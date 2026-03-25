@@ -113,83 +113,10 @@
   width: 100%;
 }
 
-.note-wheel {
+.note-wheel,
+.cents-sphere {
   display: block;
   margin: 0 auto;
-}
-
-/* Gauge */
-.gauge {
-  width: 100%;
-  max-width: 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.gauge-track {
-  position: relative;
-  width: 100%;
-  height: 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.gauge-labels {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 4px;
-}
-
-.gauge-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text);
-  opacity: 0.6;
-}
-
-.gauge-ticks {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  height: 16px;
-}
-
-.gauge-tick {
-  width: 1px;
-  height: 8px;
-  background: var(--border);
-}
-
-.gauge-tick.center {
-  height: 16px;
-  width: 2px;
-  background: var(--accent);
-}
-
-.gauge-needle {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 3px;
-  height: 32px;
-  background: var(--text-bright);
-  border-radius: 2px;
-  transform-origin: bottom center;
-  transition: transform 0.08s ease-out, background 0.15s ease-out;
-}
-
-.cents-value {
-  font-family: var(--mono);
-  font-size: 14px;
-  color: var(--text);
-  transition: color 0.15s ease-out;
 }
 
 /* Chord display */

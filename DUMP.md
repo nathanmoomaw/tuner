@@ -19,3 +19,6 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] at the beginning of each week (this is week 1) create a new branch of the form nmj/wX where X is the number of the week.  at the same time switch the branch actively deploying to the dev url (tuner-dev.obfusco.us) to this newly created branch
 [x] yes, save this pattern for global use as well with all my projects
 [x] let's add a visualization for the key/sharp/flat acts like a sphere with the keys listed around it in a circle that animates between keys by spinning and giving a nice indication of being sharp/flat or in tune with helpful colors
+[x] let's try giving that sphere some skin and opacity
+[x] let's try a similar style for another sphere that glides between flat and sharp
+[] 

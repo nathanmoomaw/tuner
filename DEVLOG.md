@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-03-25 — Sphere skin + cents sphere
+
+- Enhanced note wheel with 3D sphere skin: filled gradient body with directional lighting, specular highlight, rim light on orbit, inner latitude line for depth
+- New CentsSphere component replaces the old flat CentsGauge
+- CentsSphere: a smaller 3D sphere that rotates based on cents deviation
+- Tick marks along the orbit from -50 to +50 cents, z-sorted for depth
+- Glowing indicator dot at the reference point with tuning color (green→red)
+- "flat"/"sharp" labels on sides, cents readout in center
+- Smooth lerped rotation animation matching the note wheel style
+- Removed old DOM-based gauge styles (gauge-track, gauge-needle, etc.)
+
 ## 2026-03-25 — Spherical note wheel visualization
 
 - New NoteWheel canvas component: 12 chromatic notes arranged on a 3D-tilted elliptical orbit

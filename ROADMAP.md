@@ -23,3 +23,5 @@
 - [x] Deploy to tuner.obfusco.us (S3 + CloudFront + CI/CD)
 - [x] Dev environment at tuner-dev.obfusco.us
 - [x] Spherical note wheel visualization (3D orbit, animated rotation, color-coded tuning)
+- [x] Sphere skin with 3D lighting, specular highlight, and opacity
+- [x] Cents sphere — 3D sphere gauge for flat/sharp deviation
