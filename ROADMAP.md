@@ -17,3 +17,5 @@
 - [x] Spectrographic color feedback (green=in tune, red=off)
 - [x] Persistent note display (holds last detected note)
 - [x] Stable layout (no jiggle between listening/detected states)
+- [x] Chord identification mode (FFT peak extraction + chord matching)
+- [x] Spacebar start/stop

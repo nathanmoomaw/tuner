@@ -1,21 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTuner } from './hooks/useTuner'
 import './App.css'
 
-/**
- * Maps cents offset to a color on a spectrum:
- * 0 cents = bright green (in tune)
- * ±15 cents = yellow
- * ±30+ cents = red/orange (way off)
- */
 function centsToColor(cents, active) {
-  if (!active) return 'rgba(156, 163, 175, 0.3)' // dim gray when stale
+  if (!active) return 'rgba(156, 163, 175, 0.3)'
   const absCents = Math.min(Math.abs(cents), 50)
-  // 0 → 120° (green), 50 → 0° (red) in HSL
   const hue = Math.round(120 * (1 - absCents / 50))
-  const saturation = 80
-  const lightness = 55
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+  return `hsl(${hue}, 80%, 55%)`
 }
 
 function CentsGauge({ cents, active }) {
@@ -53,10 +44,7 @@ function CentsGauge({ cents, active }) {
   )
 }
 
-function App() {
-  const [a4, setA4] = useState(440)
-  const { listening, note, error, start, stop } = useTuner(a4)
-
+function TunerDisplay({ note }) {
   const displayName = note ? note.name : '--'
   const displayOctave = note ? note.octave : ''
   const displayCents = note ? note.cents : 0
@@ -65,21 +53,98 @@ function App() {
   const noteColor = note ? centsToColor(note.cents, isActive) : undefined
 
   return (
+    <div className="note-display">
+      <div
+        className={`note-name ${!isActive ? 'stale' : ''}`}
+        style={noteColor ? { color: noteColor } : undefined}
+      >
+        {displayName}
+        {displayOctave !== '' && (
+          <span className="note-octave">{displayOctave}</span>
+        )}
+      </div>
+      <CentsGauge cents={displayCents} active={isActive} />
+      <div className="frequency">{displayFreq || '\u00A0'}</div>
+    </div>
+  )
+}
+
+function ChordDisplay({ chord }) {
+  const isActive = chord?.active ?? false
+
+  return (
+    <div className="chord-display">
+      <div className={`chord-name ${!isActive ? 'stale' : ''}`}>
+        {chord ? chord.chord : '--'}
+      </div>
+      {chord && (
+        <div className={`chord-notes ${!isActive ? 'stale' : ''}`}>
+          {chord.notes.join(' \u2022 ')}
+        </div>
+      )}
+      <div className="chord-hint">
+        {!chord ? 'Play a chord...' : '\u00A0'}
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  const [a4, setA4] = useState(440)
+  const { listening, mode, setMode, note, chord, error, start, stop } = useTuner(a4)
+
+  const toggle = useCallback(() => {
+    if (listening) {
+      stop()
+    } else {
+      start()
+    }
+  }, [listening, start, stop])
+
+  // Spacebar to start/stop
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.code === 'Space' && e.target === document.body) {
+        e.preventDefault()
+        toggle()
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [toggle])
+
+  return (
     <div className="tuner">
       <header className="tuner-header">
         <h1>Tuner</h1>
-        <div className="a4-control">
-          <label>
-            A4 =
-            <input
-              type="number"
-              min="400"
-              max="480"
-              value={a4}
-              onChange={(e) => setA4(Number(e.target.value))}
-            />
-            Hz
-          </label>
+        <div className="header-controls">
+          <div className="mode-toggle">
+            <button
+              className={`mode-btn ${mode === 'tuner' ? 'active' : ''}`}
+              onClick={() => setMode('tuner')}
+            >
+              Note
+            </button>
+            <button
+              className={`mode-btn ${mode === 'chord' ? 'active' : ''}`}
+              onClick={() => setMode('chord')}
+            >
+              Chord
+            </button>
+          </div>
+          <div className="a4-control">
+            <label>
+              A4 =
+              <input
+                type="number"
+                min="400"
+                max="480"
+                value={a4}
+                onChange={(e) => setA4(Number(e.target.value))}
+              />
+              Hz
+            </label>
+          </div>
         </div>
       </header>
 
@@ -87,24 +152,19 @@ function App() {
         {error && <p className="error">{error}</p>}
 
         {!listening ? (
-          <button className="start-btn" onClick={start}>
-            Start Tuning
-          </button>
+          <div className="start-area">
+            <button className="start-btn" onClick={start}>
+              Start Tuning
+            </button>
+            <div className="spacebar-hint">or press spacebar</div>
+          </div>
         ) : (
           <>
-            <div className="note-display">
-              <div
-                className={`note-name ${!isActive ? 'stale' : ''}`}
-                style={noteColor ? { color: noteColor } : undefined}
-              >
-                {displayName}
-                {displayOctave !== '' && (
-                  <span className="note-octave">{displayOctave}</span>
-                )}
-              </div>
-              <CentsGauge cents={displayCents} active={isActive} />
-              <div className="frequency">{displayFreq || '\u00A0'}</div>
-            </div>
+            {mode === 'tuner' ? (
+              <TunerDisplay note={note} />
+            ) : (
+              <ChordDisplay chord={chord} />
+            )}
             <button className="stop-btn" onClick={stop}>
               Stop
             </button>

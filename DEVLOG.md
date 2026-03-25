@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Chord detection mode, spacebar control
+
+- Added chord identification mode (Note/Chord toggle in header)
+- FFT-based peak extraction with harmonic filtering for polyphonic detection
+- Chord dictionary: major, minor, 7th, maj7, m7, dim, aug, sus2, sus4, 6th, m7b5, dim7, power chords
+- Spacebar toggles start/stop for hands-free use
+- Shared audio pipeline between tuner and chord modes
+
 ## 2026-03-25 — UX polish: persistent display, spectrographic colors
 
 - Note persists on screen for 1.5s after signal drops (fades to stale state)
