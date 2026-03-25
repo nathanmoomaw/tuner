@@ -34,3 +34,6 @@
 - [x] Visualizer moved to top/bottom edge bands (decorative framing, clear center)
 - [x] Möbius ribbon visualizer (endless twisted ribbon encircling key area, audio-reactive)
 - [x] Particle sphere buttons (fibonacci dot distribution, rainbow colors, session-unique patterns)
+- [x] Grid-style particle spheres with reduced opacity
+- [x] Outward-only ribbon vibration (expands away from key area)
+- [x] Particle sphere favicon

@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-03-25 — Grid spheres, outward-only ribbon, sphere favicon
+
+- ParticleSphere dots now arranged in a latitude×longitude grid pattern (more structured/gridlike)
+- Reduced dot opacity and glow for more transparent appearance
+- Visualizer ribbon audio modulation now pushes exclusively outward (away from center)
+- Added high-frequency vibration on outer ribbon layers for energy feel
+- Ribbon never contracts inward toward the key area
+- Replaced favicon with particle sphere SVG (rainbow-colored dots on dark background)
+
 ## 2026-03-25 — Möbius ribbon visualizer + particle sphere buttons
 
 - Rewrote Visualizer as a Möbius ribbon: 14 layered strokes tracing an elliptical path with a smooth 180° twist (`cos(t * π)`)

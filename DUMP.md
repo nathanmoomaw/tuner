@@ -32,3 +32,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] let's give the visualizer a bit more love.  let's try to encircle the key area with it so it's one endless ribbon (with one long subtle 180 twist in it)
 [x] stylize the stop button like the start button using somewhat randomly generated versions of those spheres in image-1.png
 [x] restylize the start sphere using those images as reference too.  they should auto generate unique versions each session
+[x] make those sphere buttons a bit more gridlike and more transparent
+[x] let's keep working on the visualization ribbon.  it should vibrate to expand the space available without infringing on the key area
+[x] change the favicon to better match the concept of those spheres
+
