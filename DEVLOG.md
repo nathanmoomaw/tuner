@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-03-25 — Spherical note wheel visualization
+
+- New NoteWheel canvas component: 12 chromatic notes arranged on a 3D-tilted elliptical orbit
+- Sphere smoothly spins to the detected note with lerped animation
+- Shortest-path rotation handles wrapping (B to C, etc.)
+- Z-sorted rendering: front notes are large/bright, back notes are small/dim
+- Active note gets colored glow (green=in tune, red=off) matching cents deviation
+- Center displays note name, octave, cents, and frequency
+- Reference triangle indicator at top of orbit
+- Keeps existing CentsGauge below the wheel for precision tuning feedback
+- Replaces the old flat text-based TunerDisplay
+
 ## 2026-03-25 — Deploy pipeline + visualizer redesign
 
 - Deployed to tuner.obfusco.us (S3 + CloudFront + Route 53)
