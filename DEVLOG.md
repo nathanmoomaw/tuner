@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-03-25 — Sphere opacity + waveform edge bands
+
+- Roughly doubled sphere body gradient opacity on both NoteWheel and CentsSphere
+- Boosted specular highlights, rim glow, equator/meridian/latitude line visibility
+- Redesigned visualizer: waveforms now render as ambient bands at top and bottom edges only
+- Center of viewport is completely clear — no overlap with spheres or tuning UI
+- Reduced waveform alpha (decorative, not competing with functional UI)
+- Reduced amplitude to keep waveforms within their edge bands
+- Soft linear gradient fades at band edges prevent hard cutoffs
+- Removed old arch/center-fade approach in favor of edge-only rendering
+
 ## 2026-03-25 — Waveform encircle + sphere start button
 
 - Increased waveform arch strength (0.24h) so waveforms fully encircle the key area without touching it

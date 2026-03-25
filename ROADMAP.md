@@ -30,3 +30,5 @@
 - [x] Enhanced 3D sphere rendering (full body, specular, shadows, wireframe)
 - [x] Waveform encircles key area without touching it
 - [x] Animated 3D sphere start button (bobbing, rotating)
+- [x] Increased sphere opacity for better visibility
+- [x] Visualizer moved to top/bottom edge bands (decorative framing, clear center)

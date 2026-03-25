@@ -97,11 +97,11 @@ export function NoteWheel({ note }) {
         cx - radius * 0.35, cy - radius * 0.35, radius * 0.08,
         cx, cy, radius
       )
-      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.2)')
-      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.12)')
-      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.06)')
-      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.08)')
-      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.18)')
+      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.38)')
+      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.22)')
+      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.12)')
+      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.16)')
+      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.3)')
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
       ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
@@ -110,7 +110,7 @@ export function NoteWheel({ note }) {
       // Rim glow on sphere edge
       ctx.beginPath()
       ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.08)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
       ctx.lineWidth = 2
       ctx.stroke()
 
@@ -119,8 +119,8 @@ export function NoteWheel({ note }) {
         cx - radius * 0.32, cy - radius * 0.38, 0,
         cx - radius * 0.32, cy - radius * 0.38, radius * 0.35
       )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.14)')
-      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.05)')
+      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)')
+      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.08)')
       specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
       ctx.fillStyle = specGrad
       ctx.beginPath()
@@ -130,7 +130,7 @@ export function NoteWheel({ note }) {
       // Longitude meridian (vertical great circle)
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius * 0.18, radius * 0.95, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.03)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.06)'
       ctx.lineWidth = 0.75
       ctx.stroke()
 
@@ -139,21 +139,21 @@ export function NoteWheel({ note }) {
       const upperLatR = Math.sqrt(radius * radius - upperLatY * upperLatY)
       ctx.beginPath()
       ctx.ellipse(cx, cy - upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.035)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.07)'
       ctx.lineWidth = 0.75
       ctx.stroke()
 
       // Lower latitude line
       ctx.beginPath()
       ctx.ellipse(cx, cy + upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.025)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.05)'
       ctx.lineWidth = 0.75
       ctx.stroke()
 
       // Equator (orbit ring) — brighter rim
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius, radius * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.18)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.25)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 

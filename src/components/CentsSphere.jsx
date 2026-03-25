@@ -87,11 +87,11 @@ export function CentsSphere({ cents = 0, active = false }) {
         cx - sphereR * 0.35, cy - sphereR * 0.35, sphereR * 0.08,
         cx, cy, sphereR
       )
-      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.18)')
-      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.1)')
-      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.05)')
-      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.07)')
-      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.16)')
+      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.35)')
+      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.2)')
+      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.1)')
+      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.14)')
+      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.28)')
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
       ctx.arc(cx, cy, sphereR, 0, TWO_PI)
@@ -100,7 +100,7 @@ export function CentsSphere({ cents = 0, active = false }) {
       // Rim glow
       ctx.beginPath()
       ctx.arc(cx, cy, sphereR, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.07)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.14)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 
@@ -109,8 +109,8 @@ export function CentsSphere({ cents = 0, active = false }) {
         cx - sphereR * 0.3, cy - sphereR * 0.35, 0,
         cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3
       )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.12)')
-      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.04)')
+      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.2)')
+      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.07)')
       specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
       ctx.fillStyle = specGrad
       ctx.beginPath()
@@ -120,14 +120,14 @@ export function CentsSphere({ cents = 0, active = false }) {
       // Meridian line
       ctx.beginPath()
       ctx.ellipse(cx, cy, sphereR * 0.15, sphereR * 0.95, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.03)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.06)'
       ctx.lineWidth = 0.5
       ctx.stroke()
 
       // Orbit ring (equator)
       ctx.beginPath()
       ctx.ellipse(cx, cy, rx, ry, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.22)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 
