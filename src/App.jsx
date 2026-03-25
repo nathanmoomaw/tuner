@@ -2,49 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { useTuner } from './hooks/useTuner'
 import { Visualizer } from './components/Visualizer'
 import { NoteWheel } from './components/NoteWheel'
+import { CentsSphere } from './components/CentsSphere'
 import './App.css'
-
-function centsToColor(cents, active) {
-  if (!active) return 'rgba(156, 163, 175, 0.3)'
-  const absCents = Math.min(Math.abs(cents), 50)
-  const hue = Math.round(120 * (1 - absCents / 50))
-  return `hsl(${hue}, 80%, 55%)`
-}
-
-function CentsGauge({ cents, active }) {
-  const clampedCents = Math.max(-50, Math.min(50, cents))
-  const rotation = (clampedCents / 50) * 45
-  const color = centsToColor(cents, active)
-
-  return (
-    <div className="gauge">
-      <div className="gauge-track">
-        <div className="gauge-labels">
-          <span className="gauge-label flat">flat</span>
-          <span className="gauge-label sharp">sharp</span>
-        </div>
-        <div className="gauge-ticks">
-          {[-40, -30, -20, -10, 0, 10, 20, 30, 40].map((tick) => (
-            <div
-              key={tick}
-              className={`gauge-tick ${tick === 0 ? 'center' : ''}`}
-            />
-          ))}
-        </div>
-        <div
-          className="gauge-needle"
-          style={{
-            transform: `translateX(-50%) rotate(${rotation}deg)`,
-            background: color,
-          }}
-        />
-      </div>
-      <div className="cents-value" style={{ color }}>
-        {cents > 0 ? '+' : ''}{cents} cents
-      </div>
-    </div>
-  )
-}
 
 function TunerDisplay({ note }) {
   const displayCents = note ? note.cents : 0
@@ -53,7 +12,7 @@ function TunerDisplay({ note }) {
   return (
     <div className="note-display">
       <NoteWheel note={note} />
-      <CentsGauge cents={displayCents} active={isActive} />
+      <CentsSphere cents={displayCents} active={isActive} />
     </div>
   )
 }

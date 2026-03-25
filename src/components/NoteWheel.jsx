@@ -80,23 +80,47 @@ export function NoteWheel({ note }) {
       const radius = size * 0.38
       const tilt = 0.4
 
-      // Subtle sphere surface gradient
-      const sphereGrad = ctx.createRadialGradient(
-        cx - radius * 0.15, cy - radius * tilt * 0.15, 0,
-        cx, cy, radius * 0.95
+      // Sphere body — filled gradient with 3D lighting
+      const bodyGrad = ctx.createRadialGradient(
+        cx - radius * 0.3, cy - radius * tilt * 0.35, radius * 0.05,
+        cx + radius * 0.1, cy + radius * tilt * 0.1, radius
       )
-      sphereGrad.addColorStop(0, 'rgba(110, 231, 183, 0.04)')
-      sphereGrad.addColorStop(0.6, 'rgba(110, 231, 183, 0.015)')
-      sphereGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
-      ctx.fillStyle = sphereGrad
+      bodyGrad.addColorStop(0, 'rgba(140, 255, 215, 0.12)')
+      bodyGrad.addColorStop(0.3, 'rgba(110, 231, 183, 0.07)')
+      bodyGrad.addColorStop(0.7, 'rgba(60, 160, 130, 0.04)')
+      bodyGrad.addColorStop(1, 'rgba(20, 60, 50, 0.1)')
+      ctx.fillStyle = bodyGrad
       ctx.beginPath()
-      ctx.ellipse(cx, cy, radius * 0.85, radius * 0.85 * tilt, 0, 0, TWO_PI)
+      ctx.ellipse(cx, cy, radius * 0.92, radius * 0.92 * tilt, 0, 0, TWO_PI)
       ctx.fill()
 
-      // Orbit ellipse
+      // Specular highlight (top-left)
+      const specGrad = ctx.createRadialGradient(
+        cx - radius * 0.28, cy - radius * tilt * 0.22, 0,
+        cx - radius * 0.28, cy - radius * tilt * 0.22, radius * 0.4
+      )
+      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.07)')
+      specGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)')
+      specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
+      ctx.fillStyle = specGrad
+      ctx.beginPath()
+      ctx.ellipse(
+        cx - radius * 0.28, cy - radius * tilt * 0.22,
+        radius * 0.38, radius * 0.38 * tilt, 0, 0, TWO_PI
+      )
+      ctx.fill()
+
+      // Inner latitude line for depth
+      ctx.beginPath()
+      ctx.ellipse(cx, cy, radius * 0.6, radius * 0.6 * tilt, 0, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.04)'
+      ctx.lineWidth = 1
+      ctx.stroke()
+
+      // Orbit ellipse (equator) — rim light
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius, radius * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.1)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 
