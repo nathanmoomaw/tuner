@@ -1,16 +1,17 @@
 # Roadmap
 
 ## Up Next
-- [ ] Mic input via Web Audio API (getUserMedia)
-- [ ] Pitch detection algorithm (autocorrelation)
-- [ ] Chromatic tuner display (note name, cents, frequency)
-- [ ] Visual indicator (needle/gauge showing sharp/flat)
-- [ ] Reference pitch setting (A4 = 440 Hz default, adjustable)
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
-- [ ] Dark theme UI
-- [ ] Mobile-friendly layout
+- [ ] Visual indicator improvements (color feedback for in-tune/sharp/flat)
 - [ ] Deploy to tuner.obfusco.us
 
 ## Completed
 - [x] Project scaffold (Vite + React)
+- [x] Mic input via Web Audio API (getUserMedia)
+- [x] Pitch detection algorithm (autocorrelation)
+- [x] Chromatic tuner display (note name, cents, frequency)
+- [x] Visual indicator (needle/gauge showing sharp/flat)
+- [x] Reference pitch setting (A4 = 440 Hz default, adjustable)
+- [x] Dark theme UI
+- [x] Mobile-friendly layout
