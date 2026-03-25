@@ -1,120 +1,93 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useTuner } from './hooks/useTuner'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function CentsGauge({ cents }) {
+  // cents ranges from -50 to +50
+  const clampedCents = Math.max(-50, Math.min(50, cents))
+  const rotation = (clampedCents / 50) * 45 // max 45deg each way
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="gauge">
+      <div className="gauge-track">
+        <div className="gauge-labels">
+          <span className="gauge-label flat">flat</span>
+          <span className="gauge-label sharp">sharp</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+        <div className="gauge-ticks">
+          {[-40, -30, -20, -10, 0, 10, 20, 30, 40].map((tick) => (
+            <div
+              key={tick}
+              className={`gauge-tick ${tick === 0 ? 'center' : ''}`}
+            />
+          ))}
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        <div
+          className="gauge-needle"
+          style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
+        />
+      </div>
+      <div className="cents-value">
+        {cents > 0 ? '+' : ''}{cents} cents
+      </div>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
+function App() {
+  const [a4, setA4] = useState(440)
+  const { listening, note, error, start, stop } = useTuner(a4)
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+  return (
+    <div className="tuner">
+      <header className="tuner-header">
+        <h1>Tuner</h1>
+        <div className="a4-control">
+          <label>
+            A4 =
+            <input
+              type="number"
+              min="400"
+              max="480"
+              value={a4}
+              onChange={(e) => setA4(Number(e.target.value))}
+            />
+            Hz
+          </label>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <main className="tuner-display">
+        {error && <p className="error">{error}</p>}
+
+        {!listening ? (
+          <button className="start-btn" onClick={start}>
+            Start Tuning
+          </button>
+        ) : (
+          <>
+            {note ? (
+              <div className="note-display">
+                <div className="note-name">
+                  {note.name}
+                  <span className="note-octave">{note.octave}</span>
+                </div>
+                <CentsGauge cents={note.cents} />
+                <div className="frequency">{note.frequency} Hz</div>
+              </div>
+            ) : (
+              <div className="note-display">
+                <div className="note-name listening">--</div>
+                <div className="frequency">Listening...</div>
+              </div>
+            )}
+            <button className="stop-btn" onClick={stop}>
+              Stop
+            </button>
+          </>
+        )}
+      </main>
+    </div>
   )
 }
 

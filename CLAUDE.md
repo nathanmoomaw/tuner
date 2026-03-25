@@ -26,6 +26,7 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - No ads, no popups, no tracking
 - Large, readable display — works well on a music stand or propped-up phone
 - Dark theme by default
+- Colorful graphic display to fill screen, geared towards mobile use
 
 ## Hosting & Deployment
 - Production: tuner.obfusco.us
