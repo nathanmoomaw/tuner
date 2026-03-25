@@ -28,3 +28,5 @@
 - [x] Waveform arch over/under key area for readability
 - [x] Visualizer toggle button
 - [x] Enhanced 3D sphere rendering (full body, specular, shadows, wireframe)
+- [x] Waveform encircles key area without touching it
+- [x] Animated 3D sphere start button (bobbing, rotating)

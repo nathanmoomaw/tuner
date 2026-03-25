@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-03-25 — Waveform encircle + sphere start button
+
+- Increased waveform arch strength (0.24h) so waveforms fully encircle the key area without touching it
+- Stronger center radial fade (0.98 opacity, 0.48 radius) for clean separation
+- Start button replaced with animated 3D sphere: gently bobs up/down, slowly rotating globe wireframe
+- Sphere has full 3D lighting (gradient body, specular, rim glow, ground shadow)
+- Rotating meridians and latitude lines create living globe effect
+- "Start Tuning" text rendered on sphere surface
+- Hover/active scale transforms for tactile feedback
+
 ## 2026-03-25 — Waveform arch, viz toggle, 3D spheres
 
 - Waveform now arches over and under the key area, clearing the center for readability
