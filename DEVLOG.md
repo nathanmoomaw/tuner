@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-03-25 — Möbius ribbon visualizer + particle sphere buttons
+
+- Rewrote Visualizer as a Möbius ribbon: 14 layered strokes tracing an elliptical path with a smooth 180° twist (`cos(t * π)`)
+- Audio-reactive: frequency data modulates ribbon width per-segment with history smoothing
+- Rainbow hue gradient across layers, trailing glow via semi-transparent fill
+- New ParticleSphere component: fibonacci-distributed dots on a 3D sphere surface
+- Rainbow-colored dots with depth-based sizing (back dots small/dim, front dots large/bright)
+- Session-unique patterns via seeded PRNG (mulberry32) — each page load generates different arrangements
+- Start button and stop button both use ParticleSphere with different seed offsets, sizes, and dot counts
+- Slow rotation, gentle bob animation, ground shadow, subtle glow halos on front-facing dots
+- Removed old StartSphere wireframe globe component
+
 ## 2026-03-25 — Sphere opacity + waveform edge bands
 
 - Roughly doubled sphere body gradient opacity on both NoteWheel and CentsSphere

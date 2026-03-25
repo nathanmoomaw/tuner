@@ -29,3 +29,6 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] still want to see more opacity on those spheres
 [x] the visualization still kinda covers some of the spheres. it should either shrink to fit or simply go offscreen![](<Screenshot 2026-03-25 at 16.03.04.png>)
 [x] note that the visualization doesn't necesarily help the user tune.  it's simply for fun, so it should be treated accordingly
+[x] let's give the visualizer a bit more love.  let's try to encircle the key area with it so it's one endless ribbon (with one long subtle 180 twist in it)
+[x] stylize the stop button like the start button using somewhat randomly generated versions of those spheres in image-1.png
+[x] restylize the start sphere using those images as reference too.  they should auto generate unique versions each session

@@ -2,14 +2,15 @@ import { useRef, useEffect } from 'react'
 
 /**
  * Full-viewport audio visualizer.
- * Draws layered flowing waveform lines with rainbow colors, centered vertically.
- * Inspired by colorful spectrographic waveform art.
+ * Draws an endless Möbius ribbon that encircles the key area,
+ * with a subtle 180° twist. Decorative — just for fun.
  */
 export function Visualizer({ analyserRef, active, visible = true }) {
   const canvasRef = useRef(null)
   const rafRef = useRef(null)
   const dataRef = useRef(null)
   const historyRef = useRef([])
+  const timeRef = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -25,24 +26,25 @@ export function Visualizer({ analyserRef, active, visible = true }) {
     resize()
     window.addEventListener('resize', resize)
 
-    // Number of waveform layers to draw
-    const LAYER_COUNT = 28
-    // How many historical frames to keep for the flowing trail effect
+    const LAYER_COUNT = 14
     const HISTORY_LENGTH = 6
+    const SEGMENTS = 220
+    const TWO_PI = Math.PI * 2
 
     const draw = () => {
       if (!running) return
+      timeRef.current += 0.006
 
       const w = canvas.width
       const h = canvas.height
+      const dpr = devicePixelRatio
 
-      // Fade previous frame instead of clearing — gives trailing glow
-      ctx.fillStyle = 'rgba(15, 17, 23, 0.25)'
+      // Fade previous frame — trailing glow
+      ctx.fillStyle = 'rgba(15, 17, 23, 0.18)'
       ctx.fillRect(0, 0, w, h)
 
       const analyser = analyserRef.current
       if (!analyser || !active || !visible) {
-        // When inactive, fade to black
         ctx.fillStyle = 'rgba(15, 17, 23, 0.08)'
         ctx.fillRect(0, 0, w, h)
         rafRef.current = requestAnimationFrame(draw)
@@ -55,84 +57,62 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       analyser.getByteFrequencyData(dataRef.current)
       const data = dataRef.current
 
-      // Push current frame to history
       historyRef.current.push(new Uint8Array(data))
-      if (historyRef.current.length > HISTORY_LENGTH) {
-        historyRef.current.shift()
-      }
+      if (historyRef.current.length > HISTORY_LENGTH) historyRef.current.shift()
 
       const usableBins = Math.floor(data.length * 0.35)
-
-      // Waveforms render as decorative ambient bands at the top and bottom edges,
-      // completely clear of the center tuning UI.
-      const HALF = Math.floor(LAYER_COUNT / 2)
-      const bandSpread = h * 0.14
-      const bandCenters = [h * 0.1, h * 0.9]
+      const cx = w / 2
+      const cy = h / 2
+      // Ellipse sized to encircle the key area with clearance
+      const rx = Math.min(w * 0.46, cx - 20 * dpr)
+      const ry = Math.min(h * 0.42, cy - 20 * dpr)
+      const baseWidth = Math.min(w, h) * 0.025
+      const phase = timeRef.current
 
       for (let layer = 0; layer < LAYER_COUNT; layer++) {
-        const isUpper = layer < HALF
-        const localIdx = isUpper ? layer : layer - HALF
-        const localT = localIdx / (HALF - 1) // 0..1 within the band
-        const bandCenter = bandCenters[isUpper ? 0 : 1]
-        const yOffset = (localT - 0.5) * bandSpread
-        const freqOffset = Math.floor(layer * 1.5)
-
-        // Rainbow hue across all layers
+        const layerOffset = ((layer / (LAYER_COUNT - 1)) - 0.5) * 2 // -1 to 1
         const hue = (layer / (LAYER_COUNT - 1)) * 300
-        // Gentler alpha — decorative, not competing with UI
-        const alpha = 0.18 + 0.2 * Math.sin(localT * Math.PI)
+        const alpha = 0.1 + 0.1 * (1 - Math.abs(layerOffset))
 
         ctx.beginPath()
-        ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha})`
-        ctx.lineWidth = 1.5 * devicePixelRatio
 
-        const points = Math.min(w / 2, usableBins)
-        const step = usableBins / points
+        for (let seg = 0; seg <= SEGMENTS; seg++) {
+          const t = seg / SEGMENTS
+          const angle = t * TWO_PI + phase
 
-        for (let i = 0; i <= points; i++) {
-          const x = (i / points) * w
-          const binIndex = Math.min(Math.floor(i * step) + freqOffset, data.length - 1)
+          // Möbius twist: smooth 180° rotation over the full loop
+          const twist = Math.cos(t * Math.PI)
 
-          let value = data[binIndex]
-          const history = historyRef.current
-          for (let hi = 0; hi < history.length; hi++) {
-            value += history[hi][binIndex] || 0
+          // Layer displacement with twist
+          const displacement = layerOffset * baseWidth * twist
+
+          // Audio modulation — smoothed with history
+          const binIdx = Math.min(
+            Math.floor(t * usableBins),
+            data.length - 1
+          )
+          let value = data[binIdx]
+          for (let hi = 0; hi < historyRef.current.length; hi++) {
+            value += historyRef.current[hi][binIdx] || 0
           }
-          value /= (history.length + 1)
+          value /= (historyRef.current.length + 1)
 
-          const amplitude = (value / 255) * h * 0.15
-          const y = bandCenter + yOffset
-                    + (amplitude * Math.sin((i / points) * Math.PI))
-                    - amplitude * 0.5
+          const audioMod = (value / 255) * baseWidth * 0.7
 
-          if (i === 0) {
-            ctx.moveTo(x, y)
-          } else {
-            const prevX = ((i - 1) / points) * w
-            const cpX = (prevX + x) / 2
-            ctx.quadraticCurveTo(cpX, y, x, y)
-          }
+          const totalDisp = displacement + audioMod * (0.3 + 0.7 * Math.abs(layerOffset))
+
+          const x = cx + (rx + totalDisp) * Math.cos(angle)
+          const y = cy + (ry + totalDisp) * Math.sin(angle)
+
+          if (seg === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
         }
 
+        ctx.closePath()
+        ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha})`
+        ctx.lineWidth = 1.5 * dpr
         ctx.stroke()
       }
-
-      // Soft fade at band edges so waveforms don't have hard cutoffs
-      ctx.save()
-      ctx.globalCompositeOperation = 'destination-out'
-      // Fade top edge
-      const topFade = ctx.createLinearGradient(0, 0, 0, h * 0.22)
-      topFade.addColorStop(0, 'rgba(0,0,0,0.5)')
-      topFade.addColorStop(1, 'rgba(0,0,0,0)')
-      ctx.fillStyle = topFade
-      ctx.fillRect(0, 0, w, h * 0.22)
-      // Fade bottom edge
-      const botFade = ctx.createLinearGradient(0, h * 0.78, 0, h)
-      botFade.addColorStop(0, 'rgba(0,0,0,0)')
-      botFade.addColorStop(1, 'rgba(0,0,0,0.5)')
-      ctx.fillStyle = botFade
-      ctx.fillRect(0, h * 0.78, w, h * 0.22)
-      ctx.restore()
 
       rafRef.current = requestAnimationFrame(draw)
     }

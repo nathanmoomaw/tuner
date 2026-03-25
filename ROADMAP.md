@@ -32,3 +32,5 @@
 - [x] Animated 3D sphere start button (bobbing, rotating)
 - [x] Increased sphere opacity for better visibility
 - [x] Visualizer moved to top/bottom edge bands (decorative framing, clear center)
+- [x] Möbius ribbon visualizer (endless twisted ribbon encircling key area, audio-reactive)
+- [x] Particle sphere buttons (fibonacci dot distribution, rainbow colors, session-unique patterns)
