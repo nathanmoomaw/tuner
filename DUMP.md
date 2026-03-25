@@ -26,3 +26,6 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] make the spheres more 3d
 [x] make the visualization arches not touch the key area at all (just encircle it)
 [x] stylize the start tuning button like a gently bobbing/floating and slowly rotating sphere created
+[x] still want to see more opacity on those spheres
+[x] the visualization still kinda covers some of the spheres. it should either shrink to fit or simply go offscreen![](<Screenshot 2026-03-25 at 16.03.04.png>)
+[x] note that the visualization doesn't necesarily help the user tune.  it's simply for fun, so it should be treated accordingly

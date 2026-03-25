@@ -61,25 +61,26 @@ export function Visualizer({ analyserRef, active, visible = true }) {
         historyRef.current.shift()
       }
 
-      const centerY = h * 0.5
       const usableBins = Math.floor(data.length * 0.35)
 
-      // Draw each layer as a flowing waveform line
+      // Waveforms render as decorative ambient bands at the top and bottom edges,
+      // completely clear of the center tuning UI.
+      const HALF = Math.floor(LAYER_COUNT / 2)
+      const bandSpread = h * 0.14
+      const bandCenters = [h * 0.1, h * 0.9]
+
       for (let layer = 0; layer < LAYER_COUNT; layer++) {
-        const layerT = layer / (LAYER_COUNT - 1) // 0..1
-
-        // Rainbow hue across layers
-        const hue = layerT * 300 // red → magenta → blue → cyan → green → yellow
-        const alpha = 0.3 + 0.35 * Math.sin(layerT * Math.PI) // brighter in middle
-
-        // Each layer is offset vertically and reads slightly different frequency ranges
-        const yOffset = (layerT - 0.5) * h * 0.45
+        const isUpper = layer < HALF
+        const localIdx = isUpper ? layer : layer - HALF
+        const localT = localIdx / (HALF - 1) // 0..1 within the band
+        const bandCenter = bandCenters[isUpper ? 0 : 1]
+        const yOffset = (localT - 0.5) * bandSpread
         const freqOffset = Math.floor(layer * 1.5)
 
-        // Arch: push waveforms well clear of the key area in the center
-        const archDir = layerT < 0.5 ? -1 : 1
-        const centerCloseness = 1 - Math.abs(layerT - 0.5) * 2
-        const archStrength = h * 0.24 * (0.4 + 0.6 * centerCloseness)
+        // Rainbow hue across all layers
+        const hue = (layer / (LAYER_COUNT - 1)) * 300
+        // Gentler alpha — decorative, not competing with UI
+        const alpha = 0.18 + 0.2 * Math.sin(localT * Math.PI)
 
         ctx.beginPath()
         ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha})`
@@ -92,7 +93,6 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           const x = (i / points) * w
           const binIndex = Math.min(Math.floor(i * step) + freqOffset, data.length - 1)
 
-          // Average with history for smoother movement
           let value = data[binIndex]
           const history = historyRef.current
           for (let hi = 0; hi < history.length; hi++) {
@@ -100,45 +100,10 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           }
           value /= (history.length + 1)
 
-          const amplitude = (value / 255) * h * 0.32
-          const archFactor = Math.sin((i / points) * Math.PI)
-          const archY = archDir * archFactor * archStrength
-          const y = centerY + yOffset + (amplitude * Math.sin((i / points) * Math.PI))
-                    - amplitude * 0.5 + archY
-
-          if (i === 0) {
-            ctx.moveTo(x, y)
-          } else {
-            // Smooth curve to next point
-            const prevX = ((i - 1) / points) * w
-            const cpX = (prevX + x) / 2
-            ctx.quadraticCurveTo(cpX, y, x, y)
-          }
-        }
-
-        ctx.stroke()
-
-        // Draw a mirrored, dimmer version below for depth
-        ctx.beginPath()
-        ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha * 0.3})`
-        ctx.lineWidth = 1 * devicePixelRatio
-
-        for (let i = 0; i <= points; i++) {
-          const x = (i / points) * w
-          const binIndex = Math.min(Math.floor(i * step) + freqOffset, data.length - 1)
-
-          let value = data[binIndex]
-          const history = historyRef.current
-          for (let hi = 0; hi < history.length; hi++) {
-            value += history[hi][binIndex] || 0
-          }
-          value /= (history.length + 1)
-
-          const amplitude = (value / 255) * h * 0.32
-          const archFactor = Math.sin((i / points) * Math.PI)
-          const mirrorArchY = -archDir * archFactor * archStrength
-          const y = centerY - yOffset - (amplitude * Math.sin((i / points) * Math.PI))
-                    + amplitude * 0.5 + mirrorArchY
+          const amplitude = (value / 255) * h * 0.15
+          const y = bandCenter + yOffset
+                    + (amplitude * Math.sin((i / points) * Math.PI))
+                    - amplitude * 0.5
 
           if (i === 0) {
             ctx.moveTo(x, y)
@@ -152,20 +117,21 @@ export function Visualizer({ analyserRef, active, visible = true }) {
         ctx.stroke()
       }
 
-      // Apply a strong radial fade — key zone is fully clear, waveforms encircle it
+      // Soft fade at band edges so waveforms don't have hard cutoffs
       ctx.save()
       ctx.globalCompositeOperation = 'destination-out'
-      const gradient = ctx.createRadialGradient(
-        w / 2, centerY, 0,
-        w / 2, centerY, Math.min(w, h) * 0.48
-      )
-      gradient.addColorStop(0, 'rgba(0,0,0,0.98)')
-      gradient.addColorStop(0.35, 'rgba(0,0,0,0.85)')
-      gradient.addColorStop(0.55, 'rgba(0,0,0,0.4)')
-      gradient.addColorStop(0.75, 'rgba(0,0,0,0.1)')
-      gradient.addColorStop(1, 'rgba(0,0,0,0)')
-      ctx.fillStyle = gradient
-      ctx.fillRect(0, 0, w, h)
+      // Fade top edge
+      const topFade = ctx.createLinearGradient(0, 0, 0, h * 0.22)
+      topFade.addColorStop(0, 'rgba(0,0,0,0.5)')
+      topFade.addColorStop(1, 'rgba(0,0,0,0)')
+      ctx.fillStyle = topFade
+      ctx.fillRect(0, 0, w, h * 0.22)
+      // Fade bottom edge
+      const botFade = ctx.createLinearGradient(0, h * 0.78, 0, h)
+      botFade.addColorStop(0, 'rgba(0,0,0,0)')
+      botFade.addColorStop(1, 'rgba(0,0,0,0.5)')
+      ctx.fillStyle = botFade
+      ctx.fillRect(0, h * 0.78, w, h * 0.22)
       ctx.restore()
 
       rafRef.current = requestAnimationFrame(draw)
