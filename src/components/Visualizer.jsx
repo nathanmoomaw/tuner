@@ -76,10 +76,10 @@ export function Visualizer({ analyserRef, active, visible = true }) {
         const yOffset = (layerT - 0.5) * h * 0.45
         const freqOffset = Math.floor(layer * 1.5)
 
-        // Arch: push waveforms away from vertical center at horizontal center
+        // Arch: push waveforms well clear of the key area in the center
         const archDir = layerT < 0.5 ? -1 : 1
         const centerCloseness = 1 - Math.abs(layerT - 0.5) * 2
-        const archStrength = h * 0.13 * (0.3 + 0.7 * centerCloseness)
+        const archStrength = h * 0.24 * (0.4 + 0.6 * centerCloseness)
 
         ctx.beginPath()
         ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha})`
@@ -152,16 +152,17 @@ export function Visualizer({ analyserRef, active, visible = true }) {
         ctx.stroke()
       }
 
-      // Apply a stronger radial fade in the center for key zone legibility
+      // Apply a strong radial fade — key zone is fully clear, waveforms encircle it
       ctx.save()
       ctx.globalCompositeOperation = 'destination-out'
       const gradient = ctx.createRadialGradient(
         w / 2, centerY, 0,
-        w / 2, centerY, Math.min(w, h) * 0.42
+        w / 2, centerY, Math.min(w, h) * 0.48
       )
-      gradient.addColorStop(0, 'rgba(0,0,0,0.92)')
-      gradient.addColorStop(0.4, 'rgba(0,0,0,0.6)')
-      gradient.addColorStop(0.7, 'rgba(0,0,0,0.2)')
+      gradient.addColorStop(0, 'rgba(0,0,0,0.98)')
+      gradient.addColorStop(0.35, 'rgba(0,0,0,0.85)')
+      gradient.addColorStop(0.55, 'rgba(0,0,0,0.4)')
+      gradient.addColorStop(0.75, 'rgba(0,0,0,0.1)')
       gradient.addColorStop(1, 'rgba(0,0,0,0)')
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, w, h)

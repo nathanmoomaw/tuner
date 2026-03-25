@@ -3,6 +3,7 @@ import { useTuner } from './hooks/useTuner'
 import { Visualizer } from './components/Visualizer'
 import { NoteWheel } from './components/NoteWheel'
 import { CentsSphere } from './components/CentsSphere'
+import { StartSphere } from './components/StartSphere'
 import './App.css'
 
 function TunerDisplay({ note }) {
@@ -118,9 +119,7 @@ function App() {
 
         {!listening ? (
           <div className="start-area">
-            <button className="start-btn" onClick={start}>
-              Start Tuning
-            </button>
+            <StartSphere onClick={start} />
             <div className="spacebar-hint">or press spacebar</div>
           </div>
         ) : (

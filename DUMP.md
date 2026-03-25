@@ -24,4 +24,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] key area should be more readable. dim the waveform a bit more there and ensure all that text is readable and in front of the waveform.  this is especially important on mobile. let's actually try making the waveform arch over and under the key area
 [x] add a button to turn off and on the waveform visual easily
 [x] make the spheres more 3d
-[] stylize the start tuning button like a gently bobbing/floating and slowly rotating sphere created 
+[x] make the visualization arches not touch the key area at all (just encircle it)
+[x] stylize the start tuning button like a gently bobbing/floating and slowly rotating sphere created

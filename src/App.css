@@ -205,35 +205,37 @@
   gap: 12px;
 }
 
+.start-sphere {
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.start-sphere:hover {
+  transform: scale(1.05);
+}
+
+.start-sphere:active {
+  transform: scale(0.97);
+}
+
 .spacebar-hint {
   font-size: 13px;
   color: var(--text);
   opacity: 0.4;
 }
 
-.start-btn,
 .stop-btn {
   font-family: var(--sans);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
-  padding: 14px 40px;
+  padding: 10px 28px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.15s;
-}
-
-.start-btn {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-.start-btn:hover {
-  background: #5ddba8;
-}
-
-.start-btn:active {
-  background: #4ccea0;
 }
 
 .stop-btn {
