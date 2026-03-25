@@ -37,3 +37,5 @@
 - [x] Grid-style particle spheres with reduced opacity
 - [x] Outward-only ribbon vibration (expands away from key area)
 - [x] Particle sphere favicon
+- [x] Bigger, more audio-responsive ribbon (outward-only expansion)
+- [x] Chaotic fibonacci particle sphere buttons
