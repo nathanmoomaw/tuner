@@ -63,16 +63,21 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
       const cy = h / 2
-      // Ellipse sized to encircle the key area with clearance
-      const rx = Math.min(w * 0.46, cx - 20 * dpr)
-      const ry = Math.min(h * 0.42, cy - 20 * dpr)
-      const baseWidth = Math.min(w, h) * 0.025
+      // Larger ellipse — fills more of the viewport
+      const rx = Math.min(w * 0.44, cx - 10 * dpr)
+      const ry = Math.min(h * 0.40, cy - 10 * dpr)
+      const baseWidth = Math.min(w, h) * 0.035
       const phase = timeRef.current
+
+      // Compute overall audio energy for global responsiveness
+      let totalEnergy = 0
+      for (let i = 0; i < usableBins; i++) totalEnergy += data[i]
+      const avgEnergy = totalEnergy / usableBins / 255
 
       for (let layer = 0; layer < LAYER_COUNT; layer++) {
         const layerOffset = ((layer / (LAYER_COUNT - 1)) - 0.5) * 2 // -1 to 1
         const hue = (layer / (LAYER_COUNT - 1)) * 300
-        const alpha = 0.1 + 0.1 * (1 - Math.abs(layerOffset))
+        const alpha = 0.1 + 0.12 * (1 - Math.abs(layerOffset))
 
         ctx.beginPath()
 
@@ -83,7 +88,7 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           // Möbius twist: smooth 180° rotation over the full loop
           const twist = Math.cos(t * Math.PI)
 
-          // Layer displacement with twist
+          // Layer displacement with twist — kept as signed for visual interest
           const displacement = layerOffset * baseWidth * twist
 
           // Audio modulation — smoothed with history
@@ -99,17 +104,20 @@ export function Visualizer({ analyserRef, active, visible = true }) {
 
           const audioNorm = value / 255
 
-          // Audio pushes outward only — vibration expands the ribbon away from center
-          const audioMod = audioNorm * baseWidth * 1.2
+          // Strong outward audio push — scales with per-bin intensity AND global energy
+          const audioMod = audioNorm * baseWidth * (2.5 + avgEnergy * 3.0)
 
-          // High-frequency vibration on outer layers for energy feel
-          const vibrate = Math.sin(angle * 8 + phase * 12) * audioNorm * baseWidth * 0.15 * Math.abs(layerOffset)
+          // High-frequency vibration for energy feel
+          const vibrate = Math.sin(angle * 6 + phase * 10) * audioNorm * baseWidth * 0.3 * Math.abs(layerOffset)
 
-          // Ensure displacement is always outward (positive = away from center)
-          const totalDisp = Math.abs(displacement) + audioMod * (0.3 + 0.7 * Math.abs(layerOffset)) + vibrate
+          // Displacement: twist provides visual structure, audio always pushes outward
+          const totalDisp = displacement + audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate
 
-          const x = cx + (rx + totalDisp) * Math.cos(angle)
-          const y = cy + (ry + totalDisp) * Math.sin(angle)
+          // Clamp to never go inward past the base ellipse
+          const outwardDisp = Math.max(0, totalDisp)
+
+          const x = cx + (rx + outwardDisp) * Math.cos(angle)
+          const y = cy + (ry + outwardDisp) * Math.sin(angle)
 
           if (seg === 0) ctx.moveTo(x, y)
           else ctx.lineTo(x, y)

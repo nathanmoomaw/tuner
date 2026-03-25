@@ -4,8 +4,9 @@ const TWO_PI = Math.PI * 2
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
 
 /**
- * Generate grid-based points on a unit sphere (latitude × longitude intersections).
- * Each session gets a unique arrangement via a random seed that jitters the grid.
+ * Generate chaotic fibonacci-distributed points on a unit sphere.
+ * Heavy random jitter + varied sizes for an organic, non-uniform look.
+ * Each session gets a unique arrangement via a random seed.
  */
 function generatePoints(count, seed) {
   // Simple seeded PRNG (mulberry32)
@@ -17,28 +18,23 @@ function generatePoints(count, seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296
   }
 
-  // Derive grid dimensions from count: roughly sqrt(count) lines each way
-  const latLines = Math.round(Math.sqrt(count * 0.6))
-  const lonLines = Math.round(count / latLines)
-  // Random rotation offsets for session uniqueness
-  const lonOffset = rand() * TWO_PI
-  const latOffset = (rand() - 0.5) * 0.3
-
   const points = []
-  for (let la = 0; la < latLines; la++) {
-    const phi = (Math.PI * (la + 0.5)) / latLines + latOffset * 0.1
-    const y = Math.cos(phi)
-    const ringR = Math.sin(phi)
-    for (let lo = 0; lo < lonLines; lo++) {
-      const theta = (TWO_PI * lo) / lonLines + lonOffset + rand() * 0.08
-      points.push({
-        x: Math.cos(theta) * ringR,
-        y: y,
-        z: Math.sin(theta) * ringR,
-        hueOffset: rand() * 40 - 20,
-        sizeScale: 0.8 + rand() * 0.4,
-      })
-    }
+  for (let i = 0; i < count; i++) {
+    // Fibonacci base with heavy angular jitter for chaos
+    const y = 1 - (2 * i) / (count - 1)
+    const radiusAtY = Math.sqrt(1 - y * y)
+    const theta = GOLDEN_ANGLE * i + (rand() - 0.5) * 1.2
+
+    // Push the point slightly off-sphere for depth variation
+    const radialJitter = 0.92 + rand() * 0.16
+
+    points.push({
+      x: Math.cos(theta) * radiusAtY * radialJitter,
+      y: y + (rand() - 0.5) * 0.08,
+      z: Math.sin(theta) * radiusAtY * radialJitter,
+      hueOffset: rand() * 80 - 40,
+      sizeScale: 0.4 + rand() * 1.2,
+    })
   }
   return points
 }

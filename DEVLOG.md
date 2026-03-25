@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-03-25 — Bigger ribbon + chaotic sphere buttons
+
+- Increased ribbon base ellipse and width for larger visual presence
+- Audio response boosted significantly (2.5x + 3x energy scaling vs previous 1.2x)
+- Added global energy computation so ribbon reacts to overall audio intensity
+- Restored Möbius twist displacement (signed) with `Math.max(0)` clamp to prevent inward contraction
+- Particle spheres reverted to fibonacci distribution with heavy angular jitter (±0.6 rad)
+- Added radial jitter (0.92–1.08) and y-axis noise for organic, chaotic dot placement
+- Wider hue offset range (±40) and size variation (0.4–1.6x) for more visual chaos
+
 ## 2026-03-25 — Grid spheres, outward-only ribbon, sphere favicon
 
 - ParticleSphere dots now arranged in a latitude×longitude grid pattern (more structured/gridlike)

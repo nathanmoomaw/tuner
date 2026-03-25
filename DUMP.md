@@ -35,4 +35,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] make those sphere buttons a bit more gridlike and more transparent
 [x] let's keep working on the visualization ribbon.  it should vibrate to expand the space available without infringing on the key area
 [x] change the favicon to better match the concept of those spheres
-
+[x] something is not right with the last ribbon adjustment though.  it's smaller now and i actually wanted it bigger and more responsive to the audio, still without infringing on the center
+[x] those sphere buttons are too regular and symmetrical now.  they should be more chaotic
