@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-03-25 — Deploy pipeline + visualizer redesign
+
+- Deployed to tuner.obfusco.us (S3 + CloudFront + Route 53)
+- Dev environment at tuner-dev.obfusco.us for nmj/* branches
+- GitHub Actions CI/CD: auto-deploy on push to main or nmj/* branches
+- IAM user github-actions-moomaw with scoped S3/CF permissions
+- Redesigned visualizer: flowing rainbow waveform lines (matching reference art)
+- Full viewport width, centered vertically behind the key display
+- Radial gradient mask dims the center so note/chord info stays legible
+
 ## 2026-03-25 — Background audio visualizer
 
 - Canvas-based frequency bar visualizer behind tuner UI

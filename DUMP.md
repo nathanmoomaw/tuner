@@ -10,3 +10,10 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] spacebar should stop it
 [x] add chord identification mode
 [x] add some background visualizer like this: https://brad-carter.medium.com/see-the-sound-the-code-behind-music-visualizers-b8d0099f1302
+[x] the visualizer should stretch 100% width and be centered vertically, so it dances behind the key
+[x] here's that reference again: ![alt text](image.png)
+[x] let's get this up on a server at tuner.obfusco.us
+[x] the visualizer is covering up the key zone in the middle too much, make sure it's behind the info and make it more transparent in the center so the center (key zone) is legible
+[x] let's have main branch autodeploy to tuner.obfusco.us
+[x] let's create an active dev branch called nmj/w1 and have this autodeploying to tuner-dev.obfusco.us
+[] at the beginning of each week (this is week 1) create a new branch of the form nmj/wX where X is the number of the week.  when this is done
