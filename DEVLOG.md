@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-03-25 — Background audio visualizer
+
+- Canvas-based frequency bar visualizer behind tuner UI
+- Uses FFT byte frequency data from shared analyser node
+- Bars color-mapped by frequency: warm (low) to cool (high) via HSL
+- Subtle opacity (0.15–0.4) so it doesn't compete with the tuner display
+- Responsive canvas with devicePixelRatio scaling
+- Only renders when mic is active
+
 ## 2026-03-25 — Chord detection mode, spacebar control
 
 - Added chord identification mode (Note/Chord toggle in header)

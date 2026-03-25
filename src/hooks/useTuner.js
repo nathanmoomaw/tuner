@@ -140,5 +140,5 @@ export function useTuner(a4 = 440) {
     }
   }, [])
 
-  return { listening, mode, setMode, note, chord, error, start, stop }
+  return { listening, mode, setMode, note, chord, error, start, stop, analyserRef }
 }
