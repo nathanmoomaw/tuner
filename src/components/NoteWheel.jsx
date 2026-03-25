@@ -80,47 +80,80 @@ export function NoteWheel({ note }) {
       const radius = size * 0.38
       const tilt = 0.4
 
-      // Sphere body — filled gradient with 3D lighting
-      const bodyGrad = ctx.createRadialGradient(
-        cx - radius * 0.3, cy - radius * tilt * 0.35, radius * 0.05,
-        cx + radius * 0.1, cy + radius * tilt * 0.1, radius
+      // Ground shadow beneath sphere
+      const shadowGrad = ctx.createRadialGradient(
+        cx, cy + radius * 0.88, 0,
+        cx, cy + radius * 0.88, radius * 0.55
       )
-      bodyGrad.addColorStop(0, 'rgba(140, 255, 215, 0.12)')
-      bodyGrad.addColorStop(0.3, 'rgba(110, 231, 183, 0.07)')
-      bodyGrad.addColorStop(0.7, 'rgba(60, 160, 130, 0.04)')
-      bodyGrad.addColorStop(1, 'rgba(20, 60, 50, 0.1)')
+      shadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.18)')
+      shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      ctx.fillStyle = shadowGrad
+      ctx.beginPath()
+      ctx.ellipse(cx, cy + radius * 0.88, radius * 0.55, radius * 0.1, 0, 0, TWO_PI)
+      ctx.fill()
+
+      // Full circular sphere body with 3D lighting
+      const bodyGrad = ctx.createRadialGradient(
+        cx - radius * 0.35, cy - radius * 0.35, radius * 0.08,
+        cx, cy, radius
+      )
+      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.2)')
+      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.12)')
+      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.06)')
+      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.08)')
+      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.18)')
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
-      ctx.ellipse(cx, cy, radius * 0.92, radius * 0.92 * tilt, 0, 0, TWO_PI)
+      ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
       ctx.fill()
+
+      // Rim glow on sphere edge
+      ctx.beginPath()
+      ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.08)'
+      ctx.lineWidth = 2
+      ctx.stroke()
 
       // Specular highlight (top-left)
       const specGrad = ctx.createRadialGradient(
-        cx - radius * 0.28, cy - radius * tilt * 0.22, 0,
-        cx - radius * 0.28, cy - radius * tilt * 0.22, radius * 0.4
+        cx - radius * 0.32, cy - radius * 0.38, 0,
+        cx - radius * 0.32, cy - radius * 0.38, radius * 0.35
       )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.07)')
-      specGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)')
+      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.14)')
+      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.05)')
       specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
       ctx.fillStyle = specGrad
       ctx.beginPath()
-      ctx.ellipse(
-        cx - radius * 0.28, cy - radius * tilt * 0.22,
-        radius * 0.38, radius * 0.38 * tilt, 0, 0, TWO_PI
-      )
+      ctx.arc(cx - radius * 0.32, cy - radius * 0.38, radius * 0.35, 0, TWO_PI)
       ctx.fill()
 
-      // Inner latitude line for depth
+      // Longitude meridian (vertical great circle)
       ctx.beginPath()
-      ctx.ellipse(cx, cy, radius * 0.6, radius * 0.6 * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.04)'
-      ctx.lineWidth = 1
+      ctx.ellipse(cx, cy, radius * 0.18, radius * 0.95, 0, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.03)'
+      ctx.lineWidth = 0.75
       ctx.stroke()
 
-      // Orbit ellipse (equator) — rim light
+      // Upper latitude line
+      const upperLatY = radius * 0.5
+      const upperLatR = Math.sqrt(radius * radius - upperLatY * upperLatY)
+      ctx.beginPath()
+      ctx.ellipse(cx, cy - upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.035)'
+      ctx.lineWidth = 0.75
+      ctx.stroke()
+
+      // Lower latitude line
+      ctx.beginPath()
+      ctx.ellipse(cx, cy + upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.025)'
+      ctx.lineWidth = 0.75
+      ctx.stroke()
+
+      // Equator (orbit ring) — brighter rim
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius, radius * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.18)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 
@@ -151,9 +184,9 @@ export function NoteWheel({ note }) {
 
       for (const p of positions) {
         const t = (p.depth + 1) / 2 // 0=back, 1=front
-        const noteScale = 0.5 + 0.5 * t
-        const opacity = 0.08 + 0.92 * t * t
-        const fontSize = Math.round(20 * noteScale)
+        const noteScale = 0.35 + 0.65 * t
+        const opacity = 0.05 + 0.95 * t * t
+        const fontSize = Math.round(22 * noteScale)
         const isFrontNote = p.depth > 0.8 && s.active && p.name === s.noteName
 
         if (isFrontNote) {

@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-03-25 — Waveform arch, viz toggle, 3D spheres
+
+- Waveform now arches over and under the key area, clearing the center for readability
+- Stronger center radial fade (0.92 opacity, larger radius) for mobile legibility
+- Text-shadow on all UI elements over the visualizer for contrast
+- Visualizer toggle button (wave icon) in header — easily turn waveform on/off
+- Both spheres upgraded to full circular 3D bodies (not just orbit ellipses)
+- Radial gradient lighting with top-left light source for realistic shading
+- Added specular highlights, rim glow, ground shadows beneath both spheres
+- Globe wireframe: longitude meridian + latitude lines on note wheel
+- More dramatic depth scaling on notes (0.35-1.0 range vs 0.5-1.0)
+
 ## 2026-03-25 — Sphere skin + cents sphere
 
 - Enhanced note wheel with 3D sphere skin: filled gradient body with directional lighting, specular highlight, rim light on orbit, inner latitude line for depth

@@ -69,36 +69,65 @@ export function CentsSphere({ cents = 0, active = false }) {
         ? `hsl(${hue}, 80%, 55%)`
         : 'rgba(156, 163, 175, 0.3)'
 
-      // Sphere body
-      const bodyGrad = ctx.createRadialGradient(
-        cx - rx * 0.3, cy - ry * 0.35, rx * 0.05,
-        cx + rx * 0.1, cy + ry * 0.1, rx
+      // Ground shadow
+      const shadowGrad = ctx.createRadialGradient(
+        cx, cy + ry * 1.8, 0,
+        cx, cy + ry * 1.8, rx * 0.5
       )
-      bodyGrad.addColorStop(0, 'rgba(140, 255, 215, 0.1)')
-      bodyGrad.addColorStop(0.3, 'rgba(110, 231, 183, 0.06)')
-      bodyGrad.addColorStop(0.7, 'rgba(60, 160, 130, 0.03)')
-      bodyGrad.addColorStop(1, 'rgba(20, 60, 50, 0.08)')
+      shadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.12)')
+      shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      ctx.fillStyle = shadowGrad
+      ctx.beginPath()
+      ctx.ellipse(cx, cy + ry * 1.8, rx * 0.5, rx * 0.06, 0, 0, TWO_PI)
+      ctx.fill()
+
+      // Full sphere body with 3D lighting
+      const sphereR = rx * 0.65
+      const bodyGrad = ctx.createRadialGradient(
+        cx - sphereR * 0.35, cy - sphereR * 0.35, sphereR * 0.08,
+        cx, cy, sphereR
+      )
+      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.18)')
+      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.1)')
+      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.05)')
+      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.07)')
+      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.16)')
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
-      ctx.ellipse(cx, cy, rx * 0.9, ry * 0.9, 0, 0, TWO_PI)
+      ctx.arc(cx, cy, sphereR, 0, TWO_PI)
       ctx.fill()
+
+      // Rim glow
+      ctx.beginPath()
+      ctx.arc(cx, cy, sphereR, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.07)'
+      ctx.lineWidth = 1.5
+      ctx.stroke()
 
       // Specular highlight
       const specGrad = ctx.createRadialGradient(
-        cx - rx * 0.25, cy - ry * 0.2, 0,
-        cx - rx * 0.25, cy - ry * 0.2, rx * 0.35
+        cx - sphereR * 0.3, cy - sphereR * 0.35, 0,
+        cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3
       )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.06)')
+      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.12)')
+      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.04)')
       specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
       ctx.fillStyle = specGrad
       ctx.beginPath()
-      ctx.ellipse(cx - rx * 0.25, cy - ry * 0.2, rx * 0.33, ry * 0.33, 0, 0, TWO_PI)
+      ctx.arc(cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3, 0, TWO_PI)
       ctx.fill()
 
-      // Orbit ring
+      // Meridian line
+      ctx.beginPath()
+      ctx.ellipse(cx, cy, sphereR * 0.15, sphereR * 0.95, 0, 0, TWO_PI)
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.03)'
+      ctx.lineWidth = 0.5
+      ctx.stroke()
+
+      // Orbit ring (equator)
       ctx.beginPath()
       ctx.ellipse(cx, cy, rx, ry, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.12)'
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
       ctx.lineWidth = 1.5
       ctx.stroke()
 
