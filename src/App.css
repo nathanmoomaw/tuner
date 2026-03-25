@@ -3,6 +3,17 @@
   flex-direction: column;
   min-height: 100svh;
   padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.visualizer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .tuner-header {
@@ -10,6 +21,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .tuner-header h1 {
@@ -88,6 +101,8 @@
   align-items: center;
   justify-content: center;
   gap: 32px;
+  position: relative;
+  z-index: 1;
 }
 
 .note-display {

@@ -9,3 +9,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] remove "listening..." and always keep sharp/flat meter up to reduce jiggle
 [x] spacebar should stop it
 [x] add chord identification mode
+[x] add some background visualizer like this: https://brad-carter.medium.com/see-the-sound-the-code-behind-music-visualizers-b8d0099f1302

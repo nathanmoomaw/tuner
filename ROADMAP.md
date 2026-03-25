@@ -19,3 +19,4 @@
 - [x] Stable layout (no jiggle between listening/detected states)
 - [x] Chord identification mode (FFT peak extraction + chord matching)
 - [x] Spacebar start/stop
+- [x] Background audio visualizer (frequency bars)

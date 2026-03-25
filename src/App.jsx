@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTuner } from './hooks/useTuner'
+import { Visualizer } from './components/Visualizer'
 import './App.css'
 
 function centsToColor(cents, active) {
@@ -91,7 +92,7 @@ function ChordDisplay({ chord }) {
 
 function App() {
   const [a4, setA4] = useState(440)
-  const { listening, mode, setMode, note, chord, error, start, stop } = useTuner(a4)
+  const { listening, mode, setMode, note, chord, error, start, stop, analyserRef } = useTuner(a4)
 
   const toggle = useCallback(() => {
     if (listening) {
@@ -115,6 +116,7 @@ function App() {
 
   return (
     <div className="tuner">
+      <Visualizer analyserRef={analyserRef} active={listening} />
       <header className="tuner-header">
         <h1>Tuner</h1>
         <div className="header-controls">
