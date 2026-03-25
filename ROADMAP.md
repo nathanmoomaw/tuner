@@ -3,7 +3,6 @@
 ## Up Next
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
-- [ ] Deploy to tuner.obfusco.us
 
 ## Completed
 - [x] Project scaffold (Vite + React)
@@ -20,3 +19,6 @@
 - [x] Chord identification mode (FFT peak extraction + chord matching)
 - [x] Spacebar start/stop
 - [x] Background audio visualizer (frequency bars)
+- [x] Redesigned visualizer (flowing rainbow waveforms, center fade)
+- [x] Deploy to tuner.obfusco.us (S3 + CloudFront + CI/CD)
+- [x] Dev environment at tuner-dev.obfusco.us

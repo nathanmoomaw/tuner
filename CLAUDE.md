@@ -29,8 +29,13 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - Colorful graphic display to fill screen, geared towards mobile use
 
 ## Hosting & Deployment
-- Production: tuner.obfusco.us
-- Versioned deploys at /v1, /v2, etc. (if needed)
+- Production: tuner.obfusco.us (deploys on push to `main`)
+- Dev: tuner-dev.obfusco.us (deploys on push to `nmj/*` branches)
+- S3 static hosting + CloudFront CDN + Route 53 DNS
+- Prod CloudFront distribution: E36G6MIWPKYAOW
+- Dev CloudFront distribution: EUQIKHPXMBWL9
+- IAM user: github-actions-moomaw
+- GitHub Actions workflow: `.github/workflows/deploy.yml`
 
 ## Git Workflow
 - Push after every commit
