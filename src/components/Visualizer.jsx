@@ -97,9 +97,16 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           }
           value /= (historyRef.current.length + 1)
 
-          const audioMod = (value / 255) * baseWidth * 0.7
+          const audioNorm = value / 255
 
-          const totalDisp = displacement + audioMod * (0.3 + 0.7 * Math.abs(layerOffset))
+          // Audio pushes outward only — vibration expands the ribbon away from center
+          const audioMod = audioNorm * baseWidth * 1.2
+
+          // High-frequency vibration on outer layers for energy feel
+          const vibrate = Math.sin(angle * 8 + phase * 12) * audioNorm * baseWidth * 0.15 * Math.abs(layerOffset)
+
+          // Ensure displacement is always outward (positive = away from center)
+          const totalDisp = Math.abs(displacement) + audioMod * (0.3 + 0.7 * Math.abs(layerOffset)) + vibrate
 
           const x = cx + (rx + totalDisp) * Math.cos(angle)
           const y = cy + (ry + totalDisp) * Math.sin(angle)

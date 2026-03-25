@@ -4,8 +4,8 @@ const TWO_PI = Math.PI * 2
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
 
 /**
- * Generate fibonacci-distributed points on a unit sphere.
- * Each session gets a unique arrangement via a random seed.
+ * Generate grid-based points on a unit sphere (latitude × longitude intersections).
+ * Each session gets a unique arrangement via a random seed that jitters the grid.
  */
 function generatePoints(count, seed) {
   // Simple seeded PRNG (mulberry32)
@@ -17,22 +17,28 @@ function generatePoints(count, seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296
   }
 
-  const points = []
-  for (let i = 0; i < count; i++) {
-    // Fibonacci sphere with slight random jitter for uniqueness
-    const y = 1 - (2 * i) / (count - 1)
-    const radiusAtY = Math.sqrt(1 - y * y)
-    const theta = GOLDEN_ANGLE * i + rand() * 0.3
+  // Derive grid dimensions from count: roughly sqrt(count) lines each way
+  const latLines = Math.round(Math.sqrt(count * 0.6))
+  const lonLines = Math.round(count / latLines)
+  // Random rotation offsets for session uniqueness
+  const lonOffset = rand() * TWO_PI
+  const latOffset = (rand() - 0.5) * 0.3
 
-    points.push({
-      x: Math.cos(theta) * radiusAtY,
-      y: y,
-      z: Math.sin(theta) * radiusAtY,
-      // Per-dot hue offset for rainbow variation
-      hueOffset: rand() * 60 - 30,
-      // Slight size variation
-      sizeScale: 0.7 + rand() * 0.6,
-    })
+  const points = []
+  for (let la = 0; la < latLines; la++) {
+    const phi = (Math.PI * (la + 0.5)) / latLines + latOffset * 0.1
+    const y = Math.cos(phi)
+    const ringR = Math.sin(phi)
+    for (let lo = 0; lo < lonLines; lo++) {
+      const theta = (TWO_PI * lo) / lonLines + lonOffset + rand() * 0.08
+      points.push({
+        x: Math.cos(theta) * ringR,
+        y: y,
+        z: Math.sin(theta) * ringR,
+        hueOffset: rand() * 40 - 20,
+        sizeScale: 0.8 + rand() * 0.4,
+      })
+    }
   }
   return points
 }
@@ -110,8 +116,8 @@ export function ParticleSphere({
 
       // Subtle inner glow behind dots
       const glowGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius)
-      glowGrad.addColorStop(0, 'rgba(140, 120, 255, 0.04)')
-      glowGrad.addColorStop(0.6, 'rgba(100, 80, 200, 0.02)')
+      glowGrad.addColorStop(0, 'rgba(140, 120, 255, 0.02)')
+      glowGrad.addColorStop(0.6, 'rgba(100, 80, 200, 0.01)')
       glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
       ctx.fillStyle = glowGrad
       ctx.beginPath()
@@ -147,8 +153,8 @@ export function ParticleSphere({
 
       for (const dot of projected) {
         const depth = (dot.z + 1) / 2 // 0 (back) to 1 (front)
-        const dotRadius = (1.2 + depth * 2.8) * dot.sizeScale
-        const alpha = 0.15 + depth * 0.85
+        const dotRadius = (0.8 + depth * 2.0) * dot.sizeScale
+        const alpha = (0.08 + depth * 0.5)
 
         // Rainbow hue based on vertical position + per-dot offset
         const baseHue = ((dot.sy - cy + radius) / (radius * 2)) * 300
@@ -156,14 +162,14 @@ export function ParticleSphere({
 
         ctx.beginPath()
         ctx.arc(dot.sx, dot.sy, dotRadius, 0, TWO_PI)
-        ctx.fillStyle = `hsla(${hue}, 85%, ${50 + depth * 15}%, ${alpha})`
+        ctx.fillStyle = `hsla(${hue}, 80%, ${50 + depth * 15}%, ${alpha})`
         ctx.fill()
 
-        // Front dots get a subtle glow
-        if (depth > 0.7) {
+        // Front dots get a very subtle glow
+        if (depth > 0.75) {
           ctx.beginPath()
-          ctx.arc(dot.sx, dot.sy, dotRadius * 2, 0, TWO_PI)
-          ctx.fillStyle = `hsla(${hue}, 90%, 60%, ${(depth - 0.7) * 0.15})`
+          ctx.arc(dot.sx, dot.sy, dotRadius * 1.8, 0, TWO_PI)
+          ctx.fillStyle = `hsla(${hue}, 85%, 60%, ${(depth - 0.75) * 0.08})`
           ctx.fill()
         }
       }
