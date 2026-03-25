@@ -2,10 +2,26 @@ import { useState } from 'react'
 import { useTuner } from './hooks/useTuner'
 import './App.css'
 
-function CentsGauge({ cents }) {
-  // cents ranges from -50 to +50
+/**
+ * Maps cents offset to a color on a spectrum:
+ * 0 cents = bright green (in tune)
+ * ±15 cents = yellow
+ * ±30+ cents = red/orange (way off)
+ */
+function centsToColor(cents, active) {
+  if (!active) return 'rgba(156, 163, 175, 0.3)' // dim gray when stale
+  const absCents = Math.min(Math.abs(cents), 50)
+  // 0 → 120° (green), 50 → 0° (red) in HSL
+  const hue = Math.round(120 * (1 - absCents / 50))
+  const saturation = 80
+  const lightness = 55
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+}
+
+function CentsGauge({ cents, active }) {
   const clampedCents = Math.max(-50, Math.min(50, cents))
-  const rotation = (clampedCents / 50) * 45 // max 45deg each way
+  const rotation = (clampedCents / 50) * 45
+  const color = centsToColor(cents, active)
 
   return (
     <div className="gauge">
@@ -24,10 +40,13 @@ function CentsGauge({ cents }) {
         </div>
         <div
           className="gauge-needle"
-          style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
+          style={{
+            transform: `translateX(-50%) rotate(${rotation}deg)`,
+            background: color,
+          }}
         />
       </div>
-      <div className="cents-value">
+      <div className="cents-value" style={{ color }}>
         {cents > 0 ? '+' : ''}{cents} cents
       </div>
     </div>
@@ -37,6 +56,13 @@ function CentsGauge({ cents }) {
 function App() {
   const [a4, setA4] = useState(440)
   const { listening, note, error, start, stop } = useTuner(a4)
+
+  const displayName = note ? note.name : '--'
+  const displayOctave = note ? note.octave : ''
+  const displayCents = note ? note.cents : 0
+  const displayFreq = note ? `${note.frequency} Hz` : ''
+  const isActive = note?.active ?? false
+  const noteColor = note ? centsToColor(note.cents, isActive) : undefined
 
   return (
     <div className="tuner">
@@ -66,21 +92,19 @@ function App() {
           </button>
         ) : (
           <>
-            {note ? (
-              <div className="note-display">
-                <div className="note-name">
-                  {note.name}
-                  <span className="note-octave">{note.octave}</span>
-                </div>
-                <CentsGauge cents={note.cents} />
-                <div className="frequency">{note.frequency} Hz</div>
+            <div className="note-display">
+              <div
+                className={`note-name ${!isActive ? 'stale' : ''}`}
+                style={noteColor ? { color: noteColor } : undefined}
+              >
+                {displayName}
+                {displayOctave !== '' && (
+                  <span className="note-octave">{displayOctave}</span>
+                )}
               </div>
-            ) : (
-              <div className="note-display">
-                <div className="note-name listening">--</div>
-                <div className="frequency">Listening...</div>
-              </div>
-            )}
+              <CentsGauge cents={displayCents} active={isActive} />
+              <div className="frequency">{displayFreq || '\u00A0'}</div>
+            </div>
             <button className="stop-btn" onClick={stop}>
               Stop
             </button>

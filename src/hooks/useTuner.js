@@ -16,6 +16,7 @@ export function useTuner(a4 = 440) {
   const a4Ref = useRef(a4)
   const runningRef = useRef(false)
   const loopRef = useRef(null)
+  const staleTimerRef = useRef(null)
 
   useEffect(() => {
     a4Ref.current = a4
@@ -40,10 +41,15 @@ export function useTuner(a4 = 440) {
             cents: noteInfo.cents,
             frequency: Math.round(result.frequency * 10) / 10,
             clarity: result.clarity,
+            active: true,
           })
-        } else {
-          setNote(null)
+          // Reset the stale timer
+          if (staleTimerRef.current) clearTimeout(staleTimerRef.current)
+          staleTimerRef.current = setTimeout(() => {
+            setNote((prev) => prev ? { ...prev, active: false } : prev)
+          }, 1500)
         }
+        // No else — keep last note displayed
       }
 
       rafRef.current = requestAnimationFrame(loopRef.current)
@@ -77,6 +83,7 @@ export function useTuner(a4 = 440) {
   const stop = useCallback(() => {
     runningRef.current = false
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    if (staleTimerRef.current) clearTimeout(staleTimerRef.current)
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((t) => t.stop())
       streamRef.current = null
