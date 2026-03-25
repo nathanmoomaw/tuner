@@ -3,7 +3,7 @@ import { useTuner } from './hooks/useTuner'
 import { Visualizer } from './components/Visualizer'
 import { NoteWheel } from './components/NoteWheel'
 import { CentsSphere } from './components/CentsSphere'
-import { StartSphere } from './components/StartSphere'
+import { ParticleSphere } from './components/ParticleSphere'
 import './App.css'
 
 function TunerDisplay({ note }) {
@@ -119,7 +119,7 @@ function App() {
 
         {!listening ? (
           <div className="start-area">
-            <StartSphere onClick={start} />
+            <ParticleSphere onClick={start} label={'Start\nTuning'} seedOffset={0} />
             <div className="spacebar-hint">or press spacebar</div>
           </div>
         ) : (
@@ -129,9 +129,7 @@ function App() {
             ) : (
               <ChordDisplay chord={chord} />
             )}
-            <button className="stop-btn" onClick={stop}>
-              Stop
-            </button>
+            <ParticleSphere onClick={stop} label="Stop" seedOffset={42} size={120} dotCount={120} />
           </>
         )}
       </main>
