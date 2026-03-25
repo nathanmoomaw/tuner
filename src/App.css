@@ -70,11 +70,12 @@
   line-height: 1;
   letter-spacing: -4px;
   font-family: var(--sans);
+  transition: color 0.15s ease-out;
 }
 
-.note-name.listening {
-  color: var(--text);
+.note-name.stale {
   opacity: 0.4;
+  transition: color 0.4s ease-out, opacity 0.8s ease-out;
 }
 
 .note-octave {
@@ -155,13 +156,14 @@
   background: var(--text-bright);
   border-radius: 2px;
   transform-origin: bottom center;
-  transition: transform 0.08s ease-out;
+  transition: transform 0.08s ease-out, background 0.15s ease-out;
 }
 
 .cents-value {
   font-family: var(--mono);
   font-size: 14px;
   color: var(--text);
+  transition: color 0.15s ease-out;
 }
 
 /* Buttons */

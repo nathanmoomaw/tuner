@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — UX polish: persistent display, spectrographic colors
+
+- Note persists on screen for 1.5s after signal drops (fades to stale state)
+- Spectrographic color feedback: green when in tune, yellow/red as cents drift
+- Colors applied to note name, gauge needle, and cents readout
+- Removed "Listening..." text — gauge always visible to reduce layout jiggle
+- Smooth transitions on all color and position changes
+
 ## 2026-03-25 — Core chromatic tuner implemented
 
 - Built autocorrelation-based pitch detection engine

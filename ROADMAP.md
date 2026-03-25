@@ -3,7 +3,6 @@
 ## Up Next
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
-- [ ] Visual indicator improvements (color feedback for in-tune/sharp/flat)
 - [ ] Deploy to tuner.obfusco.us
 
 ## Completed
@@ -15,3 +14,6 @@
 - [x] Reference pitch setting (A4 = 440 Hz default, adjustable)
 - [x] Dark theme UI
 - [x] Mobile-friendly layout
+- [x] Spectrographic color feedback (green=in tune, red=off)
+- [x] Persistent note display (holds last detected note)
+- [x] Stable layout (no jiggle between listening/detected states)
