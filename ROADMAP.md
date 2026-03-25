@@ -22,3 +22,4 @@
 - [x] Redesigned visualizer (flowing rainbow waveforms, center fade)
 - [x] Deploy to tuner.obfusco.us (S3 + CloudFront + CI/CD)
 - [x] Dev environment at tuner-dev.obfusco.us
+- [x] Spherical note wheel visualization (3D orbit, animated rotation, color-coded tuning)

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTuner } from './hooks/useTuner'
 import { Visualizer } from './components/Visualizer'
+import { NoteWheel } from './components/NoteWheel'
 import './App.css'
 
 function centsToColor(cents, active) {
@@ -46,26 +47,13 @@ function CentsGauge({ cents, active }) {
 }
 
 function TunerDisplay({ note }) {
-  const displayName = note ? note.name : '--'
-  const displayOctave = note ? note.octave : ''
   const displayCents = note ? note.cents : 0
-  const displayFreq = note ? `${note.frequency} Hz` : ''
   const isActive = note?.active ?? false
-  const noteColor = note ? centsToColor(note.cents, isActive) : undefined
 
   return (
     <div className="note-display">
-      <div
-        className={`note-name ${!isActive ? 'stale' : ''}`}
-        style={noteColor ? { color: noteColor } : undefined}
-      >
-        {displayName}
-        {displayOctave !== '' && (
-          <span className="note-octave">{displayOctave}</span>
-        )}
-      </div>
+      <NoteWheel note={note} />
       <CentsGauge cents={displayCents} active={isActive} />
-      <div className="frequency">{displayFreq || '\u00A0'}</div>
     </div>
   )
 }
