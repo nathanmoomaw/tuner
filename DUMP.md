@@ -16,4 +16,6 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] the visualizer is covering up the key zone in the middle too much, make sure it's behind the info and make it more transparent in the center so the center (key zone) is legible
 [x] let's have main branch autodeploy to tuner.obfusco.us
 [x] let's create an active dev branch called nmj/w1 and have this autodeploying to tuner-dev.obfusco.us
-[] at the beginning of each week (this is week 1) create a new branch of the form nmj/wX where X is the number of the week.  when this is done
+[x] at the beginning of each week (this is week 1) create a new branch of the form nmj/wX where X is the number of the week.  at the same time switch the branch actively deploying to the dev url (tuner-dev.obfusco.us) to this newly created branch
+[x] yes, save this pattern for global use as well with all my projects
+[] let's 
