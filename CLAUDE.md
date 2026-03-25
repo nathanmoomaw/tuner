@@ -43,3 +43,10 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - DEVLOG: reverse-chronological (newest at top)
 - ROADMAP: mark completed items with `[x]`, move to Completed section
 - Git auth via `gh auth` with HTTPS
+
+### Weekly Branch Rotation
+- Dev work happens on branches named `nmj/wX` where X is the week number (starting from week 1 on 2026-03-25)
+- At the start of each new week, create a new branch from `main`: `git checkout -b nmj/wX main && git push -u origin nmj/wX`
+- Any push to `nmj/*` auto-deploys to tuner-dev.obfusco.us
+- When ready, merge the week's branch to `main` via PR — this deploys to production
+- Current active dev branch: `nmj/w1` (week of 2026-03-25)
