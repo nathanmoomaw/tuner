@@ -39,6 +39,7 @@ function ChordDisplay({ chord }) {
 
 function App() {
   const [a4, setA4] = useState(440)
+  const [showViz, setShowViz] = useState(true)
   const { listening, mode, setMode, note, chord, error, start, stop, analyserRef } = useTuner(a4)
 
   const toggle = useCallback(() => {
@@ -63,7 +64,7 @@ function App() {
 
   return (
     <div className="tuner">
-      <Visualizer analyserRef={analyserRef} active={listening} />
+      <Visualizer analyserRef={analyserRef} active={listening} visible={showViz} />
       <header className="tuner-header">
         <h1>Tuner</h1>
         <div className="header-controls">
@@ -81,6 +82,21 @@ function App() {
               Chord
             </button>
           </div>
+          <button
+              className={`viz-btn ${showViz ? 'active' : ''}`}
+              onClick={() => setShowViz((v) => !v)}
+              title={showViz ? 'Hide visualizer' : 'Show visualizer'}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M1 8 Q4 3.5 8 8 Q12 12.5 15 8"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+            </button>
           <div className="a4-control">
             <label>
               A4 =

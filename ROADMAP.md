@@ -25,3 +25,6 @@
 - [x] Spherical note wheel visualization (3D orbit, animated rotation, color-coded tuning)
 - [x] Sphere skin with 3D lighting, specular highlight, and opacity
 - [x] Cents sphere — 3D sphere gauge for flat/sharp deviation
+- [x] Waveform arch over/under key area for readability
+- [x] Visualizer toggle button
+- [x] Enhanced 3D sphere rendering (full body, specular, shadows, wireframe)

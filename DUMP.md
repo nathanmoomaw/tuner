@@ -21,4 +21,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] let's add a visualization for the key/sharp/flat acts like a sphere with the keys listed around it in a circle that animates between keys by spinning and giving a nice indication of being sharp/flat or in tune with helpful colors
 [x] let's try giving that sphere some skin and opacity
 [x] let's try a similar style for another sphere that glides between flat and sharp
-[] 
+[x] key area should be more readable. dim the waveform a bit more there and ensure all that text is readable and in front of the waveform.  this is especially important on mobile. let's actually try making the waveform arch over and under the key area
+[x] add a button to turn off and on the waveform visual easily
+[x] make the spheres more 3d
+[] stylize the start tuning button like a gently bobbing/floating and slowly rotating sphere created 
