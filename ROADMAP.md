@@ -39,3 +39,5 @@
 - [x] Particle sphere favicon
 - [x] Bigger, more audio-responsive ribbon (outward-only expansion)
 - [x] Chaotic fibonacci particle sphere buttons
+- [x] Smoother NoteWheel rotation (reduced lerp for calmer transitions)
+- [x] Stop button repositioned above visualizer ribbon

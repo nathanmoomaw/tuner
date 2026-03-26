@@ -68,8 +68,8 @@ export function NoteWheel({ note }) {
       const w = canvas.width
       const size = w / dpr
 
-      // Smooth lerp
-      s.currentAngle += (s.targetAngle - s.currentAngle) * 0.1
+      // Smooth lerp — slow rotation for a calm, fluid feel
+      s.currentAngle += (s.targetAngle - s.currentAngle) * 0.04
 
       ctx.clearRect(0, 0, w, w)
       ctx.save()

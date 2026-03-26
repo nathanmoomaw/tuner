@@ -227,27 +227,8 @@
   opacity: 0.4;
 }
 
-.stop-btn {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  padding: 10px 28px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.stop-btn {
-  background: var(--bg-surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-size: 15px;
-  padding: 10px 28px;
-}
-
-.stop-btn:hover {
-  border-color: var(--text);
+.stop-area {
+  margin-top: -20px;
 }
 
 .error {

@@ -129,7 +129,9 @@ function App() {
             ) : (
               <ChordDisplay chord={chord} />
             )}
-            <ParticleSphere onClick={stop} label="Stop" seedOffset={42} size={120} dotCount={120} />
+            <div className="stop-area">
+              <ParticleSphere onClick={stop} label="Stop" seedOffset={42} size={100} dotCount={100} />
+            </div>
           </>
         )}
       </main>
