@@ -50,3 +50,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] make the tuner logo lowercase and multicolored in roboto mono
 [x] ok, now desktop ribbon placement isn't right.  it's going through the stop button![alt text](<Screenshot 2026-03-25 at 17.47.07.png>)
 [x] mobile is still not quite right either.  the key area is being run through![alt text](signal-2026-03-25-174807.png)
+[x] wow, no, make desktop ribbon look like it did when i said "desktop looks good though"
+[x] and mobile was better before too.  now it's just a weird oval

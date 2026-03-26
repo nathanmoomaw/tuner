@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Restore original ribbon sizing with hard expansion cap
+
+- Reverted to the viewport-fraction sizing that looked good on desktop (rx=0.44w, ry=0.34h)
+- Replaced the 0.85 multiplier expansion cap with a hard mathematical cap
+- maxExpand = remaining space from ellipse edge to viewport edge, so overflow is impossible
+- Removed content-aware fixed-pixel approach that made the ribbon too small
+
 ## 2026-03-25 — Content-aware ribbon sizing
 
 - Ribbon now sized to encircle the actual UI content area (~320×560px) rather than viewport fractions

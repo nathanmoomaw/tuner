@@ -63,19 +63,15 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
       const cy = h / 2
-      // Size the ribbon to encircle the UI content area with clearance.
-      // Content is roughly 320×500px centered. Ribbon should sit just outside.
-      const contentHalfW = 180 * dpr // ~half of content width + padding
-      const contentHalfH = 280 * dpr // ~half of content height + padding
-      // Ribbon base ellipse: just outside the content
-      const edgeMargin = 30 * dpr
-      const maxRx = cx - edgeMargin
-      const maxRy = cy - edgeMargin
-      const rx = Math.min(contentHalfW, maxRx)
-      const ry = Math.min(contentHalfH, maxRy)
-      const baseWidth = Math.min(w, h) * 0.025
-      // Audio expansion capped so ribbon stays within viewport
-      const maxExpand = Math.min(maxRx - rx, maxRy - ry)
+      // Restore the viewport-fraction sizing that looked good on desktop
+      const margin = 30 * dpr
+      const rx = Math.min(w * 0.44, cx - margin)
+      const ry = Math.min(h * 0.34, cy - margin)
+      const baseWidth = Math.min(w, h) * 0.03
+      // Hard cap expansion so ribbon + expansion never exceeds viewport
+      const maxExpandX = cx - margin - rx
+      const maxExpandY = cy - margin - ry
+      const maxExpand = Math.min(maxExpandX, maxExpandY)
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness
