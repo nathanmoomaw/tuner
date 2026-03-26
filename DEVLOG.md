@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Shift ribbon center down to clear key area
+
+- Moved ribbon ellipse center from 50% to 54% of viewport height
+- Top of ribbon now clears the key area (note wheel + cents sphere)
+- Increased ry back to 0.38 (from 0.34) since bottom is properly clamped
+- Max expansion computed from distance to nearest edge for balanced containment
+
 ## 2026-03-25 — Fix ribbon overflow on mobile
 
 - Reduced vertical ellipse ratio from 0.40 to 0.34 to prevent bottom overflow on tall screens
