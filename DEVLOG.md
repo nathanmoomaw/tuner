@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Smoother note wheel + stop button repositioned
+
+- Slowed NoteWheel rotation lerp from 0.1 to 0.04 for calmer, smoother transitions between notes
+- Moved stop button sphere up with negative margin to avoid overlapping the visualizer ribbon
+- Reduced stop button size (100px, 100 dots) to keep it compact and out of the way
+- Removed unused flat stop-btn styles
+
 ## 2026-03-25 — Bigger ribbon + chaotic sphere buttons
 
 - Increased ribbon base ellipse and width for larger visual presence
