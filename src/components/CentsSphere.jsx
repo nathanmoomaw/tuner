@@ -109,31 +109,30 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.lineWidth = 1.5
       ctx.stroke()
 
-      // Specular highlight
-      const specGrad = ctx.createRadialGradient(
-        cx - sphereR * 0.3, cy - sphereR * 0.35, 0,
-        cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3
-      )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.2)')
-      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.07)')
-      specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
-      ctx.fillStyle = specGrad
-      ctx.beginPath()
-      ctx.arc(cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3, 0, TWO_PI)
-      ctx.fill()
-
-      // "In tune" indicator — brighter rim when near zero (no radiating glow)
+      // "In tune" glow — sphere radiates when near zero cents
       if (s.active) {
         const absCents = Math.abs(s.cents)
         if (absCents <= 5) {
           const isLocked = absCents <= 2
           const pulse = 0.5 + 0.5 * Math.sin(phaseRef.current * (isLocked ? 3 : 2))
-          const rimAlpha = isLocked ? 0.2 + pulse * 0.12 : 0.08 + pulse * 0.05
+          const glowIntensity = isLocked ? 0.2 + pulse * 0.12 : 0.08 + pulse * 0.06
+          const glowR = isLocked ? sphereR * 1.3 : sphereR * 1.15
+          const glowGrad = ctx.createRadialGradient(cx, cy, sphereR * 0.3, cx, cy, glowR)
+          glowGrad.addColorStop(0, `rgba(74, 222, 128, ${glowIntensity})`)
+          glowGrad.addColorStop(0.6, `rgba(74, 222, 128, ${glowIntensity * 0.3})`)
+          glowGrad.addColorStop(1, 'rgba(74, 222, 128, 0)')
+          ctx.fillStyle = glowGrad
           ctx.beginPath()
-          ctx.arc(cx, cy, sphereR, 0, TWO_PI)
-          ctx.strokeStyle = `rgba(74, 222, 128, ${rimAlpha})`
-          ctx.lineWidth = isLocked ? 2.5 : 1.5
-          ctx.stroke()
+          ctx.arc(cx, cy, glowR, 0, TWO_PI)
+          ctx.fill()
+
+          if (isLocked) {
+            ctx.beginPath()
+            ctx.arc(cx, cy, sphereR, 0, TWO_PI)
+            ctx.strokeStyle = `rgba(74, 222, 128, ${0.15 + pulse * 0.12})`
+            ctx.lineWidth = 2
+            ctx.stroke()
+          }
         }
       }
 
