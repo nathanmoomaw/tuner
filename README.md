@@ -1,16 +1,41 @@
-# React + Vite
+# Tuner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, ad-free, distraction-free web-based musical tuner. Uses your microphone for real-time pitch detection with a rich visual experience.
 
-Currently, two official plugins are available:
+**Live:** [tuner.obfusco.us](https://tuner.obfusco.us)
+**Dev:** [tuner-dev.obfusco.us](https://tuner-dev.obfusco.us)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Chromatic tuner** -- real-time pitch detection via autocorrelation, displaying note name, octave, cents deviation, and frequency
+- **Chord identification** -- FFT-based polyphonic detection matching against major, minor, 7th, sus, dim, aug, and more
+- **3D note wheel** -- spherical visualization with 12 chromatic notes on a tilted orbit, smooth lerped rotation, depth-sorted rendering
+- **Cents sphere** -- 3D sphere gauge showing flat/sharp deviation with color-coded feedback (green = in tune, red = off)
+- **Mobius ribbon visualizer** -- audio-reactive twisted ribbon encircling the key area, expanding outward with frequency energy
+- **Particle sphere buttons** -- fibonacci-distributed dot spheres with session-unique patterns, gentle bob and rotation
+- **Spectrographic colors** -- green/yellow/red feedback across all UI elements based on tuning accuracy
+- **Adjustable reference pitch** -- A4 = 400-480 Hz (default 440)
+- **Spacebar start/stop** -- hands-free control
+- **Dark theme** -- minimal, readable UI designed for music stands and mobile
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+- Vite + React
+- Web Audio API (`getUserMedia`, `AnalyserNode`, FFT)
+- Canvas 2D for all visualizations (no libraries)
+- npm
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Deployment
+
+- **Production** deploys on push to `main` via GitHub Actions
+- **Dev** deploys on push to `nmj/*` branches
+- Hosted on S3 + CloudFront + Route 53
+
+See [CLAUDE.md](CLAUDE.md) for full deployment details and git workflow.

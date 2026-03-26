@@ -40,3 +40,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] let's try slowing down the rotation of the key sphere so it doesn't jump around so much and seems like a smoother experience
 [x] move the stop button sphere up a bit so it's not interfering with the visualizer ribbon
 [x] commit changes and then switch back to dev branch for more work
+[x] update the project readme with all these updates and also update all the mds
