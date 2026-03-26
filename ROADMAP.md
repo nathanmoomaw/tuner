@@ -53,3 +53,4 @@
 - [x] Sphere colors tinted to match tuning hue (green→red)
 - [x] Removed glow effects for better key/cents readability
 - [x] 3D foreshortened note letters on NoteWheel (rotate with sphere)
+- [x] Exit fullscreen on stop (mobile)

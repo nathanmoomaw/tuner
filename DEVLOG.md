@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-03-26 — Exit fullscreen on stop
+
+- Stop button and spacebar now exit fullscreen on mobile
+- Uses Fullscreen API `exitFullscreen()` with webkit fallback
+- Checks `document.fullscreenElement` before attempting exit
+
 ## 2026-03-26 — Restore glow, remove specular highlight
 
 - Restored radiating green glow on both spheres when near perfect pitch
