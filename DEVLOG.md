@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Fix ribbon overflow on mobile
+
+- Reduced vertical ellipse ratio from 0.40 to 0.34 to prevent bottom overflow on tall screens
+- Added 30px margin around the ribbon so it never touches viewport edges
+- Capped max outward audio expansion (85% of remaining space to edge) so energetic audio can't push ribbon off-screen
+- Ribbon stays fully visible on portrait mobile while still being large and responsive
+
 ## 2026-03-25 — Smoother note wheel + stop button repositioned
 
 - Slowed NoteWheel rotation lerp from 0.1 to 0.04 for calmer, smoother transitions between notes

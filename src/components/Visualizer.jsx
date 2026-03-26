@@ -63,10 +63,13 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
       const cy = h / 2
-      // Larger ellipse — fills more of the viewport
-      const rx = Math.min(w * 0.44, cx - 10 * dpr)
-      const ry = Math.min(h * 0.40, cy - 10 * dpr)
-      const baseWidth = Math.min(w, h) * 0.035
+      // Ellipse sized to fill viewport but stay fully visible
+      const margin = 30 * dpr
+      const rx = Math.min(w * 0.44, cx - margin)
+      const ry = Math.min(h * 0.34, cy - margin)
+      const baseWidth = Math.min(w, h) * 0.03
+      // Max outward expansion — keeps ribbon within viewport
+      const maxExpand = Math.min(cx - rx, cy - ry) * 0.85
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness
@@ -113,8 +116,8 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           // Displacement: twist provides visual structure, audio always pushes outward
           const totalDisp = displacement + audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate
 
-          // Clamp to never go inward past the base ellipse
-          const outwardDisp = Math.max(0, totalDisp)
+          // Clamp: never inward past base ellipse, never beyond viewport
+          const outwardDisp = Math.min(Math.max(0, totalDisp), maxExpand)
 
           const x = cx + (rx + outwardDisp) * Math.cos(angle)
           const y = cy + (ry + outwardDisp) * Math.sin(angle)
