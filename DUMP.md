@@ -11,7 +11,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] add chord identification mode
 [x] add some background visualizer like this: https://brad-carter.medium.com/see-the-sound-the-code-behind-music-visualizers-b8d0099f1302
 [x] the visualizer should stretch 100% width and be centered vertically, so it dances behind the key
-[x] here's that reference again: ![alt text](image.png)
+[x] here's that reference again: ![alt text](.screenshots/image.png)
 [x] let's get this up on a server at tuner.obfusco.us
 [x] the visualizer is covering up the key zone in the middle too much, make sure it's behind the info and make it more transparent in the center so the center (key zone) is legible
 [x] let's have main branch autodeploy to tuner.obfusco.us
@@ -27,7 +27,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] make the visualization arches not touch the key area at all (just encircle it)
 [x] stylize the start tuning button like a gently bobbing/floating and slowly rotating sphere created
 [x] still want to see more opacity on those spheres
-[x] the visualization still kinda covers some of the spheres. it should either shrink to fit or simply go offscreen![](<Screenshot 2026-03-25 at 16.03.04.png>)
+[x] the visualization still kinda covers some of the spheres. it should either shrink to fit or simply go offscreen![](<.screenshots/Screenshot 2026-03-25 at 16.03.04.png>)
 [x] note that the visualization doesn't necesarily help the user tune.  it's simply for fun, so it should be treated accordingly
 [x] let's give the visualizer a bit more love.  let's try to encircle the key area with it so it's one endless ribbon (with one long subtle 180 twist in it)
 [x] stylize the stop button like the start button using somewhat randomly generated versions of those spheres in image-1.png
@@ -41,22 +41,23 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] move the stop button sphere up a bit so it's not interfering with the visualizer ribbon
 [x] commit changes and then switch back to dev branch for more work
 [x] update the project readme with all these updates and also update all the mds
-[x] on my mobile the bottom of the ribbon is going off the bottom when it shouldn't be ![alt text](signal-2026-03-25-172650.png)
+[x] on my mobile the bottom of the ribbon is going off the bottom when it shouldn't be ![alt text](.screenshots/signal-2026-03-25-172650.png)
 [x] the bottom looks good now, but the top looked better before.  now the top is impinging upon the key section
 [x] now the bottom is getting cutoff again on my pixel 7
 [x] it looks good on desktop
-[x] looks like the top is still bad on the same device![alt text](signal-2026-03-25-174052.png)
+[x] looks like the top is still bad on the same device![alt text](.screenshots/signal-2026-03-25-174052.png)
 [x] that last procedure pushed the top of the ribbon down even farther when it should have been up
 [x] make the tuner logo lowercase and multicolored in roboto mono
-[x] ok, now desktop ribbon placement isn't right.  it's going through the stop button![alt text](<Screenshot 2026-03-25 at 17.47.07.png>)
-[x] mobile is still not quite right either.  the key area is being run through![alt text](signal-2026-03-25-174807.png)
+[x] ok, now desktop ribbon placement isn't right.  it's going through the stop button![alt text](<.screenshots/Screenshot 2026-03-25 at 17.47.07.png>)
+[x] mobile is still not quite right either.  the key area is being run through![alt text](.screenshots/signal-2026-03-25-174807.png)
 [x] wow, no, make desktop ribbon look like it did when i said "desktop looks good though"
 [x] and mobile was better before too.  now it's just a weird oval
-[x] desktop ribbon should not go through the stop button like this ![alt text](<Screenshot 2026-03-25 at 17.53.35.png>)
+[x] desktop ribbon should not go through the stop button like this ![alt text](<.screenshots/Screenshot 2026-03-25 at 17.53.35.png>)
 [x] roll the mobile back version a couple cuz it's still a weird oval
 [x] desktop is looking good
 [x] mobile is still not good at all, literally need to make it look like any of those earlier screenshots and it would be fine.  it's garbage now.
-[x] mobile is still garbage.  it needs to be a colorful ribbon again, not this: ![alt text](signal-2026-03-25-175916.png)
-[x] let's save this state because it's looking good on desktop and goodish on mobile, but the bottom is going off the screen again while it still has like 70px to play with there ![alt text](signal-2026-03-25-180522.png)
+[x] mobile is still garbage.  it needs to be a colorful ribbon again, not this: ![alt text](.screenshots/signal-2026-03-25-175916.png)
+[x] let's save this state because it's looking good on desktop and goodish on mobile, but the bottom is going off the screen again while it still has like 70px to play with there ![alt text](.screenshots/signal-2026-03-25-180522.png)
 [x] make the start button also trigger a fullscreen
 [x] that should only be for mobile
+[] ok get these changes onto main
