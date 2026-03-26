@@ -67,7 +67,13 @@ function App() {
     <div className="tuner">
       <Visualizer analyserRef={analyserRef} active={listening} visible={showViz} />
       <header className="tuner-header">
-        <h1>Tuner</h1>
+        <h1 className="logo">
+          <span style={{color:'#a78bfa'}}>t</span>
+          <span style={{color:'#60a5fa'}}>u</span>
+          <span style={{color:'#34d399'}}>n</span>
+          <span style={{color:'#fbbf24'}}>e</span>
+          <span style={{color:'#f87171'}}>r</span>
+        </h1>
         <div className="header-controls">
           <div className="mode-toggle">
             <button

@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Ribbon back to center + multicolored logo
+
+- Reverted ribbon center to 50% (was wrongly shifted down to 58% on mobile)
+- Simplified sizing: ry = 72% of max radius, remaining 28% reserved for audio expansion
+- Hard cap on expansion makes overflow impossible on any screen
+- Logo changed to lowercase "tuner" with per-letter rainbow colors in Roboto Mono
+- Added Google Fonts import for Roboto Mono
+
 ## 2026-03-25 — Aspect-aware ribbon positioning for mobile
 
 - Ribbon center now shifts based on screen aspect ratio: 58% on tall/portrait screens (>1.4:1), 52% on wide/desktop
