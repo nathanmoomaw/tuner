@@ -54,3 +54,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] and mobile was better before too.  now it's just a weird oval
 [x] desktop ribbon should not go through the stop button like this ![alt text](<Screenshot 2026-03-25 at 17.53.35.png>)
 [x] roll the mobile back version a couple cuz it's still a weird oval
+[x] desktop is looking good
+[x] mobile is still not good at all, literally need to make it look like any of those earlier screenshots and it would be fine.  it's garbage now.
