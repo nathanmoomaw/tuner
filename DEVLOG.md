@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Fix ribbon bottom cutoff on tall mobile screens
+
+- Ribbon now uses 70% of available edge space for the base ellipse, reserving 30% for audio expansion
+- Hard cap on expansion (`spaceToEdge - ry`) makes overflow mathematically impossible
+- Increased margin to 40px for extra breathing room
+- Capped ry at `h * 0.32` to prevent overly tall ellipses on narrow portrait screens
+- Adjusted center to 53% (from 54%) for better balance
+
 ## 2026-03-25 — Shift ribbon center down to clear key area
 
 - Moved ribbon ellipse center from 50% to 54% of viewport height
