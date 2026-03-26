@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-26 — Restore glow, remove specular highlight
+
+- Restored radiating green glow on both spheres when near perfect pitch
+- Restored shadowBlur glow behind front note on NoteWheel
+- Removed specular highlight (white reflection spot) from both spheres — was hurting readability
+- 3D body gradient, rim, and wireframe still intact
+
 ## 2026-03-26 — Sphere visual refinements
 
 - CentsSphere now lights up with pulsing green rim when near perfect pitch (±5/±2 cents)

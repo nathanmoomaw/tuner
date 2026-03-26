@@ -124,31 +124,30 @@ export function NoteWheel({ note }) {
       ctx.lineWidth = 2
       ctx.stroke()
 
-      // Specular highlight (top-left)
-      const specGrad = ctx.createRadialGradient(
-        cx - radius * 0.32, cy - radius * 0.38, 0,
-        cx - radius * 0.32, cy - radius * 0.38, radius * 0.35
-      )
-      specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)')
-      specGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.08)')
-      specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
-      ctx.fillStyle = specGrad
-      ctx.beginPath()
-      ctx.arc(cx - radius * 0.32, cy - radius * 0.38, radius * 0.35, 0, TWO_PI)
-      ctx.fill()
-
-      // "In tune" indicator — brighter rim when close to perfect pitch (no radiating glow)
+      // "In tune" glow — sphere radiates when close to perfect pitch
       if (s.active && s.noteName) {
         const absCents = Math.abs(s.cents)
         if (absCents <= PERFECT_THRESHOLD) {
           const isLocked = absCents <= LOCKED_THRESHOLD
           const pulse = 0.5 + 0.5 * Math.sin(phaseRef.current * (isLocked ? 3 : 2))
-          const rimAlpha = isLocked ? 0.25 + pulse * 0.15 : 0.1 + pulse * 0.06
+          const glowIntensity = isLocked ? 0.25 + pulse * 0.15 : 0.1 + pulse * 0.08
+          const glowRadius = isLocked ? radius * 1.3 : radius * 1.15
+          const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.3, cx, cy, glowRadius)
+          glowGrad.addColorStop(0, `rgba(74, 222, 128, ${glowIntensity})`)
+          glowGrad.addColorStop(0.6, `rgba(74, 222, 128, ${glowIntensity * 0.3})`)
+          glowGrad.addColorStop(1, 'rgba(74, 222, 128, 0)')
+          ctx.fillStyle = glowGrad
           ctx.beginPath()
-          ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
-          ctx.strokeStyle = `rgba(74, 222, 128, ${rimAlpha})`
-          ctx.lineWidth = isLocked ? 3 : 2
-          ctx.stroke()
+          ctx.arc(cx, cy, glowRadius, 0, TWO_PI)
+          ctx.fill()
+
+          if (isLocked) {
+            ctx.beginPath()
+            ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
+            ctx.strokeStyle = `rgba(74, 222, 128, ${0.2 + pulse * 0.15})`
+            ctx.lineWidth = 2.5
+            ctx.stroke()
+          }
         }
       }
 
@@ -228,7 +227,22 @@ export function NoteWheel({ note }) {
         if (isFrontNote) {
           const absCents = Math.min(Math.abs(s.cents), 50)
           const hue = Math.round(120 * (1 - absCents / 50))
+          const nearPerfect = absCents <= PERFECT_THRESHOLD
           const locked = absCents <= LOCKED_THRESHOLD
+
+          // Glow behind the note
+          const glowSize = nearPerfect ? (locked ? fontSize * 1.6 : fontSize * 1.3) : fontSize * 0.9
+          const glowPulse = nearPerfect ? 0.5 + 0.5 * Math.sin(phaseRef.current * 3) : 0
+          const glowAlpha = nearPerfect ? 0.15 + glowPulse * 0.1 : 0.1
+          ctx.save()
+          ctx.shadowColor = `hsl(${hue}, 80%, 55%)`
+          ctx.shadowBlur = nearPerfect ? 30 + glowPulse * 15 : 20
+          ctx.beginPath()
+          ctx.arc(0, 0, glowSize / Math.max(Math.abs(scaleX), 0.3), 0, TWO_PI)
+          ctx.fillStyle = `hsla(${hue}, 80%, 55%, ${glowAlpha})`
+          ctx.fill()
+          ctx.restore()
+
           const noteSize = locked ? Math.round(fontSize * 1.1) : fontSize
           ctx.font = `700 ${noteSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
           ctx.textAlign = 'center'
