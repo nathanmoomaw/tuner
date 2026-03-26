@@ -96,25 +96,31 @@ export function NoteWheel({ note }) {
       ctx.ellipse(cx, cy + radius * 0.88, radius * 0.55, radius * 0.1, 0, 0, TWO_PI)
       ctx.fill()
 
+      // Sphere tint color — follows tuning hue when active
+      const bodyHue = s.active && s.noteName
+        ? Math.round(120 * (1 - Math.min(Math.abs(s.cents), 50) / 50))
+        : 160 // default teal
+      const bodyHsl = (l, a) => `hsla(${bodyHue}, 50%, ${l}%, ${a})`
+
       // Full circular sphere body with 3D lighting
       const bodyGrad = ctx.createRadialGradient(
         cx - radius * 0.35, cy - radius * 0.35, radius * 0.08,
         cx, cy, radius
       )
-      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.38)')
-      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.22)')
-      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.12)')
-      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.16)')
-      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.3)')
+      bodyGrad.addColorStop(0, bodyHsl(75, 0.3))
+      bodyGrad.addColorStop(0.2, bodyHsl(60, 0.18))
+      bodyGrad.addColorStop(0.5, bodyHsl(40, 0.1))
+      bodyGrad.addColorStop(0.8, bodyHsl(20, 0.14))
+      bodyGrad.addColorStop(1, bodyHsl(8, 0.25))
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
       ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
       ctx.fill()
 
-      // Rim glow on sphere edge
+      // Rim on sphere edge
       ctx.beginPath()
       ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.15)'
+      ctx.strokeStyle = bodyHsl(60, 0.12)
       ctx.lineWidth = 2
       ctx.stroke()
 
@@ -131,38 +137,25 @@ export function NoteWheel({ note }) {
       ctx.arc(cx - radius * 0.32, cy - radius * 0.38, radius * 0.35, 0, TWO_PI)
       ctx.fill()
 
-      // "In tune" glow — sphere lights up when close to perfect pitch
+      // "In tune" indicator — brighter rim when close to perfect pitch (no radiating glow)
       if (s.active && s.noteName) {
         const absCents = Math.abs(s.cents)
         if (absCents <= PERFECT_THRESHOLD) {
           const isLocked = absCents <= LOCKED_THRESHOLD
           const pulse = 0.5 + 0.5 * Math.sin(phaseRef.current * (isLocked ? 3 : 2))
-          const glowIntensity = isLocked ? 0.25 + pulse * 0.15 : 0.1 + pulse * 0.08
-          const glowRadius = isLocked ? radius * 1.3 : radius * 1.15
-          const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.3, cx, cy, glowRadius)
-          glowGrad.addColorStop(0, `rgba(74, 222, 128, ${glowIntensity})`)
-          glowGrad.addColorStop(0.6, `rgba(74, 222, 128, ${glowIntensity * 0.3})`)
-          glowGrad.addColorStop(1, 'rgba(74, 222, 128, 0)')
-          ctx.fillStyle = glowGrad
+          const rimAlpha = isLocked ? 0.25 + pulse * 0.15 : 0.1 + pulse * 0.06
           ctx.beginPath()
-          ctx.arc(cx, cy, glowRadius, 0, TWO_PI)
-          ctx.fill()
-
-          // Brighter rim when locked
-          if (isLocked) {
-            ctx.beginPath()
-            ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
-            ctx.strokeStyle = `rgba(74, 222, 128, ${0.2 + pulse * 0.15})`
-            ctx.lineWidth = 2.5
-            ctx.stroke()
-          }
+          ctx.arc(cx, cy, radius * 0.96, 0, TWO_PI)
+          ctx.strokeStyle = `rgba(74, 222, 128, ${rimAlpha})`
+          ctx.lineWidth = isLocked ? 3 : 2
+          ctx.stroke()
         }
       }
 
       // Longitude meridian (vertical great circle)
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius * 0.18, radius * 0.95, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.06)'
+      ctx.strokeStyle = bodyHsl(60, 0.06)
       ctx.lineWidth = 0.75
       ctx.stroke()
 
@@ -171,21 +164,21 @@ export function NoteWheel({ note }) {
       const upperLatR = Math.sqrt(radius * radius - upperLatY * upperLatY)
       ctx.beginPath()
       ctx.ellipse(cx, cy - upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.07)'
+      ctx.strokeStyle = bodyHsl(60, 0.07)
       ctx.lineWidth = 0.75
       ctx.stroke()
 
       // Lower latitude line
       ctx.beginPath()
       ctx.ellipse(cx, cy + upperLatY * tilt, upperLatR, upperLatR * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.05)'
+      ctx.strokeStyle = bodyHsl(60, 0.05)
       ctx.lineWidth = 0.75
       ctx.stroke()
 
       // Equator (orbit ring) — brighter rim
       ctx.beginPath()
       ctx.ellipse(cx, cy, radius, radius * tilt, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.25)'
+      ctx.strokeStyle = bodyHsl(60, 0.22)
       ctx.lineWidth = 1.5
       ctx.stroke()
 
@@ -197,8 +190,8 @@ export function NoteWheel({ note }) {
       ctx.lineTo(cx + 6, indY)
       ctx.closePath()
       ctx.fillStyle = s.active
-        ? 'rgba(110, 231, 183, 0.7)'
-        : 'rgba(110, 231, 183, 0.2)'
+        ? bodyHsl(60, 0.6)
+        : bodyHsl(60, 0.2)
       ctx.fill()
 
       // Compute note positions
@@ -221,39 +214,36 @@ export function NoteWheel({ note }) {
         const fontSize = Math.round(22 * noteScale)
         const isFrontNote = p.depth > 0.8 && s.active && p.name === s.noteName
 
+        // Horizontal foreshortening — simulates letters painted on the sphere surface
+        // cos(angle) gives the x-component: 1 at front, 0 at sides, -1 at back
+        const angle = p.i * NOTE_ANGLE - s.currentAngle
+        const foreshorten = Math.cos(angle)
+        // At the back (foreshorten < 0), letters appear mirrored/compressed
+        const scaleX = foreshorten
+
+        ctx.save()
+        ctx.translate(p.x, p.y)
+        ctx.scale(scaleX, 1)
+
         if (isFrontNote) {
           const absCents = Math.min(Math.abs(s.cents), 50)
           const hue = Math.round(120 * (1 - absCents / 50))
-          const nearPerfect = absCents <= PERFECT_THRESHOLD
           const locked = absCents <= LOCKED_THRESHOLD
-
-          // Glow behind the note — intensifies when near perfect
-          const glowSize = nearPerfect ? (locked ? fontSize * 1.6 : fontSize * 1.3) : fontSize * 0.9
-          const glowPulse = nearPerfect ? 0.5 + 0.5 * Math.sin(phaseRef.current * 3) : 0
-          const glowAlpha = nearPerfect ? 0.15 + glowPulse * 0.1 : 0.1
-
-          ctx.save()
-          ctx.shadowColor = `hsl(${hue}, 80%, 55%)`
-          ctx.shadowBlur = nearPerfect ? 30 + glowPulse * 15 : 20
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, glowSize, 0, TWO_PI)
-          ctx.fillStyle = `hsla(${hue}, 80%, 55%, ${glowAlpha})`
-          ctx.fill()
-          ctx.restore()
-
           const noteSize = locked ? Math.round(fontSize * 1.1) : fontSize
           ctx.font = `700 ${noteSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
           ctx.fillStyle = `hsl(${hue}, 80%, 55%)`
-          ctx.fillText(p.name, p.x, p.y)
+          ctx.fillText(p.name, 0, 0)
         } else {
           ctx.font = `400 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
           ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.6})`
-          ctx.fillText(p.name, p.x, p.y)
+          ctx.fillText(p.name, 0, 0)
         }
+
+        ctx.restore()
       }
 
       // Center display
