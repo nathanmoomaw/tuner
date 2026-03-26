@@ -24,7 +24,10 @@ export function useTuner(a4 = 440) {
   const staleTimerRef = useRef(null)
   const chordStaleTimerRef = useRef(null)
   const centsHistoryRef = useRef([])
+  const freqHistoryRef = useRef([])
   const lastNoteRef = useRef(null)
+  const noteConfirmRef = useRef({ name: null, count: 0 })
+  const lastUpdateRef = useRef(0)
 
   useEffect(() => {
     a4Ref.current = a4
@@ -53,28 +56,59 @@ export function useTuner(a4 = 440) {
         analyser.getFloatTimeDomainData(buffer)
         const result = detectPitch(buffer, sampleRate)
 
-        if (result && result.clarity > 0.8) {
+        if (result && result.clarity > 0.85) {
           const noteInfo = frequencyToNote(result.frequency, a4Ref.current)
 
-          // If note changed, reset cents history
-          if (lastNoteRef.current !== noteInfo.name) {
+          // Note-change hysteresis: require 3 consecutive detections before switching
+          const confirm = noteConfirmRef.current
+          if (noteInfo.name !== lastNoteRef.current) {
+            if (noteInfo.name === confirm.name) {
+              confirm.count++
+            } else {
+              confirm.name = noteInfo.name
+              confirm.count = 1
+            }
+            if (confirm.count < 3) {
+              rafRef.current = requestAnimationFrame(loopRef.current)
+              return
+            }
+            // Confirmed note change
             centsHistoryRef.current = []
+            freqHistoryRef.current = []
             lastNoteRef.current = noteInfo.name
           }
 
-          // Rolling average of cents for stability (last 5 readings)
-          const history = centsHistoryRef.current
-          history.push(noteInfo.cents)
-          if (history.length > 5) history.shift()
-          const smoothedCents = Math.round(
-            history.reduce((a, b) => a + b, 0) / history.length
-          )
+          // Rolling median of cents for stability (last 8 readings)
+          const cHistory = centsHistoryRef.current
+          cHistory.push(noteInfo.cents)
+          if (cHistory.length > 8) cHistory.shift()
+          const sorted = [...cHistory].sort((a, b) => a - b)
+          const mid = Math.floor(sorted.length / 2)
+          const smoothedCents = sorted.length % 2 === 0
+            ? Math.round((sorted[mid - 1] + sorted[mid]) / 2)
+            : sorted[mid]
+
+          // Smooth frequency display
+          const fHistory = freqHistoryRef.current
+          fHistory.push(result.frequency)
+          if (fHistory.length > 6) fHistory.shift()
+          const smoothedFreq = Math.round(
+            (fHistory.reduce((a, b) => a + b, 0) / fHistory.length) * 10
+          ) / 10
+
+          // Throttle state updates to ~20/sec to reduce render churn
+          const now = performance.now()
+          if (now - lastUpdateRef.current < 50) {
+            rafRef.current = requestAnimationFrame(loopRef.current)
+            return
+          }
+          lastUpdateRef.current = now
 
           setNote({
             name: noteInfo.name,
             octave: noteInfo.octave,
             cents: smoothedCents,
-            frequency: Math.round(result.frequency * 10) / 10,
+            frequency: smoothedFreq,
             clarity: result.clarity,
             active: true,
           })
