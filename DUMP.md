@@ -69,3 +69,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] reduce the jumping around that seems to happen when tuning
 [x] make the key spheres light up specially when honing in closer to being perfectly in pitch
 [x] the notches on the sharp/flat ring should be more pronounced
+[x] it's still a little bit jumpy but much better.  is there anything more that can improve performance and use?
+[] let's increase those ticks a little more, too

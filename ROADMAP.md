@@ -48,3 +48,4 @@
 - [x] Reduced tuning jitter (calmer CentsSphere lerp)
 - [x] "In tune" glow on NoteWheel (pulsing green when near perfect pitch)
 - [x] More pronounced CentsSphere tick marks with cents labels
+- [x] Note-change hysteresis, median smoothing, and update throttling for reduced jitter

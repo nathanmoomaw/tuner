@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-26 — Further jitter reduction
+
+- Clarity threshold raised from 0.8 to 0.85 to reject noisier detections
+- Note-change hysteresis: requires 3 consecutive detections of a new note before switching
+- Switched from rolling mean to rolling median (8 readings) — immune to outlier spikes
+- Added frequency display smoothing (6-reading average)
+- Throttled state updates to ~20/sec instead of ~60 to reduce render churn
+
 ## 2026-03-26 — Tuning UX improvements
 
 - Playful logo: each letter slightly rotated and offset for a fun, jumbled look
