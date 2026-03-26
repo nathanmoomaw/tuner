@@ -52,3 +52,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] mobile is still not quite right either.  the key area is being run through![alt text](signal-2026-03-25-174807.png)
 [x] wow, no, make desktop ribbon look like it did when i said "desktop looks good though"
 [x] and mobile was better before too.  now it's just a weird oval
+[x] desktop ribbon should not go through the stop button like this ![alt text](<Screenshot 2026-03-25 at 17.53.35.png>)
+[x] roll the mobile back version a couple cuz it's still a weird oval
