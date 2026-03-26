@@ -61,3 +61,11 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] make the start button also trigger a fullscreen
 [x] that should only be for mobile
 [x] ok get these changes onto main
+
+# Thursday March 26
+
+[x] try jumbling the letters of the logo a bit so they seem more fun/playful
+[x] let's work on improving the accuracy and ease of reading as the user tunes
+[x] reduce the jumping around that seems to happen when tuning
+[x] make the key spheres light up specially when honing in closer to being perfectly in pitch
+[x] the notches on the sharp/flat ring should be more pronounced

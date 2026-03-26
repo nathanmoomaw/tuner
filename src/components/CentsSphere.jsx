@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 const TWO_PI = Math.PI * 2
-const TICK_CENTS = [-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50]
+const TICK_CENTS = [-50, -40, -30, -20, -10, -5, 0, 5, 10, 20, 30, 40, 50]
 // Map ±50 cents to ±70° of rotation
 const MAX_ANGLE = (70 / 180) * Math.PI
 
@@ -49,8 +49,8 @@ export function CentsSphere({ cents = 0, active = false }) {
       const w = cw / dpr
       const h = ch / dpr
 
-      // Smooth lerp
-      s.currentAngle += (s.targetAngle - s.currentAngle) * 0.12
+      // Smooth lerp — slower for calmer, less jittery movement
+      s.currentAngle += (s.targetAngle - s.currentAngle) * 0.06
 
       ctx.clearRect(0, 0, cw, ch)
       ctx.save()
@@ -159,8 +159,9 @@ export function CentsSphere({ cents = 0, active = false }) {
         const t = (tick.depth + 1) / 2
         const opacity = 0.05 + 0.95 * t * t
         const isCenter = tick.c === 0
-        const tickLen = isCenter ? 10 : 6
-        const tickW = isCenter ? 2 : 1
+        const isMajor = tick.c % 10 === 0
+        const tickLen = isCenter ? 14 : isMajor ? 10 : 6
+        const tickW = isCenter ? 2.5 : isMajor ? 1.8 : 1.2
 
         // Draw tick mark (radial line from orbit)
         const angle = Math.atan2(tick.x - cx, -(tick.y - cy))
@@ -170,10 +171,24 @@ export function CentsSphere({ cents = 0, active = false }) {
         ctx.moveTo(tick.x, tick.y)
         ctx.lineTo(tick.x + nx * tickLen * tilt, tick.y + ny * tickLen * tilt)
         ctx.strokeStyle = isCenter
-          ? `rgba(110, 231, 183, ${opacity * 0.6})`
-          : `rgba(255, 255, 255, ${opacity * 0.2})`
+          ? `rgba(110, 231, 183, ${opacity * 0.8})`
+          : isMajor
+            ? `rgba(255, 255, 255, ${opacity * 0.4})`
+            : `rgba(255, 255, 255, ${opacity * 0.25})`
         ctx.lineWidth = tickW
         ctx.stroke()
+
+        // Add cents label on major ticks (except center)
+        if (isMajor && !isCenter && t > 0.3) {
+          const labelDist = tickLen + 8
+          const lx = tick.x + nx * labelDist * tilt
+          const ly = tick.y + ny * labelDist * tilt
+          ctx.font = `400 ${Math.round(8 * (0.7 + 0.3 * t))}px -apple-system, sans-serif`
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillStyle = `rgba(156, 163, 175, ${opacity * 0.3})`
+          ctx.fillText(`${tick.c}`, lx, ly)
+        }
       }
 
       // Glowing indicator dot — sits at the top (reference point) since the sphere rotates under it

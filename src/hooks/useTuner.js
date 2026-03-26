@@ -23,6 +23,8 @@ export function useTuner(a4 = 440) {
   const loopRef = useRef(null)
   const staleTimerRef = useRef(null)
   const chordStaleTimerRef = useRef(null)
+  const centsHistoryRef = useRef([])
+  const lastNoteRef = useRef(null)
 
   useEffect(() => {
     a4Ref.current = a4
@@ -53,10 +55,25 @@ export function useTuner(a4 = 440) {
 
         if (result && result.clarity > 0.8) {
           const noteInfo = frequencyToNote(result.frequency, a4Ref.current)
+
+          // If note changed, reset cents history
+          if (lastNoteRef.current !== noteInfo.name) {
+            centsHistoryRef.current = []
+            lastNoteRef.current = noteInfo.name
+          }
+
+          // Rolling average of cents for stability (last 5 readings)
+          const history = centsHistoryRef.current
+          history.push(noteInfo.cents)
+          if (history.length > 5) history.shift()
+          const smoothedCents = Math.round(
+            history.reduce((a, b) => a + b, 0) / history.length
+          )
+
           setNote({
             name: noteInfo.name,
             octave: noteInfo.octave,
-            cents: noteInfo.cents,
+            cents: smoothedCents,
             frequency: Math.round(result.frequency * 10) / 10,
             clarity: result.clarity,
             active: true,
