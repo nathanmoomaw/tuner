@@ -115,14 +115,13 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           // High-frequency vibration for energy feel
           const vibrate = Math.sin(angle * 6 + phase * 10) * audioNorm * baseWidth * 0.3 * Math.abs(layerOffset)
 
-          // Audio expansion: cap to available headroom so it can't overflow viewport
-          const audioExpansion = Math.min(
-            audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate,
-            headroom
-          )
+          // Combine twist + audio
+          const audioExpansion = audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate
+          const rawDisp = displacement + audioExpansion
 
-          // Total: twist displacement (unclamped, creates ribbon width) + audio (capped)
-          const outwardDisp = displacement + audioExpansion
+          // Cap outward displacement at headroom so ribbon can't exceed viewport
+          // Inward displacement (negative) is unclamped — layers can go inward freely
+          const outwardDisp = Math.min(rawDisp, headroom)
 
           const x = cx + (rx + outwardDisp) * Math.cos(angle)
           const y = cy + (ry + outwardDisp) * Math.sin(angle)

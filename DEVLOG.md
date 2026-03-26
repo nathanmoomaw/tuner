@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-03-25 — Cap total outward displacement to prevent bottom overflow
+
+- Combined twist + audio displacement is now clamped at headroom (viewport edge)
+- Inward displacement remains unclamped so layers still spread apart naturally
+- Prevents the bottom from going off-screen while keeping the colorful ribbon effect
+
 ## 2026-03-25 — Fix mobile ribbon collapsing to thin outline
 
 - Root cause: maxExpand was clamping ALL displacement (twist + audio) to near-zero on mobile
