@@ -63,15 +63,15 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
       const cy = h / 2
-      // Restore the viewport-fraction sizing that looked good on desktop
+      // Viewport-proportional ellipse — matches the original look
       const margin = 30 * dpr
       const rx = Math.min(w * 0.44, cx - margin)
-      const ry = Math.min(h * 0.34, cy - margin)
-      const baseWidth = Math.min(w, h) * 0.03
-      // Hard cap expansion so ribbon + expansion never exceeds viewport
-      const maxExpandX = cx - margin - rx
-      const maxExpandY = cy - margin - ry
-      const maxExpand = Math.min(maxExpandX, maxExpandY)
+      // Cap aspect ratio so mobile doesn't get a weird skinny oval
+      const ryRaw = Math.min(h * 0.40, cy - margin)
+      const ry = Math.min(ryRaw, rx * 1.3)
+      const baseWidth = Math.min(w, h) * 0.035
+      // Hard cap expansion so ribbon never exceeds viewport
+      const maxExpand = Math.min(cx - margin - rx, cy - margin - ry)
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness

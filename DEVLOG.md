@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Fix ribbon shape and overflow
+
+- Restored original viewport-proportional sizing (rx=0.44w, ry=0.40h, baseWidth=0.035)
+- Added aspect ratio cap: ry limited to 1.3× rx so mobile doesn't get a weird skinny oval
+- Hard expansion cap at viewport edge prevents overflow on any screen
+- Desktop: ribbon no longer passes through stop button (expansion is bounded)
+- Mobile: proportional oval shape instead of elongated vertical ellipse
+
 ## 2026-03-25 — Restore original ribbon sizing with hard expansion cap
 
 - Reverted to the viewport-fraction sizing that looked good on desktop (rx=0.44w, ry=0.34h)
