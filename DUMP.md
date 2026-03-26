@@ -46,3 +46,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] now the bottom is getting cutoff again on my pixel 7
 [x] it looks good on desktop
 [x] looks like the top is still bad on the same device![alt text](signal-2026-03-25-174052.png)
+[x] that last procedure pushed the top of the ribbon down even farther when it should have been up
+[x] make the tuner logo lowercase and multicolored in roboto mono

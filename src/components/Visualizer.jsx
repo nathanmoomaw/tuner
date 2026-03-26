@@ -62,22 +62,15 @@ export function Visualizer({ analyserRef, active, visible = true }) {
 
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
-      // On tall screens (mobile), push the ribbon center down to avoid the key area
-      // On wide screens (desktop), keep it centered
-      const aspect = h / w
-      const centerShift = aspect > 1.4 ? 0.58 : 0.52
-      const cy = h * centerShift
-      // Margins from top and bottom edges
+      const cy = h / 2
+      // Keep ribbon fully within viewport with room for audio expansion
       const margin = 40 * dpr
-      const spaceAbove = cy - margin
-      const spaceBelow = h - cy - margin
-      // ry must fit within both directions; use 70% of available space
-      const availableR = Math.min(spaceAbove, spaceBelow)
+      const maxR = cy - margin
       const rx = Math.min(w * 0.44, cx - margin)
-      const ry = availableR * 0.70
+      const ry = maxR * 0.72
       const baseWidth = Math.min(w, h) * 0.03
-      // Max outward expansion — hard cap so ribbon never leaves viewport
-      const maxExpand = availableR - ry
+      // Hard cap on expansion — ribbon can never exceed viewport
+      const maxExpand = maxR - ry
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness

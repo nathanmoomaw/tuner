@@ -25,11 +25,12 @@
   z-index: 1;
 }
 
-.tuner-header h1 {
-  font-size: 20px;
+.tuner-header .logo {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 22px;
   font-weight: 600;
-  color: var(--text-bright);
-  letter-spacing: -0.5px;
+  letter-spacing: 1px;
+  text-transform: lowercase;
 }
 
 .header-controls {
