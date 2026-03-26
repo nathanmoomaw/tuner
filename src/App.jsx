@@ -43,13 +43,27 @@ function App() {
   const [showViz, setShowViz] = useState(true)
   const { listening, mode, setMode, note, chord, error, start, stop, analyserRef } = useTuner(a4)
 
+  const startWithFullscreen = useCallback(() => {
+    start()
+    // Only request fullscreen on mobile/touch devices
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (isMobile) {
+      const el = document.documentElement
+      if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {})
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen()
+      }
+    }
+  }, [start])
+
   const toggle = useCallback(() => {
     if (listening) {
       stop()
     } else {
-      start()
+      startWithFullscreen()
     }
-  }, [listening, start, stop])
+  }, [listening, start, stop, startWithFullscreen])
 
   // Spacebar to start/stop
   useEffect(() => {
@@ -125,7 +139,7 @@ function App() {
 
         {!listening ? (
           <div className="start-area">
-            <ParticleSphere onClick={start} label={'Start\nTuning'} seedOffset={0} />
+            <ParticleSphere onClick={startWithFullscreen} label={'Start\nTuning'} seedOffset={0} />
             <div className="spacebar-hint">or press spacebar</div>
           </div>
         ) : (
