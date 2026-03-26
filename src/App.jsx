@@ -82,11 +82,11 @@ function App() {
       <Visualizer analyserRef={analyserRef} active={listening} visible={showViz} />
       <header className="tuner-header">
         <h1 className="logo">
-          <span style={{color:'#a78bfa'}}>t</span>
-          <span style={{color:'#60a5fa'}}>u</span>
-          <span style={{color:'#34d399'}}>n</span>
-          <span style={{color:'#fbbf24'}}>e</span>
-          <span style={{color:'#f87171'}}>r</span>
+          <span className="logo-letter" style={{color:'#a78bfa', '--rot':'-4deg', '--y':'-1px'}}>t</span>
+          <span className="logo-letter" style={{color:'#60a5fa', '--rot':'3deg', '--y':'2px'}}>u</span>
+          <span className="logo-letter" style={{color:'#34d399', '--rot':'-2deg', '--y':'-2px'}}>n</span>
+          <span className="logo-letter" style={{color:'#fbbf24', '--rot':'5deg', '--y':'1px'}}>e</span>
+          <span className="logo-letter" style={{color:'#f87171', '--rot':'-3deg', '--y':'-1px'}}>r</span>
         </h1>
         <div className="header-controls">
           <div className="mode-toggle">

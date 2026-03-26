@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-03-26 — Tuning UX improvements
+
+- Playful logo: each letter slightly rotated and offset for a fun, jumbled look
+- Smoothed cents display: rolling average of last 5 readings eliminates jitter
+- Reduced CentsSphere lerp from 0.12 to 0.06 for calmer sharp/flat gauge movement
+- NoteWheel "in tune" glow: sphere pulses green when within ±5 cents, intensifies at ±2
+- Front note grows slightly and gets a brighter glow when locked to pitch
+- CentsSphere tick marks: more pronounced (longer, thicker), added ±5 cent ticks, cents labels on major ticks
+- Three-tier tick sizing: center (14px, 2.5w), major/10s (10px, 1.8w), minor/5s (6px, 1.2w)
+
 ## 2026-03-25 — Mobile fullscreen on start
 
 - Start button and spacebar now trigger fullscreen on mobile/touch devices

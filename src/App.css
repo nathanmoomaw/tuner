@@ -33,6 +33,12 @@
   text-transform: lowercase;
 }
 
+.logo-letter {
+  display: inline-block;
+  transform: rotate(var(--rot)) translateY(var(--y));
+  transition: transform 0.3s ease;
+}
+
 .header-controls {
   display: flex;
   align-items: center;

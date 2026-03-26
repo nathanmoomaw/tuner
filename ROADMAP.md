@@ -43,3 +43,8 @@
 - [x] Stop button repositioned above visualizer ribbon
 - [x] Multicolored lowercase logo in Roboto Mono
 - [x] Mobile fullscreen on start (removes browser chrome for full viewport)
+- [x] Playful jumbled logo letters
+- [x] Smoothed cents display (rolling average for stability)
+- [x] Reduced tuning jitter (calmer CentsSphere lerp)
+- [x] "In tune" glow on NoteWheel (pulsing green when near perfect pitch)
+- [x] More pronounced CentsSphere tick marks with cents labels
