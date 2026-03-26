@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Content-aware ribbon sizing
+
+- Ribbon now sized to encircle the actual UI content area (~320×560px) rather than viewport fractions
+- Fixed desktop issue where ribbon was too wide (rx was 44% of a wide monitor)
+- Fixed mobile issue where ribbon top cut through note wheel
+- Audio expansion capped at remaining space to viewport edge
+- Consistent sizing across all screen sizes — ribbon wraps the content, not the viewport
+
 ## 2026-03-25 — Ribbon back to center + multicolored logo
 
 - Reverted ribbon center to 50% (was wrongly shifted down to 58% on mobile)
