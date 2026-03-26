@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Restore tall mobile ribbon (remove aspect ratio cap)
+
+- Removed the ry ≤ 1.3×rx aspect ratio cap that was making the mobile ribbon too short
+- Restored original proportions: rx=0.44w, ry=0.40h — tall on mobile, wide on desktop
+- Hard expansion cap still prevents overflow on any screen
+- This matches the earlier screenshots the user liked
+
 ## 2026-03-25 — Fix ribbon shape and overflow
 
 - Restored original viewport-proportional sizing (rx=0.44w, ry=0.40h, baseWidth=0.035)
