@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-03-25 — Aspect-aware ribbon positioning for mobile
+
+- Ribbon center now shifts based on screen aspect ratio: 58% on tall/portrait screens (>1.4:1), 52% on wide/desktop
+- This pushes the ribbon well below the key area on mobile while staying centered on desktop
+- ry computed from actual available space in both directions (min of above/below)
+- Eliminates ribbon/key-area overlap on Pixel 7 and similar tall Android screens
+
 ## 2026-03-25 — Fix ribbon bottom cutoff on tall mobile screens
 
 - Ribbon now uses 70% of available edge space for the base ellipse, reserving 30% for audio expansion
