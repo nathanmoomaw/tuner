@@ -62,14 +62,15 @@ export function Visualizer({ analyserRef, active, visible = true }) {
 
       const usableBins = Math.floor(data.length * 0.35)
       const cx = w / 2
-      const cy = h / 2
+      // Shift center down so the top of the ribbon clears the key area
+      const cy = h * 0.54
       // Ellipse sized to fill viewport but stay fully visible
       const margin = 30 * dpr
       const rx = Math.min(w * 0.44, cx - margin)
-      const ry = Math.min(h * 0.34, cy - margin)
+      const ry = Math.min(h * 0.38, Math.min(cy, h - cy) - margin)
       const baseWidth = Math.min(w, h) * 0.03
       // Max outward expansion — keeps ribbon within viewport
-      const maxExpand = Math.min(cx - rx, cy - ry) * 0.85
+      const maxExpand = Math.min(cx - rx, Math.min(cy, h - cy) - ry) * 0.85
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness
