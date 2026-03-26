@@ -60,4 +60,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] let's save this state because it's looking good on desktop and goodish on mobile, but the bottom is going off the screen again while it still has like 70px to play with there ![alt text](.screenshots/signal-2026-03-25-180522.png)
 [x] make the start button also trigger a fullscreen
 [x] that should only be for mobile
-[] ok get these changes onto main
+[x] ok get these changes onto main
