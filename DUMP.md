@@ -71,3 +71,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] the notches on the sharp/flat ring should be more pronounced
 [x] it's still a little bit jumpy but much better.  is there anything more that can improve performance and use?
 [x] let's increase those ticks a little more, too
+[x] make centsphere also light up when in pitch
+[x] let's try to subtly change the colors of the spheres from green to a mild shade of whatever the key color is registering.  make sure to create appropriate contrast for best visibility
+[x] make the spheres look 3d still, but remove the glow from them because it affects the visibility of the key/cents.
+[x] i want the appearance of the spheres to be that they themselves are actually spinning.  can we try to actually rotate the key letters to reflect being turned backwards?

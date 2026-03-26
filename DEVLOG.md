@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-03-26 — Sphere visual refinements
+
+- CentsSphere now lights up with pulsing green rim when near perfect pitch (±5/±2 cents)
+- Both spheres tint to match tuning hue — green when in tune, shifts toward red when off
+- Removed radiating glow effects (shadowBlur, radial gradients) that were obscuring key/cents text
+- Kept 3D appearance: body gradient, specular highlight, rim, wireframe all intact
+- Note letters on NoteWheel now foreshorten horizontally based on sphere position
+- Letters compress at edges and appear mirrored at the back — simulates text painted on sphere surface
+
 ## 2026-03-26 — Further jitter reduction
 
 - Clarity threshold raised from 0.8 to 0.85 to reject noisier detections

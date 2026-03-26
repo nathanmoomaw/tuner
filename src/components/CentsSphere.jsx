@@ -14,6 +14,7 @@ export function CentsSphere({ cents = 0, active = false }) {
     active: false,
   })
   const rafRef = useRef(null)
+  const phaseRef = useRef(0)
 
   useEffect(() => {
     const s = stateRef.current
@@ -51,6 +52,7 @@ export function CentsSphere({ cents = 0, active = false }) {
 
       // Smooth lerp — slower for calmer, less jittery movement
       s.currentAngle += (s.targetAngle - s.currentAngle) * 0.06
+      phaseRef.current += 0.04
 
       ctx.clearRect(0, 0, cw, ch)
       ctx.save()
@@ -81,26 +83,29 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.ellipse(cx, cy + ry * 1.8, rx * 0.5, rx * 0.06, 0, 0, TWO_PI)
       ctx.fill()
 
+      // Sphere tint — follows tuning hue
+      const bodyHsl = (l, a) => `hsla(${hue}, 50%, ${l}%, ${a})`
+
       // Full sphere body with 3D lighting
       const sphereR = rx * 0.65
       const bodyGrad = ctx.createRadialGradient(
         cx - sphereR * 0.35, cy - sphereR * 0.35, sphereR * 0.08,
         cx, cy, sphereR
       )
-      bodyGrad.addColorStop(0, 'rgba(150, 255, 220, 0.35)')
-      bodyGrad.addColorStop(0.2, 'rgba(110, 231, 183, 0.2)')
-      bodyGrad.addColorStop(0.5, 'rgba(70, 170, 140, 0.1)')
-      bodyGrad.addColorStop(0.8, 'rgba(30, 80, 65, 0.14)')
-      bodyGrad.addColorStop(1, 'rgba(10, 30, 25, 0.28)')
+      bodyGrad.addColorStop(0, bodyHsl(75, 0.3))
+      bodyGrad.addColorStop(0.2, bodyHsl(60, 0.18))
+      bodyGrad.addColorStop(0.5, bodyHsl(40, 0.1))
+      bodyGrad.addColorStop(0.8, bodyHsl(20, 0.14))
+      bodyGrad.addColorStop(1, bodyHsl(8, 0.25))
       ctx.fillStyle = bodyGrad
       ctx.beginPath()
       ctx.arc(cx, cy, sphereR, 0, TWO_PI)
       ctx.fill()
 
-      // Rim glow
+      // Rim
       ctx.beginPath()
       ctx.arc(cx, cy, sphereR, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.14)'
+      ctx.strokeStyle = bodyHsl(60, 0.12)
       ctx.lineWidth = 1.5
       ctx.stroke()
 
@@ -117,17 +122,32 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.arc(cx - sphereR * 0.3, cy - sphereR * 0.35, sphereR * 0.3, 0, TWO_PI)
       ctx.fill()
 
+      // "In tune" indicator — brighter rim when near zero (no radiating glow)
+      if (s.active) {
+        const absCents = Math.abs(s.cents)
+        if (absCents <= 5) {
+          const isLocked = absCents <= 2
+          const pulse = 0.5 + 0.5 * Math.sin(phaseRef.current * (isLocked ? 3 : 2))
+          const rimAlpha = isLocked ? 0.2 + pulse * 0.12 : 0.08 + pulse * 0.05
+          ctx.beginPath()
+          ctx.arc(cx, cy, sphereR, 0, TWO_PI)
+          ctx.strokeStyle = `rgba(74, 222, 128, ${rimAlpha})`
+          ctx.lineWidth = isLocked ? 2.5 : 1.5
+          ctx.stroke()
+        }
+      }
+
       // Meridian line
       ctx.beginPath()
       ctx.ellipse(cx, cy, sphereR * 0.15, sphereR * 0.95, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.06)'
+      ctx.strokeStyle = bodyHsl(60, 0.06)
       ctx.lineWidth = 0.5
       ctx.stroke()
 
       // Orbit ring (equator)
       ctx.beginPath()
       ctx.ellipse(cx, cy, rx, ry, 0, 0, TWO_PI)
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.22)'
+      ctx.strokeStyle = bodyHsl(60, 0.2)
       ctx.lineWidth = 1.5
       ctx.stroke()
 
@@ -139,8 +159,8 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.lineTo(cx + 4, refY)
       ctx.closePath()
       ctx.fillStyle = s.active
-        ? 'rgba(110, 231, 183, 0.6)'
-        : 'rgba(110, 231, 183, 0.2)'
+        ? bodyHsl(60, 0.5)
+        : bodyHsl(60, 0.2)
       ctx.fill()
 
       // Tick marks along the orbit — z-sorted
@@ -200,17 +220,6 @@ export function CentsSphere({ cents = 0, active = false }) {
       const dotY = cy - ry
       const dotRadius = s.active ? 5 : 3
 
-      if (s.active) {
-        // Glow
-        ctx.save()
-        ctx.shadowColor = tuneColor
-        ctx.shadowBlur = 15
-        ctx.beginPath()
-        ctx.arc(dotX, dotY, dotRadius + 3, 0, TWO_PI)
-        ctx.fillStyle = tuneColor.replace(')', ', 0.2)').replace('hsl', 'hsla')
-        ctx.fill()
-        ctx.restore()
-      }
       ctx.beginPath()
       ctx.arc(dotX, dotY, dotRadius, 0, TWO_PI)
       ctx.fillStyle = tuneColor

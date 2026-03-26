@@ -49,3 +49,7 @@
 - [x] "In tune" glow on NoteWheel (pulsing green when near perfect pitch)
 - [x] More pronounced CentsSphere tick marks with cents labels
 - [x] Note-change hysteresis, median smoothing, and update throttling for reduced jitter
+- [x] CentsSphere in-tune glow (pulsing rim when near perfect pitch)
+- [x] Sphere colors tinted to match tuning hue (green→red)
+- [x] Removed glow effects for better key/cents readability
+- [x] 3D foreshortened note letters on NoteWheel (rotate with sphere)
