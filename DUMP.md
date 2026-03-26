@@ -75,4 +75,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] let's try to subtly change the colors of the spheres from green to a mild shade of whatever the key color is registering.  make sure to create appropriate contrast for best visibility
 [x] make the spheres look 3d still, but remove the glow from them because it affects the visibility of the key/cents.
 [x] i want the appearance of the spheres to be that they themselves are actually spinning.  can we try to actually rotate the key letters to reflect being turned backwards?
-[x] i want the glow back.  it's the reflection that i have trouble with.  this part![alt text](<Screenshot 2026-03-26 at 13.05.57.png>)
+[x] i want the glow back.  it's the reflection that i have trouble with.  this part![alt text](<.screenshots/Screenshot 2026-03-26 at 13.05.57.png>)
+[x] ok commit these changes and merge into main branch
