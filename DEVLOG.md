@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-03-25 — Mobile fullscreen on start
+
+- Start button and spacebar now trigger fullscreen on mobile/touch devices
+- Uses Fullscreen API with webkit fallback
+- Only activates on touch devices (checks `ontouchstart` / `maxTouchPoints`)
+- Desktop is unaffected — no fullscreen triggered
+- Removes browser chrome on mobile, giving the ribbon the full viewport
+
 ## 2026-03-25 — Cap total outward displacement to prevent bottom overflow
 
 - Combined twist + audio displacement is now clamped at headroom (viewport edge)

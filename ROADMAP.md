@@ -42,3 +42,4 @@
 - [x] Smoother NoteWheel rotation (reduced lerp for calmer transitions)
 - [x] Stop button repositioned above visualizer ribbon
 - [x] Multicolored lowercase logo in Roboto Mono
+- [x] Mobile fullscreen on start (removes browser chrome for full viewport)

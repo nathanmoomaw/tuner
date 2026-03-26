@@ -58,3 +58,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] mobile is still not good at all, literally need to make it look like any of those earlier screenshots and it would be fine.  it's garbage now.
 [x] mobile is still garbage.  it needs to be a colorful ribbon again, not this: ![alt text](signal-2026-03-25-175916.png)
 [x] let's save this state because it's looking good on desktop and goodish on mobile, but the bottom is going off the screen again while it still has like 70px to play with there ![alt text](signal-2026-03-25-180522.png)
+[x] make the start button also trigger a fullscreen
+[x] that should only be for mobile
