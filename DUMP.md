@@ -56,3 +56,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] roll the mobile back version a couple cuz it's still a weird oval
 [x] desktop is looking good
 [x] mobile is still not good at all, literally need to make it look like any of those earlier screenshots and it would be fine.  it's garbage now.
+[x] mobile is still garbage.  it needs to be a colorful ribbon again, not this: ![alt text](signal-2026-03-25-175916.png)

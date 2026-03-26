@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-03-25 — Fix mobile ribbon collapsing to thin outline
+
+- Root cause: maxExpand was clamping ALL displacement (twist + audio) to near-zero on mobile
+- This collapsed all 14 layers onto the same line, losing the colorful ribbon effect
+- Fix: only cap the audio expansion, not the Möbius twist displacement
+- Twist displacement (which creates ribbon width/color spread) is now unclamped
+- Audio expansion is capped to available headroom so it can't overflow the viewport
+- Ribbon is now colorful and reactive on mobile again
+
 ## 2026-03-25 — Restore tall mobile ribbon (remove aspect ratio cap)
 
 - Removed the ry ≤ 1.3×rx aspect ratio cap that was making the mobile ribbon too short

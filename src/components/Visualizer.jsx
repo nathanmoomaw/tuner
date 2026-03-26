@@ -64,12 +64,14 @@ export function Visualizer({ analyserRef, active, visible = true }) {
       const cx = w / 2
       const cy = h / 2
       // Viewport-proportional ellipse — tall on mobile, wide on desktop
-      const margin = 30 * dpr
+      const margin = 20 * dpr
       const rx = Math.min(w * 0.44, cx - margin)
       const ry = Math.min(h * 0.40, cy - margin)
       const baseWidth = Math.min(w, h) * 0.035
-      // Hard cap expansion so ribbon never exceeds viewport
-      const maxExpand = Math.min(cx - margin - rx, cy - margin - ry)
+      // How much room is left between ellipse edge and viewport edge
+      const headroomX = Math.max(0, cx - margin - rx)
+      const headroomY = Math.max(0, cy - margin - ry)
+      const headroom = Math.min(headroomX, headroomY)
       const phase = timeRef.current
 
       // Compute overall audio energy for global responsiveness
@@ -113,11 +115,14 @@ export function Visualizer({ analyserRef, active, visible = true }) {
           // High-frequency vibration for energy feel
           const vibrate = Math.sin(angle * 6 + phase * 10) * audioNorm * baseWidth * 0.3 * Math.abs(layerOffset)
 
-          // Displacement: twist provides visual structure, audio always pushes outward
-          const totalDisp = displacement + audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate
+          // Audio expansion: cap to available headroom so it can't overflow viewport
+          const audioExpansion = Math.min(
+            audioMod * (0.4 + 0.6 * Math.abs(layerOffset)) + vibrate,
+            headroom
+          )
 
-          // Clamp: never inward past base ellipse, never beyond viewport
-          const outwardDisp = Math.min(Math.max(0, totalDisp), maxExpand)
+          // Total: twist displacement (unclamped, creates ribbon width) + audio (capped)
+          const outwardDisp = displacement + audioExpansion
 
           const x = cx + (rx + outwardDisp) * Math.cos(angle)
           const y = cy + (ry + outwardDisp) * Math.sin(angle)
