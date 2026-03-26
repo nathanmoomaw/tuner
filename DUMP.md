@@ -48,3 +48,5 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] looks like the top is still bad on the same device![alt text](signal-2026-03-25-174052.png)
 [x] that last procedure pushed the top of the ribbon down even farther when it should have been up
 [x] make the tuner logo lowercase and multicolored in roboto mono
+[x] ok, now desktop ribbon placement isn't right.  it's going through the stop button![alt text](<Screenshot 2026-03-25 at 17.47.07.png>)
+[x] mobile is still not quite right either.  the key area is being run through![alt text](signal-2026-03-25-174807.png)
