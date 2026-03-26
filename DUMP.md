@@ -43,3 +43,6 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] update the project readme with all these updates and also update all the mds
 [x] on my mobile the bottom of the ribbon is going off the bottom when it shouldn't be ![alt text](signal-2026-03-25-172650.png)
 [x] the bottom looks good now, but the top looked better before.  now the top is impinging upon the key section
+[x] now the bottom is getting cutoff again on my pixel 7
+[] looks like the top is still on the same device
+[x] it looks good on desktop
