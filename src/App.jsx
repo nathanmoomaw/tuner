@@ -43,6 +43,17 @@ function App() {
   const [showViz, setShowViz] = useState(true)
   const { listening, mode, setMode, note, chord, error, start, stop, analyserRef } = useTuner(a4)
 
+  const stopWithExitFullscreen = useCallback(() => {
+    stop()
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {})
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      }
+    }
+  }, [stop])
+
   const startWithFullscreen = useCallback(() => {
     start()
     // Only request fullscreen on mobile/touch devices
@@ -59,11 +70,11 @@ function App() {
 
   const toggle = useCallback(() => {
     if (listening) {
-      stop()
+      stopWithExitFullscreen()
     } else {
       startWithFullscreen()
     }
-  }, [listening, start, stop, startWithFullscreen])
+  }, [listening, stopWithExitFullscreen, startWithFullscreen])
 
   // Spacebar to start/stop
   useEffect(() => {
@@ -150,7 +161,7 @@ function App() {
               <ChordDisplay chord={chord} />
             )}
             <div className="stop-area">
-              <ParticleSphere onClick={stop} label="Stop" seedOffset={42} size={100} dotCount={100} />
+              <ParticleSphere onClick={stopWithExitFullscreen} label="Stop" seedOffset={42} size={100} dotCount={100} />
             </div>
           </>
         )}
