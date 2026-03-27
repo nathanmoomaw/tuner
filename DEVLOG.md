@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-03-27 — Faster NoteWheel rotation
+
+- Increased NoteWheel lerp from 0.04 to 0.07 for snappier response while staying smooth
+
 ## 2026-03-27 — Pitch accuracy and readability improvements
 
 - Replaced basic autocorrelation with McLeod Pitch Method (NSDF) for much better pitch accuracy and fewer octave errors
