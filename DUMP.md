@@ -86,3 +86,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] trying on tuner-dev, but it's not registering any keys.  i see the visualizer jumping to my mic input though
 [x] it's looking good now, much less jumpy and glitchy and seems to find the key better
 [x] it seems just a tad slow rolling the key sphere now though.  can we speed that up just a bit?
+[x] merge to main, update mds and compact
