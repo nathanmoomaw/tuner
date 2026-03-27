@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { detectPitch, frequencyToNote } from '../lib/pitchDetection'
 import { detectChord } from '../lib/chordDetection'
 
-const FFT_SIZE = 4096
+const FFT_SIZE = 8192
 
 export function useTuner(a4 = 440) {
   const [listening, setListening] = useState(false)
@@ -56,7 +56,7 @@ export function useTuner(a4 = 440) {
         analyser.getFloatTimeDomainData(buffer)
         const result = detectPitch(buffer, sampleRate)
 
-        if (result && result.clarity > 0.85) {
+        if (result && result.clarity > 0.9) {
           const noteInfo = frequencyToNote(result.frequency, a4Ref.current)
 
           // Note-change hysteresis: require 3 consecutive detections before switching
@@ -78,10 +78,10 @@ export function useTuner(a4 = 440) {
             lastNoteRef.current = noteInfo.name
           }
 
-          // Rolling median of cents for stability (last 8 readings)
+          // Rolling median of cents for stability (last 12 readings)
           const cHistory = centsHistoryRef.current
           cHistory.push(noteInfo.cents)
-          if (cHistory.length > 8) cHistory.shift()
+          if (cHistory.length > 12) cHistory.shift()
           const sorted = [...cHistory].sort((a, b) => a - b)
           const mid = Math.floor(sorted.length / 2)
           const smoothedCents = sorted.length % 2 === 0
@@ -147,7 +147,7 @@ export function useTuner(a4 = 440) {
       const source = audioCtx.createMediaStreamSource(stream)
       const analyser = audioCtx.createAnalyser()
       analyser.fftSize = FFT_SIZE
-      analyser.smoothingTimeConstant = 0.8
+      analyser.smoothingTimeConstant = 0.6
       source.connect(analyser)
       analyserRef.current = analyser
       bufferRef.current = new Float32Array(analyser.fftSize)

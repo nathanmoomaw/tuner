@@ -269,7 +269,7 @@ export function NoteWheel({ note }) {
           : 'rgba(156, 163, 175, 0.3)'
 
         // Big note name
-        ctx.font = `700 ${Math.round(size * 0.2)}px -apple-system, BlinkMacSystemFont, sans-serif`
+        ctx.font = `700 ${Math.round(size * 0.24)}px -apple-system, BlinkMacSystemFont, sans-serif`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         ctx.fillStyle = centerColor
@@ -285,13 +285,13 @@ export function NoteWheel({ note }) {
 
           // Cents
           const centsText = `${s.cents > 0 ? '+' : ''}${s.cents}\u00A2`
-          ctx.font = `500 ${Math.round(size * 0.055)}px "SF Mono", "Fira Code", monospace`
+          ctx.font = `600 ${Math.round(size * 0.065)}px "SF Mono", "Fira Code", monospace`
           ctx.textAlign = 'center'
           ctx.fillStyle = centerColor
           ctx.fillText(centsText, cx, cy + size * 0.1)
 
           // Frequency
-          ctx.font = `400 ${Math.round(size * 0.04)}px "SF Mono", "Fira Code", monospace`
+          ctx.font = `400 ${Math.round(size * 0.045)}px "SF Mono", "Fira Code", monospace`
           ctx.fillStyle = 'rgba(156, 163, 175, 0.5)'
           ctx.fillText(`${s.frequency} Hz`, cx, cy + size * 0.16)
         }

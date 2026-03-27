@@ -1,5 +1,18 @@
 # Devlog
 
+## 2026-03-27 — Pitch accuracy and readability improvements
+
+- Replaced basic autocorrelation with McLeod Pitch Method (NSDF) for much better pitch accuracy and fewer octave errors
+- Added Hanning windowing to reduce spectral leakage in pitch detection
+- Increased audio buffer from 4096 to 8192 samples for better low-frequency resolution
+- NSDF clarity threshold set to 0.9 (normalized 0-1 scale, more meaningful than raw autocorrelation)
+- Increased cents median window from 8 to 12 readings for smoother display
+- Reduced analyser smoothing constant (0.8 to 0.6) for more responsive time-domain data
+- Larger center note name in NoteWheel (0.20 to 0.24 of sphere size)
+- Larger, bolder cents readout in NoteWheel (0.055 to 0.065, weight 600)
+- Larger frequency display (0.04 to 0.045)
+- Larger, bolder cents text in CentsSphere (14px to 16px, weight 600)
+
 ## 2026-03-26 — Roadmap: Native app
 
 - Added native app store version with single-pay pricing to roadmap

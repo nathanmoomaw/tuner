@@ -8,7 +8,7 @@
 ## Completed
 - [x] Project scaffold (Vite + React)
 - [x] Mic input via Web Audio API (getUserMedia)
-- [x] Pitch detection algorithm (autocorrelation)
+- [x] Pitch detection algorithm (McLeod Pitch Method / NSDF)
 - [x] Chromatic tuner display (note name, cents, frequency)
 - [x] Visual indicator (needle/gauge showing sharp/flat)
 - [x] Reference pitch setting (A4 = 440 Hz default, adjustable)
@@ -55,3 +55,5 @@
 - [x] Removed glow effects for better key/cents readability
 - [x] 3D foreshortened note letters on NoteWheel (rotate with sphere)
 - [x] Exit fullscreen on stop (mobile)
+- [x] McLeod Pitch Method (NSDF) for improved pitch accuracy
+- [x] Improved readability (larger center display text)
