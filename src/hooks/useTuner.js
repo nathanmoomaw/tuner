@@ -156,8 +156,13 @@ export function useTuner(a4 = 440) {
       runningRef.current = true
       setListening(true)
       rafRef.current = requestAnimationFrame(loopRef.current)
-    } catch {
-      setError('Microphone access denied. Please allow mic access and try again.')
+    } catch (err) {
+      console.error('Tuner start error:', err)
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        setError('Microphone access denied. Please allow mic access and try again.')
+      } else {
+        setError(`Audio error: ${err.message}`)
+      }
     }
   }, [])
 
