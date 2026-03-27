@@ -52,16 +52,19 @@ export function detectPitch(buffer, sampleRate) {
     nsdf[tau] = m > 0 ? (2 * acf) / m : 0
   }
 
-  // Find positive-going zero crossings, then find peaks between them
-  // MPM: pick the first peak above a threshold (key max * CUTOFF)
-  const peaks = []  // { lag, value }
+  // Skip the initial positive region (trivial self-correlation around lag 0)
+  // Find the first zero crossing, then collect peaks from subsequent positive regions
+  let startIdx = 1
+  while (startIdx < halfSize && nsdf[startIdx] > 0) {
+    startIdx++
+  }
 
-  // Find all local maxima where nsdf > 0
+  const peaks = []  // { lag, value }
   let positiveRegion = false
   let maxInRegion = -Infinity
   let maxLag = 0
 
-  for (let i = 1; i < halfSize - 1; i++) {
+  for (let i = startIdx; i < halfSize - 1; i++) {
     if (nsdf[i] > 0) {
       if (!positiveRegion) {
         positiveRegion = true
@@ -72,14 +75,12 @@ export function detectPitch(buffer, sampleRate) {
         maxLag = i
       }
     } else if (positiveRegion) {
-      // Exiting a positive region — record the peak
       if (maxInRegion > 0) {
         peaks.push({ lag: maxLag, value: maxInRegion })
       }
       positiveRegion = false
     }
   }
-  // Catch final region
   if (positiveRegion && maxInRegion > 0) {
     peaks.push({ lag: maxLag, value: maxInRegion })
   }
