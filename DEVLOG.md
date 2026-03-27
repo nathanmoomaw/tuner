@@ -1,5 +1,10 @@
 # Devlog
 
+## 2026-03-26 — Roadmap: Native app
+
+- Added native app store version with single-pay pricing to roadmap
+- Routed from LIFE /pdump
+
 ## 2026-03-26 — Exit fullscreen on stop
 
 - Stop button and spacebar now exit fullscreen on mobile

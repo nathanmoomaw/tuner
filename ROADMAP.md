@@ -3,6 +3,7 @@
 ## Up Next
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
+- [ ] Native version for app store with logical single-pay price
 
 ## Completed
 - [x] Project scaffold (Vite + React)
