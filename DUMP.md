@@ -78,3 +78,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] i want the glow back.  it's the reflection that i have trouble with.  this part![alt text](<.screenshots/Screenshot 2026-03-26 at 13.05.57.png>)
 [x] ok commit these changes and merge into main branch
 [x] pressing stop on mobile should exit fullscreen mode as well
+[x] roadmap: native version for app store w/ logical single pay price
