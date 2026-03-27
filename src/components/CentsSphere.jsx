@@ -237,7 +237,7 @@ export function CentsSphere({ cents = 0, active = false }) {
       // Center cents display
       if (s.active) {
         const centsText = `${s.cents > 0 ? '+' : ''}${s.cents}\u00A2`
-        ctx.font = `500 14px "SF Mono", "Fira Code", monospace`
+        ctx.font = `600 16px "SF Mono", "Fira Code", monospace`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         ctx.fillStyle = tuneColor

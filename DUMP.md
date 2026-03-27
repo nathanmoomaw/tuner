@@ -79,3 +79,7 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] ok commit these changes and merge into main branch
 [x] pressing stop on mobile should exit fullscreen mode as well
 [x] roadmap: native version for app store w/ logical single pay price
+
+# Friday March 27
+
+[x] still want to improve the readability of this and pitch accuracy.  is there anything more we can do?
