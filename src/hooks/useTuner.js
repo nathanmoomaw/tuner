@@ -56,7 +56,7 @@ export function useTuner(a4 = 440) {
         analyser.getFloatTimeDomainData(buffer)
         const result = detectPitch(buffer, sampleRate)
 
-        if (result && result.clarity > 0.9) {
+        if (result && result.clarity > 0.8) {
           const noteInfo = frequencyToNote(result.frequency, a4Ref.current)
 
           // Note-change hysteresis: require 3 consecutive detections before switching

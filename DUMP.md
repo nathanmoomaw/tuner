@@ -83,3 +83,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 # Friday March 27
 
 [x] still want to improve the readability of this and pitch accuracy.  is there anything more we can do?
+[x] trying on tuner-dev, but it's not registering any keys.  i see the visualizer jumping to my mic input though
