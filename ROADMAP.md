@@ -59,3 +59,4 @@
 - [x] Improved readability (larger center display text)
 - [x] Audio-reactive logo letters
 - [x] Capacitor native app scaffold (iOS + Android)
+- [x] Wavy ribbon bands on particle sphere buttons (visualizer-style design consistency)

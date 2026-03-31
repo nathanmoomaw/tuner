@@ -92,4 +92,4 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 
 [x] make logo reactive to audio like the visualizer
 [x] let's begin the native app version by developing a plan
-[] incorporate some 
+[x] incorporate some of the visualizer type style into the button spheres.  presently they are build mostly from point-based design scheme.  would like to incorporate some wavey style to them for design consistency
