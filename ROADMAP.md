@@ -3,7 +3,7 @@
 ## Up Next
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
-- [ ] Native version for app store with logical single-pay price
+- [ ] Native version for app store with logical single-pay price (Capacitor scaffolded, needs dev accounts)
 
 ## Completed
 - [x] Project scaffold (Vite + React)
@@ -57,3 +57,5 @@
 - [x] Exit fullscreen on stop (mobile)
 - [x] McLeod Pitch Method (NSDF) for improved pitch accuracy
 - [x] Improved readability (larger center display text)
+- [x] Audio-reactive logo letters
+- [x] Capacitor native app scaffold (iOS + Android)

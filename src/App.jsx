@@ -1,10 +1,14 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Capacitor } from '@capacitor/core'
 import { useTuner } from './hooks/useTuner'
 import { Visualizer } from './components/Visualizer'
 import { NoteWheel } from './components/NoteWheel'
 import { CentsSphere } from './components/CentsSphere'
 import { ParticleSphere } from './components/ParticleSphere'
+import { ReactiveLogo } from './components/ReactiveLogo'
 import './App.css'
+
+const isNative = Capacitor.isNativePlatform()
 
 function TunerDisplay({ note }) {
   const displayCents = note ? note.cents : 0
@@ -45,7 +49,8 @@ function App() {
 
   const stopWithExitFullscreen = useCallback(() => {
     stop()
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
+    // Native app is always fullscreen — skip Fullscreen API
+    if (!isNative && (document.fullscreenElement || document.webkitFullscreenElement)) {
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {})
       } else if (document.webkitExitFullscreen) {
@@ -56,14 +61,16 @@ function App() {
 
   const startWithFullscreen = useCallback(() => {
     start()
-    // Only request fullscreen on mobile/touch devices
-    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-    if (isMobile) {
-      const el = document.documentElement
-      if (el.requestFullscreen) {
-        el.requestFullscreen().catch(() => {})
-      } else if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen()
+    // Native app is always fullscreen — only use Fullscreen API in browser on mobile
+    if (!isNative) {
+      const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      if (isMobile) {
+        const el = document.documentElement
+        if (el.requestFullscreen) {
+          el.requestFullscreen().catch(() => {})
+        } else if (el.webkitRequestFullscreen) {
+          el.webkitRequestFullscreen()
+        }
       }
     }
   }, [start])
@@ -92,13 +99,7 @@ function App() {
     <div className="tuner">
       <Visualizer analyserRef={analyserRef} active={listening} visible={showViz} />
       <header className="tuner-header">
-        <h1 className="logo">
-          <span className="logo-letter" style={{color:'#a78bfa', '--rot':'-4deg', '--y':'-1px'}}>t</span>
-          <span className="logo-letter" style={{color:'#60a5fa', '--rot':'3deg', '--y':'2px'}}>u</span>
-          <span className="logo-letter" style={{color:'#34d399', '--rot':'-2deg', '--y':'-2px'}}>n</span>
-          <span className="logo-letter" style={{color:'#fbbf24', '--rot':'5deg', '--y':'1px'}}>e</span>
-          <span className="logo-letter" style={{color:'#f87171', '--rot':'-3deg', '--y':'-1px'}}>r</span>
-        </h1>
+        <ReactiveLogo analyserRef={analyserRef} active={listening} />
         <div className="header-controls">
           <div className="mode-toggle">
             <button

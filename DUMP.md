@@ -87,3 +87,9 @@ A simple, multipurpose web-based musical tuner using the mic. Free of ads and di
 [x] it's looking good now, much less jumpy and glitchy and seems to find the key better
 [x] it seems just a tad slow rolling the key sphere now though.  can we speed that up just a bit?
 [x] merge to main, update mds and compact
+
+# Monday March 30
+
+[x] make logo reactive to audio like the visualizer
+[x] let's begin the native app version by developing a plan
+[] incorporate some 

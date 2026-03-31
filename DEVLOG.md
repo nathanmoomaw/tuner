@@ -1,5 +1,27 @@
 # Devlog
 
+## 2026-03-30 — Capacitor native app scaffold
+
+- Added Capacitor for iOS + Android native app wrapping
+- Bundle ID: `us.obfusco.tuner`
+- iOS: Added `NSMicrophoneUsageDescription` to Info.plist
+- Android: Added `RECORD_AUDIO` and `MODIFY_AUDIO_SETTINGS` permissions
+- Conditional fullscreen: skips Fullscreen API when running as native app (always fullscreen)
+- Safe area insets via `env(safe-area-inset-*)` for notched devices
+- Viewport `viewport-fit=cover` for edge-to-edge rendering
+- Status bar configured dark to match theme (#111827)
+- Splash screen configured with dark background
+- Installed `@capacitor/status-bar` and `@capacitor/splash-screen` plugins
+- Developer accounts (Apple + Google) still needed before publishing
+
+## 2026-03-30 — Audio-reactive logo
+
+- New ReactiveLogo component replaces static logo letters
+- Each letter reacts to a different frequency band from the analyser
+- Letters scale, rotate, and bounce based on audio energy
+- Smooth lerp (0.3) prevents jarring transitions
+- Falls back to static base transforms when not listening
+
 ## 2026-03-27 — Faster NoteWheel rotation
 
 - Increased NoteWheel lerp from 0.04 to 0.07 for snappier response while staying smooth

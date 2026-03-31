@@ -5,6 +5,7 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 ## Stack
 - Vite + React
 - Web Audio API (mic input, pitch detection)
+- Capacitor (iOS + Android native wrapper)
 - npm as package manager
 
 ## Core Concepts
@@ -36,6 +37,16 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - Dev CloudFront distribution: EUQIKHPXMBWL9
 - IAM user: github-actions-moomaw
 - GitHub Actions workflow: `.github/workflows/deploy.yml`
+
+## Native App
+- Bundle ID: `us.obfusco.tuner`
+- Capacitor wraps the Vite build output (`dist/`)
+- Build native: `npm run build && npx cap sync`
+- Open in Xcode: `npx cap open ios`
+- Open in Android Studio: `npx cap open android`
+- iOS permissions in `ios/App/App/Info.plist`
+- Android permissions in `android/app/src/main/AndroidManifest.xml`
+- Status: scaffolded, needs Apple + Google developer accounts for publishing
 
 ## Git Workflow
 - Push after every commit
