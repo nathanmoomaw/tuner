@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-03-31 — Wavy ribbon bands on particle sphere buttons
+
+- Added 7 wavy orbital bands to `ParticleSphere` (Start and Stop buttons)
+- Bands use the same rainbow `hsla(hue, 85%, 65%)` color palette as the Möbius ribbon visualizer
+- Each band traces a 3D ring at a different inclination angle, projected with the same rotation math as the particle dots
+- Sinusoidal wave deformation (3 cycles/band, phase-shifted per band and over time) gives the flowing ribbon feel
+- Bands drawn on top of the dots at low alpha (0.09–0.14), animated independently for organic motion
+- Ties the button aesthetic to the visualizer's wavy ribbon style
+
 ## 2026-03-30 — Capacitor native app scaffold
 
 - Added Capacitor for iOS + Android native app wrapping

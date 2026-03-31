@@ -170,6 +170,43 @@ export function ParticleSphere({
         }
       }
 
+      // Wavy orbital bands — visualizer-style ribbon aesthetic
+      const NUM_BANDS = 7
+      const BAND_SEGS = 90
+      for (let b = 0; b < NUM_BANDS; b++) {
+        const hue = (b / (NUM_BANDS - 1)) * 300
+        const phi = (b / NUM_BANDS) * Math.PI
+        const sinPhi = Math.sin(phi)
+        const cosPhi = Math.cos(phi)
+        const bandPhase = b * 1.3 + t * (0.5 + b * 0.07)
+        const alpha = 0.09 + 0.05 * Math.abs(Math.sin(t * 0.4 + b))
+
+        ctx.beginPath()
+        for (let seg = 0; seg <= BAND_SEGS; seg++) {
+          const loopAngle = (seg / BAND_SEGS) * TWO_PI
+          const wave = Math.sin(loopAngle * 3 + bandPhase) * radius * 0.09
+          const r = radius * 1.02 + wave
+
+          const px = r * Math.cos(loopAngle)
+          const py = r * Math.sin(loopAngle) * sinPhi
+          const pz = r * Math.sin(loopAngle) * cosPhi
+
+          const pxr = px * cosRY + pz * sinRY
+          const pzr = -px * sinRY + pz * cosRY
+          const pyr2 = py * cosRX - pzr * sinRX
+
+          const sx = cx + pxr
+          const sy = cy - pyr2
+
+          if (seg === 0) ctx.moveTo(sx, sy)
+          else ctx.lineTo(sx, sy)
+        }
+        ctx.closePath()
+        ctx.strokeStyle = `hsla(${hue}, 85%, 65%, ${alpha})`
+        ctx.lineWidth = 1.2
+        ctx.stroke()
+      }
+
       // Label text
       if (label) {
         const lines = label.split('\n')
