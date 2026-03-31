@@ -1,0 +1,22 @@
+{
+  "appId": "us.obfusco.tuner",
+  "appName": "Tuner",
+  "webDir": "dist",
+  "plugins": {
+    "StatusBar": {
+      "style": "Dark",
+      "backgroundColor": "#111827"
+    },
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "backgroundColor": "#111827",
+      "showSpinner": false
+    }
+  },
+  "ios": {
+    "allowsLinkPreview": false
+  },
+  "android": {
+    "backgroundColor": "#111827"
+  }
+}
