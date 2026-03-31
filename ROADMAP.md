@@ -3,7 +3,7 @@
 ## Up Next
 - [ ] Guitar tuning presets (standard, drop D, open G, DADGAD, etc.)
 - [ ] Other instrument presets (bass, ukulele, violin, cello, etc.)
-- [ ] Native version for app store with logical single-pay price
+- [ ] Native version for app store with logical single-pay price (Capacitor scaffolded, needs dev accounts)
   - Personal: sign up for Google Play Console ($25) — see todos.md
   - Personal: sign up for Apple Developer Program ($99/yr) — lower priority
 
@@ -59,6 +59,8 @@
 - [x] Exit fullscreen on stop (mobile)
 - [x] McLeod Pitch Method (NSDF) for improved pitch accuracy
 - [x] Improved readability (larger center display text)
+- [x] Audio-reactive logo letters
+- [x] Capacitor native app scaffold (iOS + Android)
 - [x] CentsSphere directional arrows (▲ flat / ▼ sharp)
 - [x] CentsSphere orbiting ring animation (CW=flat, CCW=sharp, speed ∝ deviation)
 - [x] Fixed 'sharp' label clipping on narrow screens
