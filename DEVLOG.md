@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-05-25 — v1.1: CentsSphere UX + pitch accuracy improvements
+
+- **Directional arrows in CentsSphere**: ▲ above cents text when flat (tune up), ▼ below when sharp (tune down); hidden within ±2 cents of perfect pitch
+- **Orbiting ring animation**: dashed ring orbits the CentsSphere clockwise when flat, counterclockwise when sharp; speed proportional to cents deviation, stops at 0
+- **Fixed 'sharp' label clipping**: right-side label was being cut off at canvas edge on narrow screens; clamped x position to stay within bounds
+- **Low-string pitch accuracy**: raised MPM CUTOFF from 0.93 to 0.95 + subharmonic NSDF check — if detected frequency > 150 Hz, verifies whether 2× or 3× longer lag has strong NSDF (≥ 0.65) and prefers that lower fundamental; fixes open low-E reading as B
+- **Branch pattern shift**: `dev/vX.Y` replaces `nmj/wX` for dev branches; `dev/**` added to CI deploy trigger
+- Created `CHANGELOG.md` and `todos.md` (personal action items)
+
 ## 2026-03-27 — Faster NoteWheel rotation
 
 - Increased NoteWheel lerp from 0.04 to 0.07 for snappier response while staying smooth
