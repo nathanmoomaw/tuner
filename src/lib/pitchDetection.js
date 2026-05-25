@@ -94,8 +94,8 @@ export function detectPitch(buffer, sampleRate) {
   }
 
   // MPM: pick the first peak that exceeds CUTOFF * globalMax
-  // This avoids octave errors by preferring the fundamental
-  const CUTOFF = 0.93
+  // Higher cutoff (0.95) reduces harmonic confusion vs fundamental
+  const CUTOFF = 0.95
   const threshold = CUTOFF * globalMax
   let bestPeak = null
   for (const p of peaks) {
@@ -116,8 +116,34 @@ export function detectPitch(buffer, sampleRate) {
   const shift = denom !== 0 ? (prev - next) / denom : 0
   const refinedLag = lag + (isFinite(shift) ? shift : 0)
 
-  const frequency = sampleRate / refinedLag
-  const clarity = bestPeak.value  // NSDF peak is already normalized 0-1
+  let frequency = sampleRate / refinedLag
+  let clarity = bestPeak.value  // NSDF peak is already normalized 0-1
+
+  // Subharmonic check: if detected frequency is high, it may be a harmonic of
+  // the actual fundamental (e.g. open low-E guitar showing as B/3rd harmonic).
+  // Check if 2x or 3x the lag has a strong NSDF value and prefer that lower pitch.
+  if (frequency > 150) {
+    const SUBHARM_THRESHOLD = 0.65
+    const lag3 = Math.round(refinedLag * 3)
+    const lag2 = Math.round(refinedLag * 2)
+
+    const parabolicRefine = (l) => {
+      const p0 = nsdf[l - 1] || 0
+      const p1 = nsdf[l]
+      const p2 = nsdf[l + 1] || 0
+      const d = 2 * (p0 - 2 * p1 + p2)
+      const s = d !== 0 ? (p0 - p2) / d : 0
+      return l + (isFinite(s) ? s : 0)
+    }
+
+    if (lag3 < halfSize - 1 && nsdf[lag3] >= SUBHARM_THRESHOLD) {
+      frequency = sampleRate / parabolicRefine(lag3)
+      clarity = nsdf[lag3]
+    } else if (lag2 < halfSize - 1 && nsdf[lag2] >= SUBHARM_THRESHOLD) {
+      frequency = sampleRate / parabolicRefine(lag2)
+      clarity = nsdf[lag2]
+    }
+  }
 
   // Sanity check: musical range roughly 20 Hz to 5000 Hz
   if (frequency < 20 || frequency > 5000) return null

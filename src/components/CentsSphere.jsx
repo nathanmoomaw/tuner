@@ -15,6 +15,7 @@ export function CentsSphere({ cents = 0, active = false }) {
   })
   const rafRef = useRef(null)
   const phaseRef = useRef(0)
+  const orbitRef = useRef(0)
 
   useEffect(() => {
     const s = stateRef.current
@@ -224,17 +225,35 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.fillStyle = tuneColor
       ctx.fill()
 
-      // Labels
+      // Orbiting ring \u2014 clockwise when flat, counterclockwise when sharp
+      if (s.active) {
+        const orbitRingR = sphereR * 1.45
+        const absCentsNorm = Math.min(Math.abs(s.cents), 50) / 50
+        const orbitSpeed = absCentsNorm * 2.2
+        if (s.cents < 0) orbitRef.current += orbitSpeed
+        else if (s.cents > 0) orbitRef.current -= orbitSpeed
+        const ringOpacity = 0.12 + 0.30 * absCentsNorm
+        ctx.beginPath()
+        ctx.arc(cx, cy, orbitRingR, 0, TWO_PI)
+        ctx.setLineDash([8, 6])
+        ctx.lineDashOffset = orbitRef.current
+        ctx.strokeStyle = `hsla(${hue}, 75%, 60%, ${ringOpacity})`
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+        ctx.setLineDash([])
+      }
+
+      // Labels \u2014 'sharp' clamped to stay within canvas
       ctx.font = `400 10px -apple-system, BlinkMacSystemFont, sans-serif`
       ctx.textBaseline = 'middle'
       const labelOpacity = s.active ? 0.5 : 0.25
       ctx.fillStyle = `rgba(156, 163, 175, ${labelOpacity})`
       ctx.textAlign = 'right'
-      ctx.fillText('flat', cx - rx - 8, cy)
+      ctx.fillText('flat', cx - rx - 4, cy)
       ctx.textAlign = 'left'
-      ctx.fillText('sharp', cx + rx + 8, cy)
+      ctx.fillText('sharp', Math.min(cx + rx + 4, w - 32), cy)
 
-      // Center cents display
+      // Center cents display + directional arrows
       if (s.active) {
         const centsText = `${s.cents > 0 ? '+' : ''}${s.cents}\u00A2`
         ctx.font = `600 16px "SF Mono", "Fira Code", monospace`
@@ -242,6 +261,30 @@ export function CentsSphere({ cents = 0, active = false }) {
         ctx.textBaseline = 'middle'
         ctx.fillStyle = tuneColor
         ctx.fillText(centsText, cx, cy + 2)
+
+        // Directional arrow \u2014 \u25B2 above when flat (tune up), \u25BC below when sharp (tune down)
+        const arrowSize = 5
+        if (s.cents < 0 && Math.abs(s.cents) > 2) {
+          // Flat: arrow pointing up above text
+          const ay = cy - 16
+          ctx.beginPath()
+          ctx.moveTo(cx, ay - arrowSize)
+          ctx.lineTo(cx - arrowSize, ay)
+          ctx.lineTo(cx + arrowSize, ay)
+          ctx.closePath()
+          ctx.fillStyle = tuneColor
+          ctx.fill()
+        } else if (s.cents > 2) {
+          // Sharp: arrow pointing down below text
+          const ay = cy + 20
+          ctx.beginPath()
+          ctx.moveTo(cx, ay + arrowSize)
+          ctx.lineTo(cx - arrowSize, ay)
+          ctx.lineTo(cx + arrowSize, ay)
+          ctx.closePath()
+          ctx.fillStyle = tuneColor
+          ctx.fill()
+        }
       }
 
       ctx.restore()
