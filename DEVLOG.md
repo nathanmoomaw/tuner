@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-05-25 — Orbiting ring fix: changed circle to ellipse to prevent canvas clipping
+
+- **CentsSphere orbit ring**: was drawn as a circle at `sphereR * 1.45` radius which exceeded canvas height (`w * 0.55`), causing clipping at top and bottom; changed to an ellipse scaled from the equatorial ring (`rx * 1.2` × `ry * 1.2`) — fits within canvas and looks more 3D
+
 ## 2026-05-25 — v1.1: CentsSphere UX + pitch accuracy improvements
 
 - **Directional arrows in CentsSphere**: ▲ above cents text when flat (tune up), ▼ below when sharp (tune down); hidden within ±2 cents of perfect pitch

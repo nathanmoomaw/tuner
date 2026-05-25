@@ -66,3 +66,4 @@
 - [x] Fixed 'sharp' label clipping on narrow screens
 - [x] Improved low-string pitch accuracy (subharmonic NSDF check)
 - [x] dev/v1.1 branch pattern + CHANGELOG.md
+- [x] CentsSphere orbit ring clipping fix (circle → tilted ellipse)

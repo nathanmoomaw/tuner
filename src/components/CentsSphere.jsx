@@ -226,15 +226,17 @@ export function CentsSphere({ cents = 0, active = false }) {
       ctx.fill()
 
       // Orbiting ring \u2014 clockwise when flat, counterclockwise when sharp
+      // Ellipse matches sphere's equatorial tilt so it fits within canvas
       if (s.active) {
-        const orbitRingR = sphereR * 1.45
+        const orbitRingRx = rx * 1.2
+        const orbitRingRy = ry * 1.2
         const absCentsNorm = Math.min(Math.abs(s.cents), 50) / 50
         const orbitSpeed = absCentsNorm * 2.2
         if (s.cents < 0) orbitRef.current += orbitSpeed
         else if (s.cents > 0) orbitRef.current -= orbitSpeed
         const ringOpacity = 0.12 + 0.30 * absCentsNorm
         ctx.beginPath()
-        ctx.arc(cx, cy, orbitRingR, 0, TWO_PI)
+        ctx.ellipse(cx, cy, orbitRingRx, orbitRingRy, 0, 0, TWO_PI)
         ctx.setLineDash([8, 6])
         ctx.lineDashOffset = orbitRef.current
         ctx.strokeStyle = `hsla(${hue}, 75%, 60%, ${ringOpacity})`
