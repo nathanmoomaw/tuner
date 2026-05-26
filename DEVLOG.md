@@ -1,5 +1,10 @@
 # Devlog
 
+## 2026-05-26 — Merged dev/v1.1 → main, shipped v1.1 to tuner.obfusco.us
+
+- Updated CHANGELOG.md to include audio-reactive logo + Capacitor scaffold entries missing from initial v1.1 draft
+- Merged via PR, deployed to production via CI/CD (GitHub Actions → S3 + CloudFront)
+
 ## 2026-05-26 — No-op dump: fullscreen already implemented, explanation of subharmonic pitch fix
 
 - `startWithFullscreen` in App.jsx already triggers mobile fullscreen via touch detection — no code changes

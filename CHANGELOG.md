@@ -1,12 +1,16 @@
 # Changelog
 
-## v1.1 — 2026-05-25
+## v1.1 — 2026-05-26
+
+### Added
+- **Audio-reactive logo** — each letter in the "tuner" wordmark reacts to a different frequency band; scales, rotates, and bounces with audio energy
+- **Capacitor native app scaffold** — iOS + Android wrappers with mic permissions, safe-area insets, dark status bar, and splash screen configured (bundle ID: `us.obfusco.tuner`)
 
 ### Improved
 - **Pitch detection** — raised MPM cutoff threshold (0.93→0.95) and added subharmonic NSDF check to reduce octave errors on low guitar strings (e.g. open low E reading as B)
 - **CentsSphere** — directional tuning arrows: ▲ above cents when flat (tune up), ▼ below when sharp (tune down); hidden at ±2 cents
-- **CentsSphere** — orbiting dashed ring circles the sphere clockwise when flat, counterclockwise when sharp; speed scales with deviation; stops at 0
-- **CentsSphere** — fixed 'sharp' label clipping on narrow screens
+- **CentsSphere** — orbiting elliptical ring (matches sphere tilt) circles clockwise when flat, counterclockwise when sharp; speed scales with deviation; stops at 0
+- **CentsSphere** — fixed 'sharp' label clipping on narrow screens; fixed orbit ring being clipped by canvas edges (circle → tilted ellipse)
 
 ### Infrastructure
 - New branch pattern: `dev/vX.Y` for dev deployments (cut from main)
