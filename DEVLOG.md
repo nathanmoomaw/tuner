@@ -1,5 +1,10 @@
 # Devlog
 
+## 2026-05-26 — No-op dump: fullscreen already implemented, explanation of subharmonic pitch fix
+
+- `startWithFullscreen` in App.jsx already triggers mobile fullscreen via touch detection — no code changes
+- Explanation provided for the low-E pitch fix (subharmonic NSDF check in pitchDetection.js)
+
 ## 2026-05-25 — Orbiting ring fix: changed circle to ellipse to prevent canvas clipping
 
 - **CentsSphere orbit ring**: was drawn as a circle at `sphereR * 1.45` radius which exceeded canvas height (`w * 0.55`), causing clipping at top and bottom; changed to an ellipse scaled from the equatorial ring (`rx * 1.2` × `ry * 1.2`) — fits within canvas and looks more 3D
