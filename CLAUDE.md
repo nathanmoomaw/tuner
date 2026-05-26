@@ -5,6 +5,7 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 ## Stack
 - Vite + React
 - Web Audio API (mic input, pitch detection)
+- Capacitor (iOS + Android native wrapper)
 - npm as package manager
 
 ## Core Concepts
@@ -30,12 +31,22 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 
 ## Hosting & Deployment
 - Production: tuner.obfusco.us (deploys on push to `main`)
-- Dev: tuner-dev.obfusco.us (deploys on push to `nmj/*` branches)
+- Dev: tuner-dev.obfusco.us (deploys on push to `dev/*` branches)
 - S3 static hosting + CloudFront CDN + Route 53 DNS
 - Prod CloudFront distribution: E36G6MIWPKYAOW
 - Dev CloudFront distribution: EUQIKHPXMBWL9
 - IAM user: github-actions-moomaw
 - GitHub Actions workflow: `.github/workflows/deploy.yml`
+
+## Native App
+- Bundle ID: `us.obfusco.tuner`
+- Capacitor wraps the Vite build output (`dist/`)
+- Build native: `npm run build && npx cap sync`
+- Open in Xcode: `npx cap open ios`
+- Open in Android Studio: `npx cap open android`
+- iOS permissions in `ios/App/App/Info.plist`
+- Android permissions in `android/app/src/main/AndroidManifest.xml`
+- Status: scaffolded, needs Apple + Google developer accounts for publishing
 
 ## Git Workflow
 - Push after every commit
@@ -44,9 +55,9 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - ROADMAP: mark completed items with `[x]`, move to Completed section
 - Git auth via `gh auth` with HTTPS
 
-### Weekly Branch Rotation
-- Dev work happens on branches named `nmj/wX` where X is the week number (starting from week 1 on 2026-03-25)
-- At the start of each new week, create a new branch from `main`: `git checkout -b nmj/wX main && git push -u origin nmj/wX`
-- Any push to `nmj/*` auto-deploys to tuner-dev.obfusco.us
-- When ready, merge the week's branch to `main` via PR — this deploys to production
-- Current active dev branch: `nmj/w1` (week of 2026-03-25)
+### Branch Conventions
+- Dev branches follow `dev/vX.Y` versioning (e.g. `dev/v1.1`)
+- Any push to `dev/*` auto-deploys to tuner-dev.obfusco.us
+- When ready, merge to `main` via PR — this deploys to production
+- Current active dev branch: `dev/v1.1`
+- `todos.md` — personal action items (app store signups, etc.)

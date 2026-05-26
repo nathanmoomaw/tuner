@@ -1,5 +1,50 @@
 # Devlog
 
+## 2026-05-26 — Merged dev/v1.1 → main, shipped v1.1 to tuner.obfusco.us
+
+- Updated CHANGELOG.md to include audio-reactive logo + Capacitor scaffold entries missing from initial v1.1 draft
+- Merged via PR, deployed to production via CI/CD (GitHub Actions → S3 + CloudFront)
+
+## 2026-05-26 — No-op dump: fullscreen already implemented, explanation of subharmonic pitch fix
+
+- `startWithFullscreen` in App.jsx already triggers mobile fullscreen via touch detection — no code changes
+- Explanation provided for the low-E pitch fix (subharmonic NSDF check in pitchDetection.js)
+
+## 2026-05-25 — Orbiting ring fix: changed circle to ellipse to prevent canvas clipping
+
+- **CentsSphere orbit ring**: was drawn as a circle at `sphereR * 1.45` radius which exceeded canvas height (`w * 0.55`), causing clipping at top and bottom; changed to an ellipse scaled from the equatorial ring (`rx * 1.2` × `ry * 1.2`) — fits within canvas and looks more 3D
+
+## 2026-05-25 — v1.1: CentsSphere UX + pitch accuracy improvements
+
+- **Directional arrows in CentsSphere**: ▲ above cents text when flat (tune up), ▼ below when sharp (tune down); hidden within ±2 cents of perfect pitch
+- **Orbiting ring animation**: dashed ring orbits the CentsSphere clockwise when flat, counterclockwise when sharp; speed proportional to cents deviation, stops at 0
+- **Fixed 'sharp' label clipping**: right-side label was being cut off at canvas edge on narrow screens; clamped x position to stay within bounds
+- **Low-string pitch accuracy**: raised MPM CUTOFF from 0.93 to 0.95 + subharmonic NSDF check — if detected frequency > 150 Hz, verifies whether 2× or 3× longer lag has strong NSDF (≥ 0.65) and prefers that lower fundamental; fixes open low-E reading as B
+- **Branch pattern shift**: `dev/vX.Y` replaces `nmj/wX` for dev branches; `dev/**` added to CI deploy trigger
+- Created `CHANGELOG.md` and `todos.md` (personal action items)
+
+## 2026-03-30 — Capacitor native app scaffold
+
+- Added Capacitor for iOS + Android native app wrapping
+- Bundle ID: `us.obfusco.tuner`
+- iOS: Added `NSMicrophoneUsageDescription` to Info.plist
+- Android: Added `RECORD_AUDIO` and `MODIFY_AUDIO_SETTINGS` permissions
+- Conditional fullscreen: skips Fullscreen API when running as native app (always fullscreen)
+- Safe area insets via `env(safe-area-inset-*)` for notched devices
+- Viewport `viewport-fit=cover` for edge-to-edge rendering
+- Status bar configured dark to match theme (#111827)
+- Splash screen configured with dark background
+- Installed `@capacitor/status-bar` and `@capacitor/splash-screen` plugins
+- Developer accounts (Apple + Google) still needed before publishing
+
+## 2026-03-30 — Audio-reactive logo
+
+- New ReactiveLogo component replaces static logo letters
+- Each letter reacts to a different frequency band from the analyser
+- Letters scale, rotate, and bounce based on audio energy
+- Smooth lerp (0.3) prevents jarring transitions
+- Falls back to static base transforms when not listening
+
 ## 2026-03-27 — Faster NoteWheel rotation
 
 - Increased NoteWheel lerp from 0.04 to 0.07 for snappier response while staying smooth
