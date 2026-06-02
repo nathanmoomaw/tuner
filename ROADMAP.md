@@ -65,5 +65,6 @@
 - [x] CentsSphere orbiting ring animation (CW=flat, CCW=sharp, speed ∝ deviation)
 - [x] Fixed 'sharp' label clipping on narrow screens
 - [x] Improved low-string pitch accuracy (subharmonic NSDF check)
+- [x] Tighter high-string accuracy: raised SUBHARM_THRESHOLD + large-jump hysteresis (fixes E4 → A false reads)
 - [x] dev/v1.1 branch pattern + CHANGELOG.md
 - [x] CentsSphere orbit ring clipping fix (circle → tilted ellipse)

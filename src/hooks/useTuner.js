@@ -26,6 +26,7 @@ export function useTuner(a4 = 440) {
   const centsHistoryRef = useRef([])
   const freqHistoryRef = useRef([])
   const lastNoteRef = useRef(null)
+  const lastMidiRef = useRef(null)
   const noteConfirmRef = useRef({ name: null, count: 0 })
   const lastUpdateRef = useRef(0)
 
@@ -59,16 +60,21 @@ export function useTuner(a4 = 440) {
         if (result && result.clarity > 0.8) {
           const noteInfo = frequencyToNote(result.frequency, a4Ref.current)
 
-          // Note-change hysteresis: require 3 consecutive detections before switching
+          // Note-change hysteresis: large pitch jumps (>7 semitones) require more
+          // confirmation frames to prevent octave-error false readings (e.g. E4 → A2).
           const confirm = noteConfirmRef.current
           if (noteInfo.name !== lastNoteRef.current) {
+            const semitoneJump = lastMidiRef.current != null
+              ? Math.abs(noteInfo.midiNote - lastMidiRef.current)
+              : 0
+            const requiredFrames = semitoneJump > 7 ? 5 : 3
             if (noteInfo.name === confirm.name) {
               confirm.count++
             } else {
               confirm.name = noteInfo.name
               confirm.count = 1
             }
-            if (confirm.count < 3) {
+            if (confirm.count < requiredFrames) {
               rafRef.current = requestAnimationFrame(loopRef.current)
               return
             }
@@ -76,6 +82,7 @@ export function useTuner(a4 = 440) {
             centsHistoryRef.current = []
             freqHistoryRef.current = []
             lastNoteRef.current = noteInfo.name
+            lastMidiRef.current = noteInfo.midiNote
           }
 
           // Rolling median of cents for stability (last 12 readings)

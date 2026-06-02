@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-06-02 — Tighter pitch accuracy: fix false-key readings on high E string
+
+- **Root cause**: subharmonic NSDF check had `SUBHARM_THRESHOLD = 0.65` — when MPM correctly detected E4 (329 Hz), the 3× lag check found A2 (110 Hz, which is the 3rd sub-harmonic) with NSDF ≥ 0.65 and incorrectly replaced the detection
+- **Fix 1** (`pitchDetection.js`): raised `SUBHARM_THRESHOLD` from 0.65 → 0.82 AND added requirement that subharmonic NSDF must be ≥ 90% of original peak value — so a clear E4 at 0.95 is never overridden by a weak A2 at 0.70
+- **Fix 2** (`useTuner.js`): large pitch jumps > 7 semitones (like E4 → A2 = 22 semitones) now require 5 confirmation frames instead of 3 — secondary defense against octave errors slipping through
+
 ## 2026-05-26 — Merged dev/v1.1 → main, shipped v1.1 to tuner.obfusco.us
 
 - Updated CHANGELOG.md to include audio-reactive logo + Capacitor scaffold entries missing from initial v1.1 draft
