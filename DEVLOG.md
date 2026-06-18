@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-06-18 — Fix subharmonic check: stop E4 → A2 and similar false key reads
+
+- **Root cause**: `>= bestPeak.value * 0.90` condition was too permissive — for a clean E4 (~0.97 NSDF), the A2 alias at lag×3 would also score ~0.94, which clears 90% and wrongly demotes E4 to A2
+- **Fix**: changed both lag3 and lag2 checks to require `> bestPeak.value` (strictly stronger) — the true fundamental always has the highest NSDF, so the subharmonic should only win if it's genuinely more correlated
+- This unbreaks E4 (high E string) while preserving the original E2→B3 correction for low string
+
 ## 2026-06-02 — Tighter pitch accuracy: fix false-key readings on high E string
 
 - **Root cause**: subharmonic NSDF check had `SUBHARM_THRESHOLD = 0.65` — when MPM correctly detected E4 (329 Hz), the 3× lag check found A2 (110 Hz, which is the 3rd sub-harmonic) with NSDF ≥ 0.65 and incorrectly replaced the detection

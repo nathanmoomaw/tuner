@@ -121,8 +121,9 @@ export function detectPitch(buffer, sampleRate) {
 
   // Subharmonic check: if detected frequency is high, it may be a harmonic of
   // the actual fundamental (e.g. open low-E guitar showing as B/3rd harmonic).
-  // Only prefer lower pitch if the subharmonic NSDF is both strong on its own
-  // AND competitive with the original detection — prevents E4 → A2 false reads.
+  // Only prefer lower pitch if the subharmonic NSDF is STRICTLY STRONGER than
+  // the detected peak — the true fundamental always has the highest NSDF value,
+  // so requiring > (not >=*0.90) prevents E4 → A2 false reads on clean notes.
   if (frequency > 150) {
     const SUBHARM_THRESHOLD = 0.82
     const lag3 = Math.round(refinedLag * 3)
@@ -137,10 +138,10 @@ export function detectPitch(buffer, sampleRate) {
       return l + (isFinite(s) ? s : 0)
     }
 
-    if (lag3 < halfSize - 1 && nsdf[lag3] >= SUBHARM_THRESHOLD && nsdf[lag3] >= bestPeak.value * 0.90) {
+    if (lag3 < halfSize - 1 && nsdf[lag3] >= SUBHARM_THRESHOLD && nsdf[lag3] > bestPeak.value) {
       frequency = sampleRate / parabolicRefine(lag3)
       clarity = nsdf[lag3]
-    } else if (lag2 < halfSize - 1 && nsdf[lag2] >= SUBHARM_THRESHOLD && nsdf[lag2] >= bestPeak.value * 0.90) {
+    } else if (lag2 < halfSize - 1 && nsdf[lag2] >= SUBHARM_THRESHOLD && nsdf[lag2] > bestPeak.value) {
       frequency = sampleRate / parabolicRefine(lag2)
       clarity = nsdf[lag2]
     }

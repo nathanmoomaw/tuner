@@ -68,3 +68,4 @@
 - [x] Tighter high-string accuracy: raised SUBHARM_THRESHOLD + large-jump hysteresis (fixes E4 → A false reads)
 - [x] dev/v1.1 branch pattern + CHANGELOG.md
 - [x] CentsSphere orbit ring clipping fix (circle → tilted ellipse)
+- [x] Subharmonic check strictened: only fires when lower pitch has stronger NSDF (fixes E4 → A2 false reads)
