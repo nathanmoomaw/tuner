@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-06-18 — Add CI build safeguards (lint gate + build verification)
+
+- Added `check` job to deploy.yml that runs lint + build + verifies dist/index.html exists before any deploy job runs
+- Deploy jobs now `needs: check` — if lint or build fails, neither prod nor dev deploys
+- Upgraded Node 20 → 22 across all jobs (Node 20 deprecated on GitHub Actions runners)
+- **Note**: current failures are AWS credential expiry — rotate `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` in repo secrets to fix
+
 ## 2026-06-18 — Remove "or press spacebar" hint from start screen
 
 - Removed `.spacebar-hint` div from App.jsx and its CSS rule from App.css

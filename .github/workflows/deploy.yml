@@ -5,7 +5,25 @@ on:
     branches: [main, 'dev/**']
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Verify build output
+        run: test -f dist/index.html
+
   deploy-prod:
+    needs: check
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm ci
@@ -32,6 +50,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id E36G6MIWPKYAOW --paths "/*"
 
   deploy-dev:
+    needs: check
     if: startsWith(github.ref, 'refs/heads/dev/')
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +58,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm ci
