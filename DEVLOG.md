@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-06-18 — Remove "or press spacebar" hint from start screen
+
+- Removed `.spacebar-hint` div from App.jsx and its CSS rule from App.css
+
 ## 2026-06-18 — Fix subharmonic check: stop E4 → A2 and similar false key reads
 
 - **Root cause**: `>= bestPeak.value * 0.90` condition was too permissive — for a clean E4 (~0.97 NSDF), the A2 alias at lag×3 would also score ~0.94, which clears 90% and wrongly demotes E4 to A2

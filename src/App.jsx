@@ -152,7 +152,6 @@ function App() {
         {!listening ? (
           <div className="start-area">
             <ParticleSphere onClick={startWithFullscreen} label={'Start\nTuning'} seedOffset={0} />
-            <div className="spacebar-hint">or press spacebar</div>
           </div>
         ) : (
           <>

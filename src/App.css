@@ -228,12 +228,6 @@
   transform: scale(0.97);
 }
 
-.spacebar-hint {
-  font-size: 13px;
-  color: var(--text);
-  opacity: 0.4;
-}
-
 .stop-area {
   margin-top: -20px;
 }
