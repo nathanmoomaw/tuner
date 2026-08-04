@@ -49,11 +49,7 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - Status: scaffolded, needs Apple + Google developer accounts for publishing
 
 ## Git Workflow
-- Push after every commit
-- Keep CLAUDE.md, DEVLOG.md, ROADMAP.md updated before committing
-- DEVLOG: reverse-chronological (newest at top)
-- ROADMAP: mark completed items with `[x]`, move to Completed section
-- Git auth via `gh auth` with HTTPS
+- Follows the global default git workflow (`~/.claude/CLAUDE.md`) — push after every commit, keep CLAUDE.md/DEVLOG.md/ROADMAP.md updated, `gh auth` HTTPS. Branch conventions below are project-specific.
 
 ### Branch Conventions
 - Dev branches follow `dev/vX.Y` versioning (e.g. `dev/v1.1`)
