@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/Users/nathanmoomaw/.claude/settings.json'\\)\\); print\\('marketplace:', d['extraKnownMarketplaces']['ponytail']['source']['repo']\\); print\\('plugin:', d['enabledPlugins']['ponytail@ponytail']\\)\")"
+    ]
+  }
+}
