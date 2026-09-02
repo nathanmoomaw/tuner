@@ -14,5 +14,5 @@ Items that require action from me (not Claude).
 ## Notes
 
 - Bundle ID is already set: `us.obfusco.tuner`
-- Capacitor scaffold exists for both iOS and Android (in nmj/w2, not yet merged to main)
+- Capacitor scaffold exists for both iOS and Android (merged to main)
 - Build command: `npm run build && npx cap sync`
