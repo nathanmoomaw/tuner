@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-09-10 — Android launcher icon, lock portrait, fix logo wrap on narrow screens
+
+- **Launcher icon**: replaced the default Capacitor/Android-Studio placeholder icon with the actual tuner particle-sphere branding. Rendered the favicon's dot pattern at 1024×1024 via a headless-Chromium screenshot (ImageMagick's bundled SVG renderer produced blurry/blocky circles at this scale — no `rsvg-convert` on the machine, so Playwright's native SVG rendering was used instead) into `assets/icon-only.png`, `icon-foreground.png` (dots only, transparent, scaled to 0.85× to sit inside the adaptive-icon safe zone), and `icon-background.png` (the radial-gradient sphere backdrop). Ran `npx @capacitor/assets generate --android` to produce the full mipmap set (legacy + adaptive icon + round icon, all densities)
+- **Portrait lock**: added `android:screenOrientation="portrait"` to `MainActivity` in AndroidManifest.xml — app no longer rotates to landscape
+- **Logo wrap fix**: `.tuner-header` had no `flex-wrap`, so on narrow phone widths the flex-squeezed `<h1 class="logo">` could break between adjacent letter `<span>`s (browsers allow line breaks between inline-block boxes even without whitespace) — worst case, the trailing "r" wrapped to its own line. Added `flex-wrap: wrap` to `.tuner-header` (header-controls now drops to a second row instead of squeezing the logo) and `white-space: nowrap` + `flex-shrink: 0` on the logo so it can never break internally. Verified at 360px and 320px viewport widths with Playwright — logo stays on one line in both
+
 ## 2026-09-10 — Cut dev/v2 branch, add clickable logo → info modal
 
 - Cut `dev/v2` from `main` (dev/v1.1 was fully merged, main had 10 newer commits) — replaces dev/v1.1 as the active dev-deploy branch

@@ -18,8 +18,10 @@
 
 .tuner-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 24px;
   position: relative;
   z-index: 1;
@@ -31,6 +33,7 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: lowercase;
+  white-space: nowrap;
 }
 
 .logo-btn {
@@ -38,6 +41,7 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 /* Info modal */
