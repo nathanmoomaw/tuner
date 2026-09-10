@@ -33,6 +33,82 @@
   text-transform: lowercase;
 }
 
+.logo-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Info modal */
+.info-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+
+.info-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  max-width: 320px;
+  text-align: center;
+}
+
+.info-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.info-modal-close:hover {
+  color: var(--text-bright);
+}
+
+.info-modal-icon {
+  border-radius: 50%;
+}
+
+.info-modal-logo {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.info-modal-tagline {
+  color: var(--text);
+  font-size: 13px;
+  margin: 0;
+}
+
+.info-modal-note {
+  color: var(--text);
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
 .logo-letter {
   display: inline-block;
   transform: rotate(var(--rot)) translateY(var(--y));

@@ -70,3 +70,5 @@
 - [x] CentsSphere orbit ring clipping fix (circle → tilted ellipse)
 - [x] Subharmonic check strictened: only fires when lower pitch has stronger NSDF (fixes E4 → A2 false reads)
 - [x] CI build safeguards: lint gate + build verification before deploy, Node 20 → 22
+- [x] Clickable logo opens info modal (wordmark, tagline, Android app note)
+- [x] dev/v2 branch cut (replaces dev/v1.1 as active dev-deploy branch)

@@ -55,5 +55,5 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 - Dev branches follow `dev/vX.Y` versioning (e.g. `dev/v1.1`)
 - Any push to `dev/*` auto-deploys to tuner-dev.obfusco.us
 - When ready, merge to `main` via PR — this deploys to production
-- Current active dev branch: `dev/v1.1`
+- Current active dev branch: `dev/v2`
 - `todos.md` — personal action items (app store signups, etc.)

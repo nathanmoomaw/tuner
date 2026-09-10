@@ -6,6 +6,7 @@ import { NoteWheel } from './components/NoteWheel'
 import { CentsSphere } from './components/CentsSphere'
 import { ParticleSphere } from './components/ParticleSphere'
 import { ReactiveLogo } from './components/ReactiveLogo'
+import { InfoModal } from './components/InfoModal'
 import './App.css'
 
 const isNative = Capacitor.isNativePlatform()
@@ -45,6 +46,7 @@ function ChordDisplay({ chord }) {
 function App() {
   const [a4, setA4] = useState(440)
   const [showViz, setShowViz] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
   const { listening, mode, setMode, note, chord, error, start, stop, analyserRef } = useTuner(a4)
 
   const stopWithExitFullscreen = useCallback(() => {
@@ -99,7 +101,9 @@ function App() {
     <div className="tuner">
       <Visualizer analyserRef={analyserRef} active={listening} visible={showViz} />
       <header className="tuner-header">
-        <ReactiveLogo analyserRef={analyserRef} active={listening} />
+        <button className="logo-btn" onClick={() => setShowInfo(true)} aria-label="About tuner">
+          <ReactiveLogo analyserRef={analyserRef} active={listening} />
+        </button>
         <div className="header-controls">
           <div className="mode-toggle">
             <button
@@ -166,6 +170,8 @@ function App() {
           </>
         )}
       </main>
+
+      {showInfo && <InfoModal onClose={() => setShowInfo(false)} />}
     </div>
   )
 }

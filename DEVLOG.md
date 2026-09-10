@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-09-10 — Cut dev/v2 branch, add clickable logo → info modal
+
+- Cut `dev/v2` from `main` (dev/v1.1 was fully merged, main had 10 newer commits) — replaces dev/v1.1 as the active dev-deploy branch
+- Wrapped `ReactiveLogo` in a `.logo-btn` button; clicking it opens a new `InfoModal` component (`src/components/InfoModal.jsx`) with the favicon, a static "tuner" wordmark, tagline, and an "Android app coming soon" note — no store link yet since Google Play Console signup is still pending (see `todos.md`), link to be added once that's live
+- Verified with a throwaway Playwright script against the dev server: click opens the modal, backdrop click closes it
+
 ## 2026-06-18 — Add CI build safeguards (lint gate + build verification)
 
 - Added `check` job to deploy.yml that runs lint + build + verifies dist/index.html exists before any deploy job runs
