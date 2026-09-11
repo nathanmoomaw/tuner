@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-09-11 — Shrink logo/controls responsively instead of wrapping header on phone widths
+
+- Yesterday's fix let `.tuner-header` wrap to two rows on narrow phones to stop the logo breaking mid-word — worked, but on the user's actual phone (~390px CSS width) it wrapped even though there was visibly room, just not quite enough. Rather than wrap there, shrink to fit: `.tuner-header .logo` font-size and letter-spacing, `.header-controls` gap, and the A4 number input width all now use `clamp()` so they scale down smoothly on narrow viewports (desktop untouched — clamp maxes out at the original sizes)
+- **Bug found along the way**: shrinking the A4 input to fit clipped its value to a single digit ("4" instead of "440") — Chrome's native number-input spinner arrows were eating the width. Hid them (`-webkit-inner/outer-spin-button`, `appearance: textfield`) rather than shrinking the input further; also frees a few more px for the fit
+- Verified with Playwright across viewport widths: fits on one row down to 375px (iPhone SE/mini), still wraps (intentionally, as a fallback) below ~360px — no real phone width in between goes unhandled
+- Rebuilt web assets, synced into the Android project, and rebuilt `app-debug.apk` so the native app reflects this
+
 ## 2026-09-10 — Android launcher icon, lock portrait, fix logo wrap on narrow screens
 
 - **Launcher icon**: replaced the default Capacitor/Android-Studio placeholder icon with the actual tuner particle-sphere branding. Rendered the favicon's dot pattern at 1024×1024 via a headless-Chromium screenshot (ImageMagick's bundled SVG renderer produced blurry/blocky circles at this scale — no `rsvg-convert` on the machine, so Playwright's native SVG rendering was used instead) into `assets/icon-only.png`, `icon-foreground.png` (dots only, transparent, scaled to 0.85× to sit inside the adaptive-icon safe zone), and `icon-background.png` (the radial-gradient sphere backdrop). Ran `npx @capacitor/assets generate --android` to produce the full mipmap set (legacy + adaptive icon + round icon, all densities)
