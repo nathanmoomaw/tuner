@@ -75,3 +75,4 @@
 - [x] Android launcher icon (tuner particle-sphere branding, adaptive + legacy)
 - [x] Android app locked to portrait orientation
 - [x] Fixed logo letter-wrap on narrow phone screens
+- [x] MISSION.md (free-web-first, app stores as best-effort extension)

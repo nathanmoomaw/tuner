@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-09-21 — Add MISSION.md
+
+- New `MISSION.md`, matching the tone of `ETHOS.md`/`MYTHOS.md`: web is the permanent free home for Tuner, app store presence is a best-effort extension of that reach with no permanence guarantee since store policies/accounts/OS changes are outside this project's control
+
 ## 2026-09-11 — Shrink logo/controls responsively instead of wrapping header on phone widths
 
 - Yesterday's fix let `.tuner-header` wrap to two rows on narrow phones to stop the logo breaking mid-word — worked, but on the user's actual phone (~390px CSS width) it wrapped even though there was visibly room, just not quite enough. Rather than wrap there, shrink to fit: `.tuner-header .logo` font-size and letter-spacing, `.header-controls` gap, and the A4 number input width all now use `clamp()` so they scale down smoothly on narrow viewports (desktop untouched — clamp maxes out at the original sizes)
