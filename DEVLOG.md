@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-09-21 — Add public Play Store listing path to todos.md
+
+- The existing Android launch steps only covered the personal-use path (Internal testing track, skips public listing). Added a full "Android public listing (Production track)" section: closed testing gate (12 testers / 14 days, required for new dev accounts), store listing assets (icon, feature graphic, screenshots, descriptions), a real hosted privacy policy URL, full App content declarations, and the Production review/rollout steps — plus the ongoing `targetSdkVersion` maintenance requirement once public
+
 ## 2026-09-21 — Add MISSION.md
 
 - New `MISSION.md`, matching the tone of `ETHOS.md`/`MYTHOS.md`: web is the permanent free home for Tuner, app store presence is a best-effort extension of that reach with no permanence guarantee since store policies/accounts/OS changes are outside this project's control
