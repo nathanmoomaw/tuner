@@ -24,7 +24,7 @@ A simple, ad-free, distraction-free web-based musical tuner. Primarily for perso
 
 ### Design Direction
 - Clean, minimal, zero distractions
-- No ads, no popups, no tracking
+- No ads, no popups. Analytics via Google Tag Manager (GTM-M5GKBML2, added 2026-09-22) is the one exception — usage measurement only, no ad tech loaded through it
 - Large, readable display — works well on a music stand or propped-up phone
 - Dark theme by default
 - Colorful graphic display to fill screen, geared towards mobile use

@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-09-22 — Add Google Tag Manager (GTM-M5GKBML2)
+
+- Added GTM snippet to `index.html` head + body — since there's one shared `index.html` built for both `main` and `dev/*` branches, this covers prod and dev in a single edit
+- This directly contradicted the "no tracking" line in CLAUDE.md's Design Direction section, so flagged it to the user before implementing rather than silently landing it. Confirmed: analytics is in scope, ad tech/trackers are not. Updated CLAUDE.md and ETHOS.md to draw that line explicitly (GTM for usage measurement only, no ad networks or data selling)
+- Also committed several build-artifact files that had been untracked for a while (`android/.claude/`, `android/app/debug/`, `android/app/release/` — output-metadata.json, baseline profile `.dm` files) per a DUMP.md request; no `.gitignore` currently excludes these, worth revisiting whether they should be ignored instead of tracked going forward
+
 ## 2026-09-21 — Add public Play Store listing path to todos.md
 
 - The existing Android launch steps only covered the personal-use path (Internal testing track, skips public listing). Added a full "Android public listing (Production track)" section: closed testing gate (12 testers / 14 days, required for new dev accounts), store listing assets (icon, feature graphic, screenshots, descriptions), a real hosted privacy policy URL, full App content declarations, and the Production review/rollout steps — plus the ongoing `targetSdkVersion` maintenance requirement once public

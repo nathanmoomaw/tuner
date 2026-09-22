@@ -76,3 +76,4 @@
 - [x] Android app locked to portrait orientation
 - [x] Fixed logo letter-wrap on narrow phone screens
 - [x] MISSION.md (free-web-first, app stores as best-effort extension)
+- [x] Google Tag Manager analytics (GTM-M5GKBML2)
